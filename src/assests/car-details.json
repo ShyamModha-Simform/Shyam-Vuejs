@@ -1,0 +1,65 @@
+[
+    
+    
+    {
+      "carName": "Ford Mustang",
+      "carPrice": 45000,
+      "carImageLink": "https://www.freeiconspng.com/uploads/ford-edge-png-26.png",
+      "carDescription": "The Ford Mustang is an iconic American muscle car that has been in production since the 1960s. It is known for its powerful engine, sleek design, and performance capabilities, and is a popular choice for car enthusiasts and collectors."
+    },
+    {
+      "carName": "Chevrolet Camaro",
+      "carPrice": 48000,
+      "carImageLink": "https://www.freeiconspng.com/uploads/chevrolet-impala-icon--classic-cars-iconset--cem-21.png",
+      "carDescription": "The Chevrolet Camaro is a classic American muscle car that is known for its power, speed, and sleek design. It has a long history of being a favorite among car enthusiasts and collectors, and continues to be a popular choice for those who want a high-performance vehicle."
+    },
+    {
+      "carName": "BMW M5",
+      "carPrice": 75000,
+      "carImageLink": "https://www.freeiconspng.com/uploads/monday-april-2nd-2012-in-bmw-m5-tags-bmw-m550d-xdrive-background-color-14.png",
+      "carDescription": "The BMW M5 is a high-performance luxury sedan that offers a balance of power, comfort, and style. It is known for its advanced technology and engineering, and is a popular choice for those who want a luxury car with impressive performance capabilities."
+      },
+      {
+        "carName": "Honda Civic",
+        "carPrice": 28000,
+        "carImageLink": "https://www.freeiconspng.com/uploads/honda-brv-red-png-pictures-3.png",
+        "carDescription": "The Honda Civic is a popular compact car that offers a balance of style, comfort, and performance. It is known for its reliability and fuel efficiency, and has a long history of being one of the best-selling cars in the world."
+      },
+      {
+      "carName": "Mercedes-Benz S-Class",
+      "carPrice": 100000,
+      "carImageLink": "https://www.freeiconspng.com/uploads/mercedes-car-png-16.png",
+      "carDescription": "The Mercedes-Benz S-Class is a luxury sedan that is known for its advanced technology, elegant design, and comfortable ride. It is often considered one of the best luxury cars on the market, and is a popular choice for those who want a high-end vehicle with cutting-edge features."
+      },
+      {
+      "carName": "Porsche 911",
+      "carPrice": 120000,
+      "carImageLink": "https://www.freeiconspng.com/uploads/porsche-car-png-24.png",
+      "carDescription": "The Porsche 911 is a high-performance sports car that is known for its speed, handling, and iconic design. It has been in production for over 50 years, and is a popular choice among car enthusiasts and collectors who want a classic and powerful vehicle."
+      },
+      {
+      "carName": "Lamborghini Huracan",
+      "carPrice": 250000,
+      "carImageLink": "https://www.freeiconspng.com/uploads/lamborghini-car-front-transparent-png-13.png",
+      "carDescription": "The Lamborghini Huracan is a high-performance supercar that is known for its speed, power, and exotic design. It is a popular choice among car enthusiasts and collectors who want a rare and exclusive vehicle that stands out from the crowd."
+      },
+      {
+        "carName": "Audi R8",
+        "carPrice": 150000,
+        "carImageLink": "https://www.freeiconspng.com/uploads/audi-png-auto-car-0.png",
+        "carDescription": "The Audi R8 is a high-performance sports car that is known for its speed, handling, and sleek design. It is a popular choice among car enthusiasts who want a powerful and stylish vehicle that can turn heads on the road."
+        },
+        {
+        "carName": "Bugatti Chiron",
+        "carPrice": 3000000,
+        "carImageLink": "https://www.freeiconspng.com/uploads/bugatti-car-png-transparent-16.png",
+        "carDescription": "The Bugatti Chiron is a high-performance supercar that is known for its speed, power, and luxury design. It is a rare and exclusive vehicle that is often considered one of the most advanced and impressive cars on the market."
+        },
+        {
+            "carName": "Toyota Corolla",
+            "carPrice": 25000,
+            "carImageLink": "https://www.freeiconspng.com/uploads/red-mazda-car-front-png-0.png",
+            "carDescription": "The Toyota Corolla is a compact car that is known for its reliability, fuel efficiency, and affordability. It has been one of the best-selling cars in the world for decades, and continues to be a popular choice for those who want a practical and dependable vehicle."
+          }
+]
+  
