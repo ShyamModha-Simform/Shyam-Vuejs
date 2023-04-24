@@ -15,11 +15,11 @@ export default {
 <template>
     <div class="card-1 card-div">
             <div class="like-icon-div">
-                <label for="card-1-like" class="like-icon-div-child">
+                <!-- <label for="card-1-like" class="like-icon-div-child">
                     <input type="checkbox" id="card-1-like">
                     <i class="far fa-heart heart-empty"></i>
                     <i class="fas fa-heart heart-fill"></i>
-                </label>
+                </label> -->
             </div>
             <div class="gow-img-div img-div">
                 <img :src="carDetail.carImageLink" alt="god-of-war-figurine">
@@ -37,6 +37,41 @@ export default {
 </template>
 
 <style scoped>
+
+.like-icon-div{
+    padding: 1em 1em 0 1em;
+    width: 100%;
+    box-sizing: border-box;
+    text-align: right;
+    font-size: 1.5em;
+    color: var(--heart-icon-color);
+    border-radius:10px 10px 0 0;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.like-icon-div-child{
+    /* background-color: yellow; */
+    width: 1em;
+    height: 1em;
+    position: relative;
+    z-index: 3;
+    cursor: pointer;
+}
+
+.heart-empty{
+    position: absolute;
+    left: 0;
+    opacity: 1;
+}
+
+.heart-fill{
+    position: absolute;
+    left: 0;
+    opacity: 0;
+    transform: scale(0);
+    transition: transform 0.25s ease-in-out, opacity 0.2s ease-in-out;
+}
 .like-icon-div-child:hover .heart-fill{
     opacity: 1;
     transform: scale(1);
