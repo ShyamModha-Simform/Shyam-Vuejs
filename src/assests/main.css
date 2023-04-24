@@ -134,6 +134,7 @@ body{
 }
 
 .text-container .date{
+    text-align: left;
     font-size: 0.9em;
     font-weight: var(--date-font-weight);
     color: var(--date-text-color);

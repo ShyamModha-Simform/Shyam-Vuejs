@@ -1,17 +1,3 @@
-<script>
-import swal from 'sweetalert';  
-
-export default {
-  name: 'GalleryCard',
-  props: ['carDetail'],
-  methods: {
-    showPrice(){
-        swal("Unbeatable prices - indulge in your dream car today!",` For only $${this.carDetail.carPrice}/-`);
-    }
-  }
-}
-</script>
-
 <template>
     <div class="card-1 card-div">
             <div class="like-icon-div">
@@ -26,15 +12,34 @@ export default {
             </div>
             <div class="text-container">
                 <h2 class="item-name">{{ carDetail.carName }}</h2>
-                <p class="date">{{ carDetail.carDescription }}</p>
+                <p class="date">{{ displayTrunkedDescription() }}</p>
                 <div class="pricing-and-cart">
                     <div class="pricing">
-                        <a href="#" class="btn gray block circular" @click.prevent="showPrice">Show Price</a>
+                        <button class="btn" @click.prevent="showPrice" :disabled="carDetail.carPrice === undefined">{{ carDetail.carPrice === undefined ? 'Available Soon' : 'Show Price' }}</button>
                     </div>
                 </div>
             </div>
         </div>
 </template>
+
+
+<script>
+
+export default {
+  name: 'GalleryCard',
+  props: ['carDetail'],
+  methods: {
+    showPrice(){
+        this.$emit("showPrice", this.carDetail.carPrice);
+    },
+    displayTrunkedDescription(){
+        return this.carDetail.carDescription.slice(0, 200) + "...";
+
+    }
+  }
+}
+</script>
+
 
 <style scoped>
 
@@ -93,4 +98,28 @@ export default {
 #card-1-like:not(:checked) ~ .heart-fill{
     animation: unlike-animation 0.25s ease-in-out ;
 }
+
+
+.btn {
+    display: inline-block;
+    outline: 0;
+    border: 0;
+    cursor: pointer;
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+    height: 38px;
+    padding: 8px 24px;
+    border-radius: 50px;
+    background-color: rgb(96,109,117);
+    box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
+    transition: all .2s ease-out;         
+}
+
+.btn:disabled {
+    background-color: rgb(174, 181, 185);
+    cursor: not-allowed;
+}
+                
+
 </style>

@@ -3,7 +3,6 @@
     
     {
       "carName": "Ford Mustang",
-      "carPrice": 45000,
       "carImageLink": "https://www.freeiconspng.com/uploads/ford-edge-png-26.png",
       "carDescription": "The Ford Mustang is an iconic American muscle car that has been in production since the 1960s. It is known for its powerful engine, sleek design, and performance capabilities, and is a popular choice for car enthusiasts and collectors."
     },
@@ -45,7 +44,6 @@
       },
       {
         "carName": "Audi R8",
-        "carPrice": 150000,
         "carImageLink": "https://www.freeiconspng.com/uploads/audi-png-auto-car-0.png",
         "carDescription": "The Audi R8 is a high-performance sports car that is known for its speed, handling, and sleek design. It is a popular choice among car enthusiasts who want a powerful and stylish vehicle that can turn heads on the road."
         },
@@ -56,10 +54,10 @@
         "carDescription": "The Bugatti Chiron is a high-performance supercar that is known for its speed, power, and luxury design. It is a rare and exclusive vehicle that is often considered one of the most advanced and impressive cars on the market."
         },
         {
-            "carName": "Toyota Corolla",
-            "carPrice": 25000,
-            "carImageLink": "https://www.freeiconspng.com/uploads/red-mazda-car-front-png-0.png",
-            "carDescription": "The Toyota Corolla is a compact car that is known for its reliability, fuel efficiency, and affordability. It has been one of the best-selling cars in the world for decades, and continues to be a popular choice for those who want a practical and dependable vehicle."
+          "carName": "Toyota Corolla",
+          "carPrice": 25000,
+          "carImageLink": "https://www.freeiconspng.com/uploads/red-mazda-car-front-png-0.png",
+          "carDescription": "The Toyota Corolla is a compact car that is known for its reliability, fuel efficiency, and affordability. It has been one of the best-selling cars in the world for decades, and continues to be a popular choice for those who want a practical and dependable vehicle."
           }
 ]
   
