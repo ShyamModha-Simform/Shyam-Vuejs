@@ -13,6 +13,8 @@ export default {
       headingContent: 'Carpedia',
       tagLine: 'Your encyclopedia of all things automotive'
     }
+  },
+  components: {
   }
 }
 </script>

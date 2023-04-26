@@ -10,8 +10,12 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
+    "@popperjs/core": "^2.11.7",
+    "@vee-validate/rules": "^4.8.6",
+    "bootstrap": "^5.2.3",
     "save": "^2.9.0",
     "sweetalert": "^2.1.2",
+    "vee-validate": "^4.8.6",
     "vue": "^3.2.47"
   },
   "devDependencies": {
@@ -21,7 +25,9 @@
     "eslint": "^8.34.0",
     "eslint-plugin-vue": "^9.9.0",
     "node-sass": "^8.0.0",
+    "postcss": "^8.4.23",
     "prettier": "^2.8.4",
+    "sass": "^1.62.1",
     "sass-loader": "^13.2.2",
     "vite": "^4.1.4"
   }
