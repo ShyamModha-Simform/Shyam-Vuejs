@@ -15,7 +15,7 @@
                 <p class="date">{{ displayTrunkedDescription() }}</p>
                 <div class="pricing-and-cart">
                     <div class="pricing">
-                        <button class="btn" @click.prevent="showPrice" :disabled="carDetail.carPrice === undefined">{{ carDetail.carPrice === undefined ? 'Available Soon' : 'Show Price' }}</button>
+                        <button class="button" @click.prevent="showPrice" :disabled="carDetail.carPrice === undefined">{{ carDetail.carPrice === undefined ? 'Available Soon' : 'Show Price' }}</button>
                     </div>
                 </div>
             </div>
@@ -100,7 +100,7 @@ export default {
 }
 
 
-.btn {
+.button {
     display: inline-block;
     outline: 0;
     border: 0;
@@ -116,7 +116,7 @@ export default {
     transition: all .2s ease-out;         
 }
 
-.btn:disabled {
+.button:disabled {
     background-color: rgb(174, 181, 185);
     cursor: not-allowed;
 }
