@@ -9,10 +9,8 @@ export default defineConfig({
   plugins: [vue()],
   resolve: {
     alias: {
-      '@': fileURLToPath(new URL('./src', import.meta.url)),
-      // eslint-disable-next-line no-undef
-      '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap'),
-    },
-
+      '@': fileURLToPath(new URL('./src', import.meta.url)), // eslint-disable-next-line no-undef
+      '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap')
+    }
   }
 })

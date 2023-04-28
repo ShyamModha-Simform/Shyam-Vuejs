@@ -14,7 +14,7 @@
     "@vee-validate/rules": "^4.8.6",
     "bootstrap": "^5.2.3",
     "save": "^2.9.0",
-    "sweetalert": "^2.1.2",
+    "sweetalert2": "^11.7.3",
     "vee-validate": "^4.8.6",
     "vue": "^3.2.47"
   },
