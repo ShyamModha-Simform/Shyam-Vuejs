@@ -1,11 +1,19 @@
 import { createApp } from 'vue'
 import App from './App.vue'
-import NavbarContainer from './Components/Navbar.vue';
+import NavbarContainer from './Components/Navbar.vue'
+import VeeValidateSetup from './plugins/SetupVeeValidate'
 
-import './assests/main.css';
+// Import our custom CSS
+import './scss/styles.scss' //order matters
+import './assests/main.css'
 
-const app = createApp(App);
+// Import all of Bootstrap's JS
+// eslint-disable-next-line no-unused-vars
+import { Modal } from 'bootstrap'
 
+const app = createApp(App)
+
+app.use(VeeValidateSetup)
 app.component('NavbarContainer', NavbarContainer)
 
 app.mount('#app')
