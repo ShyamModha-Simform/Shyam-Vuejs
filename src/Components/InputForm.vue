@@ -6,7 +6,6 @@
             <label for="carName">Car Name </label>
             <ErrorMessage name="carName" class="error_message" />
         </div>
-        <!-- {{ type === 'edit' ? 'Undefined' : showEditForm }} -->
 
         <div class="group">
             <vField name="price" placeholder="‎" type="number" class="input" :validateOnInput="true"
@@ -32,9 +31,8 @@
             <label for="carDetails">Car Details</label>
         </div>
         <div class="modal-footer">
-            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal"
-                @click="clearEditFormState">Cancel</button>
-            <button type="submit" class="btn btn-primary">
+            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button type="submit" class="button">
                 {{ modalType === "edit" ? `Update` : `Submit` }}
             </button>
         </div>
@@ -53,7 +51,7 @@ export default {
             schema: {
                 carName: 'required|alpha_spaces',
                 price: 'required|integer',
-                url: 'required',
+                url: 'required|url:https://*',
                 carDetails: 'required|min:30|max:120'
             },
             car: {
@@ -73,8 +71,7 @@ export default {
     },
     methods: {
         createCar() {
-            this.$el.querySelector('button[type=reset]').click()
-            // swal("Car Details added Successfully", `Car Name: ${this.carName}`);
+            this.$el.querySelector('button[type=reset]').click();
             Swal.fire({
                 title: `Car Details added Successfully!`,
                 html: `
@@ -85,8 +82,7 @@ export default {
                     <p>Price: ${this.car.carPrice}</p>
                     <p>Details: ${this.car.carDescription}</p>
                 </div>
-                </div>
-  `,
+                </div> `,
                 showCloseButton: true,
                 showConfirmButton: true,
                 showCancelButton: false,
@@ -95,9 +91,6 @@ export default {
                 allowEscapeKey: false
             })
         },
-        clearEditFormState() {
-            this.$el.querySelector("form")
-        }
     }
 }
 </script>
@@ -177,14 +170,19 @@ export default {
 }
 
 .form button {
-    background-color: #606d75;
-    color: #fff;
-    border: none;
-    border-radius: 5px;
-    padding: 10px;
-    font-size: 16px;
+    display: inline-block;
+    outline: 0;
+    border: 0;
     cursor: pointer;
-    transition: all 0.3s ease;
+    font-weight: 600;
+    color: #fff;
+    font-size: 14px;
+    height: 38px;
+    padding: 8px 24px;
+    border-radius: 50px;
+    background-color: rgb(96, 109, 117);
+    box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
+    transition: all .2s ease-out;
 }
 
 .form button:hover {

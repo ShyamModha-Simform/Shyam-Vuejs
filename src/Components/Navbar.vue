@@ -1,8 +1,8 @@
 <template>
   <header>
     <div>
-      <h1>{{ headingContent }}</h1>
-      <h5>-{{ tagLine }}</h5>
+      <h2>{{ headingContent }}</h2>
+      <h6>-{{ tagLine }}</h6>
     </div>
     <button type="button" class="button" @click.prevent="showPrice" data-bs-toggle="modal" data-bs-target="#shyam"
       @click="openAddCarForm">Add Car</button>
@@ -36,6 +36,7 @@ header {
   gap: 10;
   z-index: 100;
   justify-content: space-around;
+
 }
 
 .button {
@@ -45,8 +46,8 @@ header {
   cursor: pointer;
   font-weight: 600;
   color: #fff;
-  font-size: 20px;
-  /* height: 38px; */
+  font-size: 14px;
+  height: 38px;
   padding: 8px 24px;
   border: 1px solid #fff;
   border-radius: 50px;
@@ -59,6 +60,20 @@ header {
 .button:disabled {
   background-color: rgb(174, 181, 185);
   cursor: not-allowed;
+}
+
+@media screen and (max-width: 600px) {
+  header {
+    padding-block: 10px;
+  }
+
+  .button {
+    padding: 8px 20px;
+  }
+
+  header h6 {
+    display: none;
+  }
 }
 </style>
 
