@@ -71,9 +71,10 @@ export default {
     },
     methods: {
         createCar() {
+            const temp = this.modalType;
             this.$el.querySelector('button[type=reset]').click();
             Swal.fire({
-                title: `Car Details added Successfully!`,
+                title: `Car Details ${temp === 'edit' ? 'Updated' : 'Added'} Successfully!`,
                 html: `
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
