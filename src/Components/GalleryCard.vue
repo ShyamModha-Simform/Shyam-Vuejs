@@ -8,15 +8,15 @@
                 </label> -->
         </div>
         <div class="gow-img-div img-div">
-            <img :src="carDetail.carImageLink" alt="god-of-war-figurine">
+            <img :src="carDetail.image" alt="god-of-war-figurine">
         </div>
         <div class="text-container">
-            <h2 class="item-name">{{ carDetail.carName }}</h2>
+            <h2 class="item-name">{{ carDetail.name }}</h2>
             <p class="date">{{ displayTrunkedDescription() }}</p>
             <div class="pricing-and-cart">
                 <div class="pricing">
-                    <button class="button" @click.prevent="showPrice" :disabled="carDetail.carPrice === undefined">{{
-                        carDetail.carPrice === undefined ? 'Available Soon' : 'Show Price' }}</button>
+                    <button class="button" @click.prevent="showPrice" :disabled="carDetail.price === undefined">{{
+                        carDetail.price === undefined ? 'Available Soon' : 'Show Price' }}</button>
                     <!-- <button class="button" @click.prevent="editCarDetails">Edit</button> -->
                 </div>
                 <div>
@@ -30,29 +30,29 @@
     </div>
 </template>
 
-
 <script>
+
 
 export default {
     name: 'GalleryCard',
     props: ['carDetail'],
     methods: {
         showPrice() {
-            this.$emit("show-price", this.carDetail.carPrice);
+            this.$emit("show-price", this.carDetail.price);
         },
         editCarDetails() {
             this.$emit("edit-car-details", { ...this.carDetail }) // we are passing object copy instead of reference
         },
-        deleteCarDetails() {
-            this.$emit("delete-car-details")
+        async deleteCarDetails() {
+
+            this.$emit("delete-car-details", this.carDetail.id)
         },
         displayTrunkedDescription() {
-            return this.carDetail.carDescription.slice(0, 200) + "...";
+            return this.carDetail?.details?.slice(0, 200) + "...";
         }
     },
 
 }
-
 
 </script>
 

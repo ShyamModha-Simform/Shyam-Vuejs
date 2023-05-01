@@ -12,7 +12,7 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <InputForm :modalType="modalType" :updateCarDetail="updateCarDetail" />
+                    <InputForm :modalType="modalType" :updateCarDetail="updateCarDetail" @render-car-list="renderCarList" />
                 </div>
             </div>
         </div>
@@ -31,6 +31,11 @@ export default {
     },
     components: {
         InputForm
+    },
+    methods: {
+        renderCarList() {
+            this.$emit("render-car-list")
+        }
     },
 
 

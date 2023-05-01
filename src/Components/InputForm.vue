@@ -1,27 +1,24 @@
 <template>
     <vForm class="form" :validation-schema="schema" @submit="createCar">
         <div class="group">
-            <vField name="carName" placeholder="‎" type="text" class="input" :validateOnInput="true"
-                v-model="car.carName" />
+            <vField name="carName" placeholder="‎" type="text" class="input" :validateOnInput="true" v-model="car.name" />
             <label for="carName">Car Name </label>
             <ErrorMessage name="carName" class="error_message" />
         </div>
 
         <div class="group">
-            <vField name="price" placeholder="‎" type="number" class="input" :validateOnInput="true"
-                v-model="car.carPrice" />
+            <vField name="price" placeholder="‎" type="number" class="input" :validateOnInput="true" v-model="car.price" />
             <label for="price">Price</label>
             <ErrorMessage name="price" class="error_message" />
         </div>
 
         <div class="group">
-            <vField name="url" placeholder="‎" type="text" class="input" :validateOnInput="true"
-                v-model="car.carImageLink" />
+            <vField name="url" placeholder="‎" type="text" class="input" :validateOnInput="true" v-model="car.image" />
             <label for="url">Image URL</label>
             <ErrorMessage name="url" class="error_message" />
         </div>
         <div class="group">
-            <vField name="carDetails" :bails="false" v-slot="{ field, errors }" v-model="car.carDescription">
+            <vField name="carDetails" :bails="false" v-slot="{ field, errors }" v-model="car.details">
                 <textarea type="text" placeholder="‎" id="comment" class="textarea" name="carDetails" rows="3"
                     v-bind="field" />
                 <div class="error_message" v-for="err in errors" :key="err">
@@ -41,6 +38,7 @@
 
 <script>
 import Swal from 'sweetalert2'
+import { addCarDetails, updataCarDetails } from '../api/api';
 
 export default {
     name: 'InputForm',
@@ -55,10 +53,10 @@ export default {
                 carDetails: 'required|min:30|max:120'
             },
             car: {
-                carName: this.updateCarDetail.carName || "",
-                carPrice: Number,
-                carDescription: "",
-                carImageLink: "",
+                name: this.updateCarDetail.carName || "",
+                price: Number,
+                details: "",
+                image: "",
             },
         }
     },
@@ -70,18 +68,31 @@ export default {
         }
     },
     methods: {
-        createCar() {
+        async createCar() {
             const temp = this.modalType;
+            let res = {};
+            if (temp !== "edit") {
+                res = await addCarDetails(this.car);
+            } else {
+                res = await updataCarDetails(this.car);
+            }
+            // if (res.status !== 201 || res.status !== 200) {
+            //     alert("Couldn't able to update car. Please try again")
+            //     return;
+            // } else {
+            this.$emit("render-car-list")
             this.$el.querySelector('button[type=reset]').click();
+            // }
+
             Swal.fire({
                 title: `Car Details ${temp === 'edit' ? 'Updated' : 'Added'} Successfully!`,
                 html: `
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                    <img src="${this.car.carImageLink}" alt="Logo" style="width: 300px;" />
-                    <h3>${this.car.carName}</h3>
-                    <p>Price: ${this.car.carPrice}</p>
-                    <p>Details: ${this.car.carDescription}</p>
+                    <img src="${this.car.image}" alt="Logo" style="width: 300px;" />
+                    <h3>${this.car.name}</h3>
+                    <p>Price: ${this.car.price}</p>
+                    <p>Details: ${this.car.details}</p>
                 </div>
                 </div> `,
                 showCloseButton: true,
