@@ -53,7 +53,7 @@ export default {
                 carDetails: 'required|min:30|max:120'
             },
             car: {
-                name: this.updateCarDetail.carName || "",
+                name: "",
                 price: Number,
                 details: "",
                 image: "",
@@ -80,6 +80,7 @@ export default {
             //     alert("Couldn't able to update car. Please try again")
             //     return;
             // } else {
+            console.log(res.status)
             this.$emit("render-car-list")
             this.$el.querySelector('button[type=reset]').click();
             // }

@@ -1,13 +1,7 @@
 <template>
     <div class="card-1 card-div">
-        <div class="like-icon-div">
-            <!-- <label for="card-1-like" class="like-icon-div-child">
-                    <input type="checkbox" id="card-1-like">
-                    <i class="far fa-heart heart-empty"></i>
-                    <i class="fas fa-heart heart-fill"></i>
-                </label> -->
-        </div>
-        <div class="gow-img-div img-div">
+
+        <div class="img-div">
             <img :src="carDetail.image" alt="god-of-war-figurine">
         </div>
         <div class="text-container">
@@ -43,8 +37,7 @@ export default {
         editCarDetails() {
             this.$emit("edit-car-details", { ...this.carDetail }) // we are passing object copy instead of reference
         },
-        async deleteCarDetails() {
-
+        deleteCarDetails() {
             this.$emit("delete-car-details", this.carDetail.id)
         },
         displayTrunkedDescription() {

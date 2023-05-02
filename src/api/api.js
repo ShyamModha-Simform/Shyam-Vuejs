@@ -6,7 +6,7 @@ const getCarDetails = async () => {
     console.log(responseData.data.data)
     return responseData.data.data
   } catch (e) {
-    alert("Couldn't get Car Details")
+    alert("Couldn't able to get Car Details")
   }
 }
 
@@ -40,7 +40,7 @@ const updataCarDetails = async (data) => {
     )
     return responseData
   } catch (e) {
-    alert("Couldn't able to delete Data..")
+    alert("Couldn't able to Update Data..")
   }
 }
 

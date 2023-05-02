@@ -9,9 +9,9 @@
 
 <script>
 import GalleryCard from './GalleryCard.vue'
-// import carDetails from '../assests/car-details.json'
+
 import Swal from 'sweetalert2'
-import { deleteCarDetails, updataCarDetails } from '../api/api';
+import { deleteCarDetails, } from '../api/api';
 
 export default {
   name: 'GalleryCardList',
@@ -50,11 +50,17 @@ export default {
       }).then(async (result) => {
         if (result.isConfirmed) {
           let res = await deleteCarDetails(carId);
+          if (res.status !== 204) {
+            console.log(res.status, res.statusText)
+            alert("Couldn't able to delete car..")
+            return;
+          }
           Swal.fire(
             'Deleted!',
             'Your file has been deleted.',
             'success'
           )
+          this.$emit("render-car-list")
         }
       })
     }
