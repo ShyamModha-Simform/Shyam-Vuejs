@@ -11,25 +11,13 @@
 import GalleryCard from './GalleryCard.vue'
 
 import Swal from 'sweetalert2'
-import { deleteCarDetails, } from '../api/api';
+import { getCarDetails, deleteCarDetails, } from '../api/api';
 
 export default {
   name: 'GalleryCardList',
   props: ['carList'],
-  data() {
-    return {
-      carDetails: [],
-    }
-  },
   components: {
     GalleryCard,
-  },
-  watch: {
-    carList: {
-      handler(newValue) {
-        this.carDetails = [...newValue];
-      }
-    }
   },
   methods: {
     displayPrice(carPrice) {
