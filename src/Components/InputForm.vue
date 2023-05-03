@@ -31,7 +31,7 @@
             <label for="carDetails">Car Details</label>
         </div>
         <div class="modal-footer">
-            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button ref="resetBtn" type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             <button type="submit" class="button">
                 {{ store.modalType === "edit" ? `Update` : `Submit` }}
             </button>
@@ -74,7 +74,7 @@ export default {
             this.$el.querySelector('button[type=reset]').click();
 
             Swal.fire({
-                title: `Car Details ${temp === 'edit' ? 'Updated' : 'Added'} Successfully!`,
+                title: `Car ${temp === 'edit' ? 'Updated' : 'Created'} Successfully!`,
                 html: `
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
@@ -92,6 +92,10 @@ export default {
                 allowEscapeKey: false
             })
         },
+        resetForm() {
+            store.carToBeEdited = {}
+            this.$refs.resetBtn.click();
+        }
     }
 }
 </script>

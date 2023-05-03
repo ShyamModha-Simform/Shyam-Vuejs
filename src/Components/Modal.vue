@@ -11,10 +11,11 @@
                     }}
                         Car
                         Details</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        @click="resetForm"></button>
                 </div>
                 <div class="modal-body">
-                    <InputForm />
+                    <InputForm ref="child" />
                 </div>
             </div>
         </div>
@@ -35,6 +36,11 @@ export default {
     components: {
         InputForm
     },
+    methods: {
+        resetForm() {
+            this.$refs.child.resetForm();
+        }
+    }
 }
 
 
