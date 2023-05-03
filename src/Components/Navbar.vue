@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { store } from '../Store/store';
+
 export default {
   name: 'NavbarContainer',
   data() {
@@ -20,7 +22,7 @@ export default {
   },
   methods: {
     openAddCarForm() {
-      this.$emit("open-add-form", "add");
+      store.modalType = "add";
     }
   }
 

@@ -11,7 +11,6 @@
                 <div class="pricing">
                     <button class="button" @click.prevent="showPrice" :disabled="carDetail.price === undefined">{{
                         carDetail.price === undefined ? 'Available Soon' : 'Show Price' }}</button>
-                    <!-- <button class="button" @click.prevent="editCarDetails">Edit</button> -->
                 </div>
                 <div>
                     <img src="../assests/edit_icon.png" class="edit-icon" alt="editIcon" @click="editCarDetails"
@@ -25,7 +24,7 @@
 </template>
 
 <script>
-
+import { store } from '../Store/store';
 
 export default {
     name: 'GalleryCard',
@@ -35,7 +34,10 @@ export default {
             this.$emit("show-price", this.carDetail.price);
         },
         editCarDetails() {
-            this.$emit("edit-car-details", { ...this.carDetail }) // we are passing object copy instead of reference
+            // Setting value in global store which will automatically reactive at other components
+            store.modalType = "edit";
+            store.carToBeEdited = { ...this.carDetail }
+            // we are passing object copy instead of reference
         },
         deleteCarDetails() {
             this.$emit("delete-car-details", this.carDetail.id)

@@ -1,59 +1,63 @@
 <template>
-  <main>
-    <div class="container">
-      <GalleryCard :carDetail="car" v-for="car in carList" :key="car.name" @show-price="displayPrice"
-        @edit-car-details="editDetails" @delete-car-details="deleteCar" />
-    </div>
-  </main>
+    <main>
+        <div class="container">
+            <GalleryCard :carDetail="car" v-for="car in store.carDetails" :key="car.name" @show-price="displayPrice"
+                @delete-car-details="deleteCar" />
+        </div>
+    </main>
 </template>
 
 <script>
 import GalleryCard from './GalleryCard.vue'
 
 import Swal from 'sweetalert2'
-import { getCarDetails, deleteCarDetails, } from '../api/api';
+import { deleteCarDetails, getCarDetails, } from '../api/api';
+import { store } from '../Store/store';
 
 export default {
-  name: 'GalleryCardList',
-  props: ['carList'],
-  components: {
-    GalleryCard,
-  },
-  methods: {
-    displayPrice(carPrice) {
-      Swal.fire("Unbeatable prices - indulge in your dream car today!", ` For only $${carPrice}/-`)
+    name: 'GalleryCardList',
+    components: {
+        GalleryCard,
     },
-    editDetails(carDetail) {
-      this.$emit('open-edit-form', carDetail)
-    },
-    deleteCar(carId) {
-      Swal.fire({
-        title: 'Are you sure?',
-        text: "You won't be able to revert this!",
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: 'Yes, delete it!'
-      }).then(async (result) => {
-        if (result.isConfirmed) {
-          let res = await deleteCarDetails(carId);
-          if (res.status !== 204) {
-            console.log(res.status, res.statusText)
-            alert("Couldn't able to delete car..")
-            return;
-          }
-          Swal.fire(
-            'Deleted!',
-            'Your file has been deleted.',
-            'success'
-          )
-          this.$emit("render-car-list")
+    data() {
+        return {
+            store,
         }
-      })
-    }
+    },
+    methods: {
+        displayPrice(carPrice) {
+            Swal.fire("Unbeatable prices - indulge in your dream car today!", ` For only $${carPrice}/-`)
+        },
+        deleteCar(carId) {
+            Swal.fire({
+                title: 'Are you sure?',
+                text: "You won't be able to revert this!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, delete it!'
+            }).then(async (result) => {
+                if (result.isConfirmed) {
+                    let res = await deleteCarDetails(carId);
+                    if (res.status !== 204) {
+                        console.log(res.status, res.statusText)
+                        alert("Couldn't able to delete car..")
+                        return;
+                    }
+                    Swal.fire(
+                        'Deleted!',
+                        'Your file has been deleted.',
+                        'success'
+                    )
+                    //rendered carList when car deleted
+                    store.carDetails = await getCarDetails();
 
-  },
+                }
+            })
+        }
+
+    },
 }
 </script>
 
