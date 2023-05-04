@@ -5,14 +5,17 @@
         <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-dark" id="staticBackdropLabel">{{ modalType === "edit" ? "Edit" : "Add"
+                    <h1 class="modal-title fs-5 text-dark" id="staticBackdropLabel">{{ store.modalType === "edit" ?
+                        "Edit" :
+                        "Add"
                     }}
                         Car
                         Details</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        @click="resetForm"></button>
                 </div>
                 <div class="modal-body">
-                    <InputForm :modalType="modalType" :updateCarDetail="updateCarDetail" />
+                    <InputForm ref="child" />
                 </div>
             </div>
         </div>
@@ -21,19 +24,23 @@
   
 <script>
 import InputForm from './InputForm.vue';
+import { store } from '../Store/store';
 
 export default {
     name: 'ModalOverlay',
-    props: ["modalType", "updateCarDetail"],
     data() {
         return {
+            store
         }
     },
     components: {
         InputForm
     },
-
-
+    methods: {
+        resetForm() {
+            this.$refs.child.resetForm();
+        }
+    }
 }
 
 

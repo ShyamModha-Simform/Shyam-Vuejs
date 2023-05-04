@@ -2,26 +2,26 @@
     <vForm class="form" :validation-schema="schema" @submit="createCar">
         <div class="group">
             <vField name="carName" placeholder="‎" type="text" class="input" :validateOnInput="true"
-                v-model="car.carName" />
+                v-model="store.carToBeEdited.name" />
             <label for="carName">Car Name </label>
             <ErrorMessage name="carName" class="error_message" />
         </div>
 
         <div class="group">
             <vField name="price" placeholder="‎" type="number" class="input" :validateOnInput="true"
-                v-model="car.carPrice" />
+                v-model="store.carToBeEdited.price" />
             <label for="price">Price</label>
             <ErrorMessage name="price" class="error_message" />
         </div>
 
         <div class="group">
             <vField name="url" placeholder="‎" type="text" class="input" :validateOnInput="true"
-                v-model="car.carImageLink" />
+                v-model="store.carToBeEdited.image" />
             <label for="url">Image URL</label>
             <ErrorMessage name="url" class="error_message" />
         </div>
         <div class="group">
-            <vField name="carDetails" :bails="false" v-slot="{ field, errors }" v-model="car.carDescription">
+            <vField name="carDetails" :bails="false" v-slot="{ field, errors }" v-model="store.carToBeEdited.details">
                 <textarea type="text" placeholder="‎" id="comment" class="textarea" name="carDetails" rows="3"
                     v-bind="field" />
                 <div class="error_message" v-for="err in errors" :key="err">
@@ -31,9 +31,9 @@
             <label for="carDetails">Car Details</label>
         </div>
         <div class="modal-footer">
-            <button type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+            <button ref="resetBtn" type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             <button type="submit" class="button">
-                {{ modalType === "edit" ? `Update` : `Submit` }}
+                {{ store.modalType === "edit" ? `Update` : `Submit` }}
             </button>
         </div>
     </vForm>
@@ -41,47 +41,47 @@
 
 <script>
 import Swal from 'sweetalert2'
+import { addCarDetails, getCarDetails, updataCarDetails } from '../api/api';
+import { store } from '../Store/store';
 
 export default {
     name: 'InputForm',
-    props: ['modalType', 'updateCarDetail'],
     data() {
 
         return {
+            store,
             schema: {
                 carName: 'required|alpha_spaces',
                 price: 'required|integer',
                 url: 'required|url:https://*',
                 carDetails: 'required|min:30|max:120'
             },
-            car: {
-                carName: this.updateCarDetail.carName || "",
-                carPrice: Number,
-                carDescription: "",
-                carImageLink: "",
-            },
-        }
-    },
-    watch: {
-        updateCarDetail: {
-            handler(newVal) {
-                this.car = newVal
-            }
         }
     },
     methods: {
-        createCar() {
-            const temp = this.modalType;
+        async createCar() {
+            const temp = store.modalType;
+            let res = {};
+            if (temp !== "edit") {
+                res = await addCarDetails(store.carToBeEdited);
+            } else {
+                res = await updataCarDetails(store.carToBeEdited);
+            }
+            console.log(res.status);
+            // rendering Car details once finish 
+            store.carDetails = await getCarDetails();
+
             this.$el.querySelector('button[type=reset]').click();
+
             Swal.fire({
-                title: `Car Details ${temp === 'edit' ? 'Updated' : 'Added'} Successfully!`,
+                title: `Car ${temp === 'edit' ? 'Updated' : 'Created'} Successfully!`,
                 html: `
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                    <img src="${this.car.carImageLink}" alt="Logo" style="width: 300px;" />
-                    <h3>${this.car.carName}</h3>
-                    <p>Price: ${this.car.carPrice}</p>
-                    <p>Details: ${this.car.carDescription}</p>
+                    <img src="${store.carToBeEdited.image}" alt="Logo" style="width: 300px;" />
+                    <h3>${store.carToBeEdited.name}</h3>
+                    <p>Price: ${store.carToBeEdited.price}</p>
+                    <p>Details: ${store.carToBeEdited.details}</p>
                 </div>
                 </div> `,
                 showCloseButton: true,
@@ -92,6 +92,10 @@ export default {
                 allowEscapeKey: false
             })
         },
+        resetForm() {
+            store.carToBeEdited = {}
+            this.$refs.resetBtn.click();
+        }
     }
 }
 </script>

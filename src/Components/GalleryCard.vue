@@ -1,23 +1,16 @@
 <template>
     <div class="card-1 card-div">
-        <div class="like-icon-div">
-            <!-- <label for="card-1-like" class="like-icon-div-child">
-                    <input type="checkbox" id="card-1-like">
-                    <i class="far fa-heart heart-empty"></i>
-                    <i class="fas fa-heart heart-fill"></i>
-                </label> -->
-        </div>
-        <div class="gow-img-div img-div">
-            <img :src="carDetail.carImageLink" alt="god-of-war-figurine">
+
+        <div class="img-div">
+            <img :src="carDetail.image" alt="god-of-war-figurine">
         </div>
         <div class="text-container">
-            <h2 class="item-name">{{ carDetail.carName }}</h2>
+            <h2 class="item-name">{{ carDetail.name }}</h2>
             <p class="date">{{ displayTrunkedDescription() }}</p>
             <div class="pricing-and-cart">
                 <div class="pricing">
-                    <button class="button" @click.prevent="showPrice" :disabled="carDetail.carPrice === undefined">{{
-                        carDetail.carPrice === undefined ? 'Available Soon' : 'Show Price' }}</button>
-                    <!-- <button class="button" @click.prevent="editCarDetails">Edit</button> -->
+                    <button class="button" @click.prevent="showPrice" :disabled="carDetail.price === undefined">{{
+                        carDetail.price === undefined ? 'Available Soon' : 'Show Price' }}</button>
                 </div>
                 <div>
                     <img src="../assests/edit_icon.png" class="edit-icon" alt="editIcon" @click="editCarDetails"
@@ -30,29 +23,31 @@
     </div>
 </template>
 
-
 <script>
+import { store } from '../Store/store';
 
 export default {
     name: 'GalleryCard',
     props: ['carDetail'],
     methods: {
         showPrice() {
-            this.$emit("show-price", this.carDetail.carPrice);
+            this.$emit("show-price", this.carDetail.price);
         },
         editCarDetails() {
-            this.$emit("edit-car-details", { ...this.carDetail }) // we are passing object copy instead of reference
+            // Setting value in global store which will automatically reactive at other components
+            store.modalType = "edit";
+            store.carToBeEdited = { ...this.carDetail }
+            // we are passing object copy instead of reference
         },
         deleteCarDetails() {
-            this.$emit("delete-car-details")
+            this.$emit("delete-car-details", this.carDetail.id)
         },
         displayTrunkedDescription() {
-            return this.carDetail.carDescription.slice(0, 200) + "...";
+            return this.carDetail?.details?.slice(0, 200) + "...";
         }
     },
 
 }
-
 
 </script>
 
