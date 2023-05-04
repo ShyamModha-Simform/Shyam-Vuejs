@@ -1,16 +1,15 @@
 <template>
     <div class="card-1 card-div">
-
         <div class="img-div">
             <img :src="carDetail.image" alt="god-of-war-figurine">
         </div>
         <div class="text-container">
             <h2 class="item-name">{{ carDetail.name }}</h2>
-            <p class="date">{{ displayTrunkedDescription() }}</p>
+            <p class="date">{{ displayTrunkedDescription }}</p>
             <div class="pricing-and-cart">
                 <div class="pricing">
                     <button class="button" @click.prevent="showPrice" :disabled="carDetail.price === undefined">{{
-                        carDetail.price === undefined ? 'Available Soon' : 'Show Price' }}</button>
+                        carDetail.price === undefined ? 'Available Soon' : 'info' }}</button>
                 </div>
                 <div>
                     <img src="../assests/edit_icon.png" class="edit-icon" alt="editIcon" @click="editCarDetails"
@@ -40,17 +39,18 @@ export default {
             // we are passing object copy instead of reference
         },
         deleteCarDetails() {
-            this.$emit("delete-car-details", this.carDetail.id)
+            this.$emit("delete-car-details", this.carDetail.id, this.carDetail)
         },
+    },
+    computed: {
         displayTrunkedDescription() {
             return this.carDetail?.details?.slice(0, 200) + "...";
         }
-    },
+    }
 
 }
 
 </script>
-
 
 <style scoped>
 .like-icon-div {
@@ -66,7 +66,6 @@ export default {
 }
 
 .like-icon-div-child {
-    /* background-color: yellow; */
     width: 1em;
     height: 1em;
     position: relative;
@@ -109,7 +108,6 @@ export default {
 #card-1-like:not(:checked)~.heart-fill {
     animation: unlike-animation 0.25s ease-in-out;
 }
-
 
 .button {
     display: inline-block;

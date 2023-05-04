@@ -28,7 +28,7 @@ export default {
         displayPrice(carPrice) {
             Swal.fire("Unbeatable prices - indulge in your dream car today!", ` For only $${carPrice}/-`)
         },
-        deleteCar(carId) {
+        deleteCar(carId, carToBeDeleted) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -46,7 +46,7 @@ export default {
                         return;
                     }
                     Swal.fire(
-                        'Deleted!',
+                        `Deleted ${carToBeDeleted.name}!`,
                         'Your file has been deleted.',
                         'success'
                     )
