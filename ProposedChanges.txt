@@ -1,0 +1,13 @@
+Implemented Changes in Practical 1:
+- Button name should be “info”.
+- There should be a button for getting the price, not link
+- Follow the same structure and sequence in all the files of the project (template, script, CSS sections
+- Remove unnecessary code
+
+Implemented Changes in Practical 2:
+- instead of calling methods directly from the template start using the computed property for the same (displayTrunkedDescription())
+
+Implemented Changes in Practical 3:
+- Alerts heading should be as per practical definition
+- After editing any car details, add modal still shows previously edited car details
+- The previous data should be cleared out if I close the modal and open it again

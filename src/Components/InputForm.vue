@@ -74,7 +74,7 @@ export default {
             this.$el.querySelector('button[type=reset]').click();
 
             Swal.fire({
-                title: `Car ${temp === 'edit' ? 'Updated' : 'Created'} Successfully!`,
+                title: `${temp === 'edit' ? 'Updated' : 'Created'} data`,
                 html: `
                 <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
@@ -142,7 +142,6 @@ export default {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.2);
-    /* margin-bottom: 20px; */
     outline: 0;
     width: 100%;
     background-color: transparent;

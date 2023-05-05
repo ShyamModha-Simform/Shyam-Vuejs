@@ -8,8 +8,7 @@ import './scss/styles.scss' //order matters
 import './assests/main.css'
 
 // Import all of Bootstrap's JS
-// eslint-disable-next-line no-unused-vars
-import { Modal } from 'bootstrap'
+import 'bootstrap'
 
 const app = createApp(App)
 

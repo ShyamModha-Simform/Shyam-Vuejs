@@ -53,7 +53,6 @@ header {
   padding: 8px 24px;
   border: 1px solid #fff;
   border-radius: 50px;
-  /* background-color: #B2B4B3; */
   background: transparent;
   box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
   transition: all .2s ease-out;
