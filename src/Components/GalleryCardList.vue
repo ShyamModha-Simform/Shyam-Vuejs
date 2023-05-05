@@ -1,6 +1,6 @@
 <template>
     <main>
-        <div class="container">
+        <div class="card-container">
             <GalleryCard :carDetail="car" v-for="car in store.carDetails" :key="car.name" @show-price="displayPrice"
                 @delete-car-details="deleteCar" />
         </div>
@@ -60,4 +60,3 @@ export default {
     },
 }
 </script>
-

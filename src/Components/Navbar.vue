@@ -1,19 +1,60 @@
 <template>
-  <header>
-    <div>
-      <h2>{{ headingContent }}</h2>
-      <h6>-{{ tagLine }}</h6>
+  
+  <nav class="navbar navbar-expand-lg">
+    <div class="container justify-content-around">
+      <h1 class="p-0">
+        <div>
+          <h2>{{ headingContent }}</h2>
+          <h6>-{{ tagLine }}</h6>
+        </div>
+      </h1>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-bs-toggle="collapse"
+        data-bs-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <RouterLink :to="{name: 'home'}">
+              <BaseButton class="navbar" size="sm"><h4>Home</h4></BaseButton>
+            </RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink :to="{name: 'login'}">
+              <BaseButton class="navbar" size="lg"><h4>Login</h4></BaseButton>
+            </RouterLink>
+          </li>
+          <li class="nav-item">
+            <RouterLink :to="{name: 'register'}">
+              <BaseButton
+              class="navbar"
+              size="sm"
+              ><h4>Register</h4>
+            </BaseButton>
+          </RouterLink>
+          </li>
+        </ul>
+      </div>
     </div>
-    <button type="button" class="button" @click.prevent="showPrice" data-bs-toggle="modal" data-bs-target="#shyam"
-      @click="openAddCarForm">Add Car</button>
-  </header>
+  </nav>
 </template>
 
 <script>
-import { store } from '../Store/store';
+import { store } from '../Store/store'
+import BaseButton from './BaseButton.vue'
 
 export default {
   name: 'NavbarContainer',
+  components: {
+    BaseButton
+  },
   data() {
     return {
       headingContent: 'Carpedia',
@@ -22,45 +63,28 @@ export default {
   },
   methods: {
     openAddCarForm() {
-      store.modalType = "add";
+      store.modalType = 'add'
     }
   }
-
 }
 </script>
 
 <style scoped>
-header {
+.navbar {
   width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   position: sticky;
   top: 0;
-  display: flex;
   gap: 10;
   z-index: 100;
+  background-color: var(--header-background);
+}
+
+.container-fluid {
+  display: flex;
   justify-content: space-around;
-
-}
-
-.button {
-  display: inline-block;
-  outline: 0;
-  border: 0;
-  cursor: pointer;
-  font-weight: 600;
-  color: #fff;
-  font-size: 14px;
-  height: 38px;
-  padding: 8px 24px;
-  border: 1px solid #fff;
-  border-radius: 50px;
-  background: transparent;
-  box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
-  transition: all .2s ease-out;
-}
-
-.button:disabled {
-  background-color: rgb(174, 181, 185);
-  cursor: not-allowed;
 }
 
 @media screen and (max-width: 600px) {
@@ -72,7 +96,7 @@ header {
     padding: 8px 20px;
   }
 
-  header h6 {
+  .navbar h6 {
     display: none;
   }
 }

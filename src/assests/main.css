@@ -39,11 +39,11 @@ body {
   background-color: whitesmoke;
 }
 
-.container input {
+.card-container input {
   display: none;
 }
 
-.container {
+.card-container {
   max-width: 100em;
   /* background-color: lightgreen; */
   display: flex;
@@ -89,9 +89,6 @@ body {
   width: 20rem;
   height: 11rem;
   object-fit: cover;
-  /* transform-origin: bottom;
-  transform: translateY(7.5%);
-  transition: transform 0.3s ease-in-out; */
 }
 
 .card-1 .like-icon-div {
@@ -182,13 +179,7 @@ body {
   transform: translate(0, -10px);
 }
 
-header {
-  /* height: 60px; */
-  background-color: var(--header-background);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
+
 
 h2 {
   color: #fff;

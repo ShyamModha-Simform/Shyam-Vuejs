@@ -12,11 +12,13 @@
   "dependencies": {
     "@popperjs/core": "^2.11.7",
     "@vee-validate/rules": "^4.8.6",
+    "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "save": "^2.9.0",
     "sweetalert2": "^11.7.3",
     "vee-validate": "^4.8.6",
-    "vue": "^3.2.47"
+    "vue": "^3.2.47",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
