@@ -82,6 +82,19 @@ export default {
   background-color: var(--header-background);
 }
 
+h2 {
+  color: #fff;
+  font-size: 45px;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+h6 {
+  color: #fff;
+  padding: 0;
+  margin-block: 1rem;
+  text-align: center;
+}
 .container-fluid {
   display: flex;
   justify-content: space-around;

@@ -44,4 +44,45 @@ const updataCarDetails = async (data) => {
   }
 }
 
-export { getCarDetails, addCarDetails, deleteCarDetails, updataCarDetails }
+const loginUser = async (data) => {
+  try {
+    let responseData = await axios.post(`https://testapi.io/api/dartya//login`, {
+      ...data
+    })
+    return responseData
+  } catch (e) {
+    alert("Something went wrong! Couldn't able to Login user.")
+  }
+}
+
+const registerUser = async (data) => {
+  try {
+    let responseData = await axios.post(`https://testapi.io/api/dartya/resource/users`, {
+      ...data
+    })
+    return responseData
+  } catch (e) {
+    alert("Something went wrong! Couldn't able to register user.")
+  }
+}
+
+const getCarDetailsById = async (id) => {
+  try {
+    let responseData = await axios.get(`	
+    https://testapi.io/api/dartya/resource/cardata/${id}`)
+
+    return responseData
+  } catch (e) {
+    alert("Couldn't able to fetch car details")
+  }
+}
+
+export {
+  getCarDetails,
+  addCarDetails,
+  deleteCarDetails,
+  updataCarDetails,
+  loginUser,
+  registerUser,
+  getCarDetailsById
+}

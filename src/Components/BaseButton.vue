@@ -53,7 +53,9 @@ export default {
 
 <style scoped>
 .base-button {
-  display: inline-block;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   outline: 0;
   border: 0;
   cursor: pointer;

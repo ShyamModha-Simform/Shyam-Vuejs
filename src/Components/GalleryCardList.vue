@@ -1,5 +1,8 @@
 <template>
     <main>
+        <BaseButton class="card" size="lg" @click="openAddCarForm">
+            Add
+        </BaseButton>
         <div class="card-container">
             <GalleryCard :carDetail="car" v-for="car in store.carDetails" :key="car.name" @show-price="displayPrice"
                 @delete-car-details="deleteCar" />
@@ -13,18 +16,23 @@ import GalleryCard from './GalleryCard.vue'
 import Swal from 'sweetalert2'
 import { deleteCarDetails, getCarDetails, } from '../api/api';
 import { store } from '../Store/store';
+import BaseButton from './BaseButton.vue';
 
 export default {
     name: 'GalleryCardList',
     components: {
-        GalleryCard,
-    },
+    GalleryCard,
+    BaseButton
+},
     data() {
         return {
             store,
         }
     },
     methods: {
+        openAddCarForm() {
+      store.modalType = 'add'
+    },
         displayPrice(carPrice) {
             Swal.fire("Unbeatable prices - indulge in your dream car today!", ` For only $${carPrice}/-`)
         },

@@ -36,7 +36,7 @@ html {
 }
 
 body {
-  background-color: whitesmoke;
+  background-color: rgb(230, 232, 231);
 }
 
 .card-container input {
@@ -181,19 +181,7 @@ body {
 
 
 
-h2 {
-  color: #fff;
-  font-size: 45px;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-h6 {
-  color: #fff;
-  padding: 0;
-  margin-block: 1rem;
-  text-align: center;
-}
+
 
 @keyframes like-animation {
   0% {

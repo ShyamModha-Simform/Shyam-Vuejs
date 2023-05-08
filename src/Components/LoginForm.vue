@@ -2,24 +2,27 @@
     <div class="form-container--login">
     <h1>Login</h1>
 
-    <vForm class="form" :validation-schema="schema" @submit="createCar">
+    <vForm class="form" :validation-schema="schema" @submit="performLogin">
         <div class="group">
-            <vField name="carName" placeholder="‎" type="text" class="input" :validateOnInput="true"
-                v-model="store.carToBeEdited.name" />
-            <label for="carName">Car Name </label>
-            <ErrorMessage name="carName" class="error_message" />
+            <vField name="email" placeholder="‎" type="text" class="input" :validateOnInput="true"
+                v-model="readLoginDetails.email" />
+            <label for="email">Email</label>
+            <ErrorMessage name="email" class="error_message" />
         </div>
 
         <div class="group">
-            <vField name="price" placeholder="‎" type="number" class="input" :validateOnInput="true"
-                v-model="store.carToBeEdited.price" />
-            <label for="price">Price</label>
-            <ErrorMessage name="price" class="error_message" />
+            <vField name="password" placeholder="‎" type="password" class="input" :validateOnInput="true"
+                v-model="readLoginDetails.password" />
+            <label for="password">Password</label>
+            <ErrorMessage name="password" class="error_message" />
         </div>
 
         <div class="modal-footer">
+          <BaseButton type="reset" class="card" size="w100"> Cancel </BaseButton>
+
             <BaseButton type="submit" class="card" size="w100">
-                Login
+                <CircularLoader v-show="isLoading"/>
+                <span v-show="!isLoading">Login</span>
             </BaseButton>
         </div>
     </vForm>
@@ -29,25 +32,44 @@
 <script>
 import { store } from '../Store/store'
 import BaseButton from '../Components/BaseButton.vue'
+import { loginUser } from '../api/api'
+import CircularLoader from './CircularLoader.vue'
 
 export default {
     name: 'LoginForm',
     components: {
-        BaseButton
+        BaseButton,
+        CircularLoader,
     },
     data() {
         return {
             store,
+            isLoading: false,
             schema: {
-                carName: 'required|alpha_spaces',
-                price: 'required|integer',
-            }
+                email: 'required|email',
+                password: 'required|min:8|max:12|regex:^(?=.*\\d)(?=.*[\\W_]).+$',
+            },
+            readLoginDetails: {
+                email: "",
+                password: "",
+            },
         }
     },
     methods: {
         resetForm() {
-
             this.$el.querySelector("button[type=reset]").click();
+        },
+        async performLogin() {
+            this.isLoading = true;
+            const res = await loginUser(this.readLoginDetails);
+            console.log(res)
+            this.isLoading = false
+            if (res.status !== 200) {
+                alert("Something went wrong, Please try again.")
+                return;
+            }
+            this.$el.querySelector("button[type=reset]").click();
+            this.$router.push({name: 'home'})
         }
     }
 }
@@ -56,11 +78,16 @@ export default {
 <style scoped>
 
 .form-container--login{
-    width: 316px;
+    width: max(316px, 25%);
     margin-inline: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-block-start: 2rem;
+}
+
+.form-container--login h1 {
+    color: #606D75;
 }
 
 .card {

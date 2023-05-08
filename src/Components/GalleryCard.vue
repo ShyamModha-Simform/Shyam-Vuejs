@@ -8,12 +8,14 @@
       <p class="date">{{ displayTrunkedDescription }}</p>
       <div class="pricing-and-cart">
         <div class="pricing">
-          <BaseButton
+          <RouterLink :to="{name: 'carDetailsById', params: {id: `${carDetail.id}`}}">
+            <BaseButton
             class="card"
-            @click="showPrice"
-            :disabled="carDetail.price === undefined"
-            >{{ carDetail.price === undefined ? 'Available Soon' : 'info' }}</BaseButton
-          >
+            >
+            Info
+          </BaseButton>
+          </RouterLink>
+          
         </div>
         <div>
           <img
