@@ -1,12 +1,8 @@
-## Carpedia - PRAC_04
+## Carpedia - PRAC_05
 
 #
 
 ![App Screenshot](./README_Images/s01.png)
-
-#
-
-![App Screenshot](./README_Images/s02.png)
 
 #
 
@@ -15,10 +11,6 @@
 #
 
 ![App Screenshot](./README_Images/s04.png)
-
-#
-
-![App Screenshot](./README_Images/s05.png)
 
 ## Recommended IDE Setup
 
