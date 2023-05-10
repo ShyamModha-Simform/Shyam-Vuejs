@@ -49,9 +49,6 @@ export default {
     BaseButton
   },
   methods: {
-    showPrice() {
-      this.$emit('show-price', this.carDetail.price)
-    },
     editCarDetails() {
       // Setting value in global store which will automatically reactive at other components
       store.modalType = 'edit'

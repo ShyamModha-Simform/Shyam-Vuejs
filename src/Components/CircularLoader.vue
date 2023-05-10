@@ -1,5 +1,5 @@
 <template>
-    <div class="loader">
+  <div class="loader">
     <div class="bar1"></div>
     <div class="bar2"></div>
     <div class="bar3"></div>
@@ -12,26 +12,29 @@
     <div class="bar10"></div>
     <div class="bar11"></div>
     <div class="bar12"></div>
-</div>
+  </div>
 </template>
 <script>
 export default {
-    name: "CircularLoader",
+  name: "CircularLoader",
 }
 </script>
 
 <style scoped>
 .loader {
   position: relative;
-  width: 32px; /* Adjust the width as desired */
-  height: 32px; /* Adjust the height as desired */
-  border-radius: 6px; /* Adjust the border radius as desired */
+  width: 32px;
+  /* Adjust the width as desired */
+  height: 32px;
+  /* Adjust the height as desired */
+  border-radius: 6px;
+  /* Adjust the border radius as desired */
 }
 
 .loader div {
   width: 8%;
   height: 24%;
-  background: rgb(128, 128, 128);
+  background: white;
   position: absolute;
   left: 50%;
   top: 32%;
@@ -110,5 +113,4 @@ export default {
   transform: rotate(330deg) translate(0, -130%);
   animation-delay: -0.1s;
 }
-
 </style>

@@ -39,6 +39,10 @@ body {
   background-color: rgb(230, 232, 231);
 }
 
+a {
+  text-decoration: none;
+}
+
 .card-container input {
   display: none;
 }
@@ -53,8 +57,9 @@ body {
   align-content: flex-start;
   margin: auto;
   min-height: 30em;
-  padding: 3em 1em 1em 1em;
+
   box-sizing: border-box;
+  position: relative;
 }
 
 /* Card Styling */
@@ -80,7 +85,6 @@ body {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  /* z-index: 1; */
   border-radius: 10px;
   background-color: var(--card-1-secondary-color);
 }
@@ -101,7 +105,6 @@ body {
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* background-color: yellow; */
   padding: 0 1.5em;
   padding-top: 1em;
   padding-bottom: 1em;
@@ -129,7 +132,6 @@ body {
 
 /* === Pricing and cart div  ===== */
 .pricing-and-cart {
-  /* background-color: wheat; */
   width: 100%;
   display: flex;
   flex-direction: row;
@@ -148,7 +150,6 @@ body {
   font-weight: var(--pricing-font-weight);
   color: var(--previous-price-text-color);
   text-decoration: line-through;
-  /* background-color: whitesmoke; */
   text-align: left;
 }
 
@@ -156,7 +157,6 @@ body {
   color: var(--current-price-text-color);
   font-size: 1.3rem;
   font-weight: var(--pricing-font-weight);
-  /* background-color: yellow; */
   margin: 0;
 }
 
@@ -170,18 +170,9 @@ body {
   transform: translateY(50%);
 }
 
-/* ====== Hover effects ======= */
-/* .card-div:hover .img-div img {
-  transform: translateY(7.5%) scale(1.2);
-} */
-
 .card-div:hover {
   transform: translate(0, -10px);
 }
-
-
-
-
 
 @keyframes like-animation {
   0% {

@@ -1,5 +1,14 @@
 <template>
-  <div class="car-detail--container d-flex">
+  
+  <div class="car-card-container">
+    <div>
+    <RouterLink :to="{name:'home'}">
+      <BaseButton class="card" size="lg">back</BaseButton>
+    </RouterLink>
+  </div>
+  <div class="car-detail--container">
+
+  
     <div class="container--left w-50">
       <h1>{{ carDetail.name }}</h1>
       <h4>Price: {{ carDetail.price }}</h4>
@@ -9,12 +18,17 @@
       <img :src="carDetail.image" alt="Car Image" />
     </div>
   </div>
+  </div>
 </template>
 
 <script>
 import { getCarDetailsById } from '../api/api'
+import BaseButton from '../Components/BaseButton.vue'
 export default {
   name: 'CarDetailsView',
+  components: {
+    BaseButton,
+  },
   data() {
     return {
       carDetail: {}
@@ -46,13 +60,21 @@ p, h4{
 img{
     width: 100%;
 }
-.car-detail--container {
-    display: flex;
+.car-card-container{
+  display: flex;
+  flex-direction: column;
     width: min(100%, 70rem);
     margin-inline: auto;
-    background-color: whitesmoke;
     margin-top: 10%;
-    padding: 1.5em 1.5em 1.5em 1.5em;
+}
+
+.car-card-container > button {
+  margin-right: 10px;
+}
+.car-detail--container {
+  display: flex;
+  background-color: whitesmoke;
+  padding: 1.5em 1.5em 1.5em 1.5em;
   box-sizing: border-box;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);

@@ -1,32 +1,32 @@
 <template>
     <div class="form-container--login">
-    <h1>Login</h1>
+        <h1>Login</h1>
 
-    <vForm class="form" :validation-schema="schema" @submit="performLogin">
-        <div class="group">
-            <vField name="email" placeholder="‎" type="text" class="input" :validateOnInput="true"
-                v-model="readLoginDetails.email" />
-            <label for="email">Email</label>
-            <ErrorMessage name="email" class="error_message" />
-        </div>
+        <vForm class="form" :validation-schema="schema" @submit="performLogin">
+            <div class="group">
+                <vField name="email" placeholder="‎" type="text" class="input" :validateOnInput="true"
+                    v-model="readLoginDetails.email" />
+                <label for="email">Email</label>
+                <ErrorMessage name="email" class="error_message" />
+            </div>
 
-        <div class="group">
-            <vField name="password" placeholder="‎" type="password" class="input" :validateOnInput="true"
-                v-model="readLoginDetails.password" />
-            <label for="password">Password</label>
-            <ErrorMessage name="password" class="error_message" />
-        </div>
+            <div class="group">
+                <vField name="password" placeholder="‎" type="password" class="input" :validateOnInput="true"
+                    v-model="readLoginDetails.password" />
+                <label for="password">Password</label>
+                <ErrorMessage name="password" class="error_message" />
+            </div>
 
-        <div class="modal-footer">
-          <BaseButton type="reset" class="card" size="w100"> Cancel </BaseButton>
+            <div class="modal-footer">
+                <BaseButton type="reset" class="card" size="w100"> Cancel </BaseButton>
 
-            <BaseButton type="submit" class="card" size="w100">
-                <CircularLoader v-show="isLoading"/>
-                <span v-show="!isLoading">Login</span>
-            </BaseButton>
-        </div>
-    </vForm>
-</div>
+                <BaseButton type="submit" class="card" size="w100">
+                    <CircularLoader v-show="isLoading" />
+                    <span v-show="!isLoading">Login</span>
+                </BaseButton>
+            </div>
+        </vForm>
+    </div>
 </template>
   
 <script>
@@ -64,20 +64,18 @@ export default {
             const res = await loginUser(this.readLoginDetails);
             console.log(res)
             this.isLoading = false
-            if (res.status !== 200) {
-                alert("Something went wrong, Please try again.")
+            this.$el.querySelector("button[type=reset]").click()
+            if (res?.status !== 200) {
                 return;
             }
-            this.$el.querySelector("button[type=reset]").click();
-            this.$router.push({name: 'home'})
+            this.$router.push({ name: 'home' })
         }
     }
 }
 </script>
   
 <style scoped>
-
-.form-container--login{
+.form-container--login {
     width: max(316px, 25%);
     margin-inline: auto;
     display: flex;
@@ -111,7 +109,7 @@ export default {
     display: flex;
     flex-direction: column;
     /* align-items: center; */
-    
+
 }
 
 .group {
@@ -125,7 +123,7 @@ export default {
     position: absolute;
     top: -10px;
     left: 10px;
-    background-color: #fff;
+    background-color: #E6E8E7;
     transition: all 0.3s ease;
 }
 
@@ -147,14 +145,14 @@ export default {
 
 .form .group input:focus,
 .form .group .textarea:focus {
-    border-color: #3366cc;
+    border-color: #606D75;
 }
 
 .form .group .input:focus+label,
 .form .group .textarea:focus+label {
     top: -10px;
     left: 10px;
-    background-color: #fff;
+    background-color: #E6E8E7;
     color: #3366cc;
     font-weight: 600;
     font-size: 14px;

@@ -104,13 +104,14 @@
           type="date"
           class="input"
           v-model="readRegisterDetails.dob"
+          @change="calculateAge"
         />
         <label for="dob">DOB:</label>
         <ErrorMessage name="dob" class="error_message" />
       </div>
 
       <div class="group">
-        <vField name="age" placeholder="‎" type="number" class="input" v-model="age" disabled />
+        <vField name="age" placeholder="‎" type="number" class="input" v-model="readRegisterDetails.age" disabled />
         <label for="age">Age</label>
         <ErrorMessage name="age" class="error_message" />
       </div>
@@ -147,9 +148,9 @@ export default {
         email: '',
         password: '',
         role: '',
-          gender: '',
-        age: Number,
-        dob: ''
+        gender: '',
+          dob: '',
+          age: Number
       },
         schema: {
         name: 'required|alpha_spaces',
@@ -184,21 +185,20 @@ export default {
   methods: {
     async performRegistration() {
       this.isLoading = true
-      const res = await registerUser({...this.readRegisterDetails, ...this.age})
+      console.log(this.readRegisterDetails)
+      const res = await registerUser({...this.readRegisterDetails})
       this.isLoading = false
-      if (res.status !== 201) {
-        alert('Something went wrong! Register again')
+      this.$el.querySelector('button[type=reset]').click()
+      if (res?.status !== 201) {
         return
       }
-      this.$el.querySelector('button[type=reset]').click()
       this.$router.push({ name: 'login' })
+    },
+    calculateAge() {
+      this.readRegisterDetails.age = (new Date().getFullYear() - new Date(this.readRegisterDetails.dob).getFullYear())
     }
   },
-  computed: {
-    age() {
-      return new Date().getFullYear() - new Date(this.readRegisterDetails.dob).getFullYear()
-    }
-  }
+    
 }
 </script>
   

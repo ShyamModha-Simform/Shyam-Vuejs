@@ -1,70 +1,82 @@
 <template>
-    <main>
-        <BaseButton class="card" size="lg" @click="openAddCarForm">
-            Add
+  <main>
+    <div class="card-container--layer">
+      <div class="add-car-container">
+        <BaseButton class="card" size="lg" @click="openAddCarForm" data-bs-toggle="modal" data-bs-target="#shyam">
+          Add
         </BaseButton>
-        <div class="card-container">
-            <GalleryCard :carDetail="car" v-for="car in store.carDetails" :key="car.name" @show-price="displayPrice"
-                @delete-car-details="deleteCar" />
-        </div>
-    </main>
+
+      </div>
+      <div class="card-container">
+
+        <GalleryCard :carDetail="car" v-for="car in store.carDetails" :key="car.name" @delete-car-details="deleteCar" />
+      </div>
+    </div>
+  </main>
 </template>
 
 <script>
 import GalleryCard from './GalleryCard.vue'
 
 import Swal from 'sweetalert2'
-import { deleteCarDetails, getCarDetails, } from '../api/api';
-import { store } from '../Store/store';
-import BaseButton from './BaseButton.vue';
+import { deleteCarDetails, getCarDetails } from '../api/api'
+import { store } from '../Store/store'
+import BaseButton from './BaseButton.vue'
 
 export default {
-    name: 'GalleryCardList',
-    components: {
+  name: 'GalleryCardList',
+  components: {
     GalleryCard,
     BaseButton
-},
-    data() {
-        return {
-            store,
-        }
-    },
-    methods: {
-        openAddCarForm() {
+  },
+  data() {
+    return {
+      store
+    }
+  },
+  methods: {
+    openAddCarForm() {
       store.modalType = 'add'
     },
-        displayPrice(carPrice) {
-            Swal.fire("Unbeatable prices - indulge in your dream car today!", ` For only $${carPrice}/-`)
-        },
-        deleteCar(carId, carToBeDeleted) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!'
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    let res = await deleteCarDetails(carId);
-                    if (res.status !== 204) {
-                        console.log(res.status, res.statusText)
-                        alert("Couldn't able to delete car..")
-                        return;
-                    }
-                    Swal.fire(
-                        `Deleted ${carToBeDeleted.name}!`,
-                        'Your file has been deleted.',
-                        'success'
-                    )
-                    //rendered carList when car deleted
-                    store.carDetails = await getCarDetails();
-
-                }
-            })
+    deleteCar(carId, carToBeDeleted) {
+      Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!'
+      }).then(async (result) => {
+        if (result.isConfirmed) {
+          let res = await deleteCarDetails(carId)
+          if (res.status !== 204) {
+            console.log(res.status, res.statusText)
+            alert("Couldn't able to delete car..")
+            return
+          }
+          Swal.fire(`Deleted ${carToBeDeleted.name}!`, 'Your file has been deleted.', 'success')
+          //rendered carList when car deleted
+          store.carDetails = await getCarDetails()
         }
-
-    },
+      })
+    }
+  }
 }
 </script>
+
+<style scoped>
+.card-container--layer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 3em 1em 1em 1em;
+}
+
+.add-car-container {
+  display: flex;
+  width: 100%;
+  flex-direction: row-reverse;
+  padding-inline: 15%;
+}
+</style>

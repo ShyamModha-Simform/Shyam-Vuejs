@@ -1,44 +1,42 @@
 <template>
-  
   <nav class="navbar navbar-expand-lg">
     <div class="container justify-content-around">
+
       <h1 class="p-0">
         <div>
-          <h2>{{ headingContent }}</h2>
+          <RouterLink :to="{ name: 'home' }">
+            <h2>{{ headingContent }}</h2>
+          </RouterLink>
           <h6>-{{ tagLine }}</h6>
         </div>
       </h1>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navbarNav"
-        aria-controls="navbarNav"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
+
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
         <ul class="navbar-nav">
           <li class="nav-item">
-            <RouterLink :to="{name: 'home'}">
-              <BaseButton class="navbar" size="sm"><h4>Home</h4></BaseButton>
+            <RouterLink :to="{ name: 'home' }">
+              <BaseButton class="navbar" size="sm">
+                <h4>Home</h4>
+              </BaseButton>
             </RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink :to="{name: 'login'}">
-              <BaseButton class="navbar" size="lg"><h4>Login</h4></BaseButton>
+            <RouterLink :to="{ name: 'login' }">
+              <BaseButton class="navbar" size="lg">
+                <h4>Login</h4>
+              </BaseButton>
             </RouterLink>
           </li>
           <li class="nav-item">
-            <RouterLink :to="{name: 'register'}">
-              <BaseButton
-              class="navbar"
-              size="sm"
-              ><h4>Register</h4>
-            </BaseButton>
-          </RouterLink>
+            <RouterLink :to="{ name: 'register' }">
+              <BaseButton class="navbar" size="sm">
+                <h4>Register</h4>
+              </BaseButton>
+            </RouterLink>
           </li>
         </ul>
       </div>
@@ -47,7 +45,6 @@
 </template>
 
 <script>
-import { store } from '../Store/store'
 import BaseButton from './BaseButton.vue'
 
 export default {
@@ -61,11 +58,6 @@ export default {
       tagLine: 'Your encyclopedia of all things automotive'
     }
   },
-  methods: {
-    openAddCarForm() {
-      store.modalType = 'add'
-    }
-  }
 }
 </script>
 
@@ -82,6 +74,10 @@ export default {
   background-color: var(--header-background);
 }
 
+.router-link-active>button {
+  color: white
+}
+
 h2 {
   color: #fff;
   font-size: 45px;
@@ -89,12 +85,14 @@ h2 {
   padding: 0;
   text-align: center;
 }
+
 h6 {
   color: #fff;
   padding: 0;
   margin-block: 1rem;
   text-align: center;
 }
+
 .container-fluid {
   display: flex;
   justify-content: space-around;

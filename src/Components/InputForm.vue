@@ -1,59 +1,28 @@
 <template>
   <vForm class="form" :validation-schema="schema" @submit="createCar">
     <div class="group">
-      <vField
-        name="carName"
-        placeholder="‎"
-        type="text"
-        class="input"
-        :validateOnInput="true"
-        v-model="store.carToBeEdited.name"
-      />
+      <vField name="carName" placeholder="‎" type="text" class="input" :validateOnInput="true"
+        v-model="store.carToBeEdited.name" />
       <label for="carName">Car Name </label>
       <ErrorMessage name="carName" class="error_message" />
     </div>
 
     <div class="group">
-      <vField
-        name="price"
-        placeholder="‎"
-        type="number"
-        class="input"
-        :validateOnInput="true"
-        v-model="store.carToBeEdited.price"
-      />
+      <vField name="price" placeholder="‎" type="number" class="input" :validateOnInput="true"
+        v-model="store.carToBeEdited.price" />
       <label for="price">Price</label>
       <ErrorMessage name="price" class="error_message" />
     </div>
 
     <div class="group">
-      <vField
-        name="url"
-        placeholder="‎"
-        type="text"
-        class="input"
-        :validateOnInput="true"
-        v-model="store.carToBeEdited.image"
-      />
+      <vField name="url" placeholder="‎" type="text" class="input" :validateOnInput="true"
+        v-model="store.carToBeEdited.image" />
       <label for="url">Image URL</label>
       <ErrorMessage name="url" class="error_message" />
     </div>
     <div class="group">
-      <vField
-        name="carDetails"
-        :bails="false"
-        v-slot="{ field, errors }"
-        v-model="store.carToBeEdited.details"
-      >
-        <textarea
-          type="text"
-          placeholder="‎"
-          id="comment"
-          class="textarea"
-          name="carDetails"
-          rows="3"
-          v-bind="field"
-        />
+      <vField name="carDetails" :bails="false" v-slot="{ field, errors }" v-model="store.carToBeEdited.details">
+        <textarea type="text" placeholder="‎" id="comment" class="textarea" name="carDetails" rows="3" v-bind="field" />
         <div class="error_message" v-for="err in errors" :key="err">
           {{ err }}
         </div>
@@ -61,14 +30,8 @@
       <label for="carDetails">Car Details</label>
     </div>
     <div class="modal-footer">
-      <BaseButton
-        type="reset"
-        class="card"
-        size="lg"
-        data-bs-dismiss="modal"
-        >Cancel</BaseButton
-      >
-      <BaseButton type="submit" class="card" >
+      <BaseButton type="reset" class="card" size="lg" data-bs-dismiss="modal">Cancel</BaseButton>
+      <BaseButton type="submit" class="card">
         {{ store.modalType === 'edit' ? `Update` : `Submit` }}
       </BaseButton>
     </div>
@@ -186,8 +149,8 @@ export default {
   background-color: transparent;
 }
 
-.form .group .input:placeholder-shown + label,
-.form .group .textarea:placeholder-shown + label {
+.form .group .input:placeholder-shown+label,
+.form .group .textarea:placeholder-shown+label {
   top: 10px;
   background-color: transparent;
 }
@@ -197,8 +160,8 @@ export default {
   border-color: #3366cc;
 }
 
-.form .group .input:focus + label,
-.form .group .textarea:focus + label {
+.form .group .input:focus+label,
+.form .group .textarea:focus+label {
   top: -10px;
   left: 10px;
   background-color: #fff;
@@ -239,8 +202,8 @@ export default {
 }
 
 .modal-footer {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 
 }
 </style>

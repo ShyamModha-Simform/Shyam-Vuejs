@@ -1,8 +1,6 @@
 <template>
   <button :class="classList" :type="type" @click="$emit('click')" :disabled="disabled">
-    <slot>
-        button
-    </slot>
+    <slot> button </slot>
   </button>
 </template>
 
@@ -11,11 +9,11 @@ export default {
   name: 'BaseButton',
   props: {
     type: {
-        type: String,
-        default: 'button',
-        validator: (value) => {
-            return ['submit', 'reset'].includes(value)
-        }
+      type: String,
+      default: 'button',
+      validator: (value) => {
+        return ['submit', 'reset'].includes(value)
+      }
     },
     class: {
       type: String,
@@ -34,14 +32,14 @@ export default {
     disabled: {
       type: Boolean,
       default: false
-    },
+    }
   },
   computed: {
     classList() {
       return [
         'base-button',
-        `base-button--${this.class}`,
-        `base-button--${this.size}`,
+        `base-button--${this.class} `,
+        `base-button--${this.size} `,
         {
           'base-button--disabled': this.disabled
         }
@@ -59,7 +57,7 @@ export default {
   outline: 0;
   border: 0;
   cursor: pointer;
-  color: #fff;
+  color: white;
   font-weight: 600;
   border-radius: 50px;
   transition: all 0.2s ease-out;
@@ -76,6 +74,7 @@ export default {
 
 .base-button--navbar {
   background: transparent;
+  color: #8f989e;
 }
 
 .base-button--card {
@@ -83,6 +82,7 @@ export default {
   width: min-content;
   box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
 }
+
 .base-button--w100 {
   min-width: fit-content;
   width: 316px;
