@@ -1,7 +1,7 @@
 <template>
   <ModalOverlay />
   <NavbarContainer />
-        <RouterView/>
+  <RouterView />
 </template>
 
 <script>

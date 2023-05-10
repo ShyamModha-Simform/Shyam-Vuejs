@@ -20,7 +20,7 @@ export default {
       isLoading: true
     }
   },
-  mounted() {
+  created() {
     this.isLoading = true
     setTimeout(async () => {
       store.carDetails = [...(await getCarDetails())]

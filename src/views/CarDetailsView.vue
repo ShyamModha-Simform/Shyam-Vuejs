@@ -1,5 +1,5 @@
 <template>
-  <div class="car-card-container mx-4">
+  <div class="car-card-container px-4">
     <div>
       <RouterLink :to="{ name: 'home' }">
         <BaseButton class="card" size="lg">back</BaseButton>
@@ -98,6 +98,7 @@ img {
   background-color: whitesmoke;
   padding: 1.5em 1.5em 1.5em 1.5em;
   box-sizing: border-box;
+  margin-inline: auto;
   margin-inline: 10px;
   border-radius: 10px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
