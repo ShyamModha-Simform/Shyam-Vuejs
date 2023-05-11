@@ -43,7 +43,7 @@ export default {
   },
   data() {
     return {
-      carDetail: {}
+      carDetail: {},
     }
   },
   async mounted() {

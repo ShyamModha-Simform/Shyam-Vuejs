@@ -17,7 +17,7 @@ export default {
   },
   data() {
     return {
-      isLoading: true
+      isLoading: true,
     }
   },
   created() {
@@ -26,6 +26,6 @@ export default {
       store.carDetails = [...(await getCarDetails())]
       this.isLoading = false
     }, 2000)
-  }
+  },
 }
 </script>
