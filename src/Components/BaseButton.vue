@@ -84,8 +84,7 @@ export default {
 }
 
 .base-button--w100 {
-  min-width: fit-content;
-  width: 316px;
+  width: fit-content;
   font-size: 18px;
   margin-inline: auto;
 }

@@ -2,7 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import HomeView from '../views/Home.vue'
 import LoginView from '../views/Login.vue'
 import RegisterView from '../views/Register.vue'
-import CarDetailsView from '../views/CarDetailsView.vue'
+import CarDetailsView from '../views/CarDetailView.vue'
 
 const websiteName = 'Carpedia'
 
