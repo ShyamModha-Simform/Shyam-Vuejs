@@ -1,319 +1,325 @@
 <template>
-  <div class="form-container--login">
-    <h1>Register</h1>
+    <div class="form-container--login">
+        <h1>Register</h1>
 
-    <vForm class="form" :validation-schema="schema" @submit="performRegistration">
-      <div class="group">
-        <vField
-          name="name"
-          placeholder="‎"
-          type="text"
-          class="input"
-          :validateOnInput="true"
-          v-model="readRegisterDetails.name"
-        />
-        <label for="name">Name</label>
-        <ErrorMessage name="name" class="error_message" />
-      </div>
+        <vForm class="form" :validation-schema="schema" @submit="performRegistration">
+            <div class="group">
+                <vField
+                    name="name"
+                    placeholder="‎"
+                    type="text"
+                    class="input"
+                    :validateOnInput="true"
+                    v-model="readRegisterDetails.name"
+                />
+                <label for="name">Name</label>
+                <ErrorMessage name="name" class="error_message" />
+            </div>
 
-      <div class="group">
-        <vField
-          name="email"
-          placeholder="‎"
-          type="text"
-          class="input"
-          :validateOnInput="true"
-          v-model="readRegisterDetails.email"
-        />
-        <label for="email">Email</label>
-        <ErrorMessage name="email" class="error_message" />
-      </div>
+            <div class="group">
+                <vField
+                    name="email"
+                    placeholder="‎"
+                    type="text"
+                    class="input"
+                    :validateOnInput="true"
+                    v-model="readRegisterDetails.email"
+                />
+                <label for="email">Email</label>
+                <ErrorMessage name="email" class="error_message" />
+            </div>
 
-      <div class="group">
-        <vField
-          name="password"
-          placeholder="‎"
-          type="password"
-          class="input"
-          :validateOnInput="true"
-          v-model="readRegisterDetails.password"
-        />
-        <label for="password">Password</label>
-        <ErrorMessage name="password" class="error_message" />
-      </div>
+            <div class="group">
+                <vField
+                    name="password"
+                    placeholder="‎"
+                    type="password"
+                    class="input"
+                    :validateOnInput="true"
+                    v-model="readRegisterDetails.password"
+                />
+                <label for="password">Password</label>
+                <ErrorMessage name="password" class="error_message" />
+            </div>
 
-      <div class="group">
-        <vField
-          name="confirmPwd"
-          placeholder="‎"
-          type="password"
-          class="input"
-          :validateOnInput="true"
-          v-model="readRegisterDetails.confirmPwd"
-        />
-        <label for="confirmPwd">Confirm Password</label>
-        <ErrorMessage name="confirmPwd" class="error_message" />
-      </div>
+            <div class="group">
+                <vField
+                    name="confirmPwd"
+                    placeholder="‎"
+                    type="password"
+                    class="input"
+                    :validateOnInput="true"
+                    v-model="readRegisterDetails.confirmPwd"
+                />
+                <label for="confirmPwd">Confirm Password</label>
+                <ErrorMessage name="confirmPwd" class="error_message" />
+            </div>
 
-      <div class="group">
-        <vField
-          name="role"
-          :bails="false"
-          class="input"
-          v-slot="{ field, errors }"
-          v-model="readRegisterDetails.role"
-        >
-          <select v-bind="field">
-            <option disabled value="">Select Role</option>
-            <option value="admin">admin</option>
-            <option value="employee">employee</option>
-            <option value="customer">customer</option>
-          </select>
-          <div class="error_message" v-for="err in errors" :key="err">
-            {{ err }}
-          </div>
-        </vField>
-        <label for="role">Role</label>
-      </div>
+            <div class="group">
+                <vField
+                    name="role"
+                    :bails="false"
+                    class="input"
+                    v-slot="{ field, errors }"
+                    v-model="readRegisterDetails.role"
+                >
+                    <select v-bind="field">
+                        <option disabled value="">Select Role</option>
+                        <option value="admin">admin</option>
+                        <option value="employee">employee</option>
+                        <option value="customer">customer</option>
+                    </select>
+                    <div class="error_message" v-for="err in errors" :key="err">
+                        {{ err }}
+                    </div>
+                </vField>
+                <label for="role">Role</label>
+            </div>
 
-      <div class="group--gender">
-        <label for="gender">Gender:</label>
-        <vField
-          name="gender"
-          placeholder="‎"
-          type="radio"
-          value="Male"
-          v-model="readRegisterDetails.gender"
-        />
-        Male
-        <vField
-          name="gender"
-          placeholder="‎"
-          type="radio"
-          value="Female"
-          v-model="readRegisterDetails.gender"
-        />
-        Female
-        <ErrorMessage name="gender" class="error_message" />
-      </div>
+            <div class="group--gender">
+                <label for="gender">Gender:</label>
+                <vField
+                    name="gender"
+                    placeholder="‎"
+                    type="radio"
+                    value="Male"
+                    v-model="readRegisterDetails.gender"
+                />
+                Male
+                <vField
+                    name="gender"
+                    placeholder="‎"
+                    type="radio"
+                    value="Female"
+                    v-model="readRegisterDetails.gender"
+                />
+                Female
+                <ErrorMessage name="gender" class="error_message" />
+            </div>
 
-      <div class="group">
-        <vField
-          name="dob"
-          placeholder="‎"
-          type="date"
-          class="input"
-          v-model="readRegisterDetails.dob"
-          @change="calculateAge"
-        />
-        <label for="dob">DOB:</label>
-        <ErrorMessage name="dob" class="error_message" />
-      </div>
+            <div class="group">
+                <vField
+                    name="dob"
+                    placeholder="‎"
+                    type="date"
+                    class="input"
+                    v-model="readRegisterDetails.dob"
+                    @change="calculateAge"
+                />
+                <label for="dob">DOB:</label>
+                <ErrorMessage name="dob" class="error_message" />
+            </div>
 
-      <div class="group">
-        <vField name="age" placeholder="‎" type="number" class="input" v-model="readRegisterDetails.age" disabled />
-        <label for="age">Age</label>
-        <ErrorMessage name="age" class="error_message" />
-      </div>
+            <div class="group">
+                <vField
+                    name="age"
+                    placeholder="‎"
+                    type="number"
+                    class="input"
+                    v-model="readRegisterDetails.age"
+                    disabled
+                />
+                <label for="age">Age</label>
+                <ErrorMessage name="age" class="error_message" />
+            </div>
 
-      <div class="modal-footer">
-        <BaseButton type="reset" class="card" size="w100"> Cancel </BaseButton>
-        <BaseButton type="submit" class="card" size="w100">
-            <CircularLoader v-show="isLoading"/>
-            <span v-show="!isLoading">Register</span>
-        </BaseButton>
-      </div>
-    </vForm>
-  </div>
+            <div class="modal-footer">
+                <BaseButton type="reset" class="card" size="w100"> Cancel </BaseButton>
+                <BaseButton type="submit" class="card" size="w100">
+                    <CircularLoader v-show="isLoading" />
+                    <span v-show="!isLoading">Register</span>
+                </BaseButton>
+            </div>
+        </vForm>
+    </div>
 </template>
-  
+
 <script>
-import { store } from '../Store/store'
-import BaseButton from '../Components/BaseButton.vue'
-import CircularLoader from './CircularLoader.vue'
-import { registerUser } from '../api/api'
+import { store } from '../Store/store';
+import BaseButton from '../Components/BaseButton.vue';
+import CircularLoader from './CircularLoader.vue';
+import { registerUser } from '../api/api';
 
 export default {
-  name: 'LoginForm',
-  components: {
-      BaseButton,
-      CircularLoader
-  },
-  data() {
-    return {
-      store,
-      isLoading: false,
-        readRegisterDetails: {
-        name: '',
-        email: '',
-        password: '',
-        role: '',
-        gender: '',
-          dob: '',
-          age: Number
-      },
-        schema: {
-        name: 'required|alpha_spaces',
-        email: 'required|email',
-        password: 'required|min:8|max:12|regex:^(?=.*\\d)(?=.*[\\W_]).+$',
-        confirmPwd: 'required|confirmed:@password',
-        role: 'required',
-        gender: (value) => {
-          if (value) {
-            return true
-          }
-
-          return 'Choose appropriate Gender'
-        },
-        dob: (value) => {
-          console.log(value)
-          if (value) {
-            const date = new Date(value)
-            // Define the minimum and maximum dates
-            const minDate = new Date('1900-01-01')
-            const maxDate = new Date('2015-01-01')
-            return date >= minDate && date <= maxDate
-              ? true
-              : 'DOB must between 01/01/1900 to 01/01/2015'
-          } else {
-            return 'Please choose a Date of birth.'
-          }
-        }
-      }
-    }
-  },
-  methods: {
-    async performRegistration() {
-      this.isLoading = true
-      console.log(this.readRegisterDetails)
-      const res = await registerUser({...this.readRegisterDetails})
-      this.isLoading = false
-      this.$el.querySelector('button[type=reset]').click()
-      if (res?.status !== 201) {
-        return
-      }
-      this.$router.push({ name: 'login' })
+    name: 'LoginForm',
+    components: {
+        BaseButton,
+        CircularLoader,
     },
-    calculateAge() {
-      this.readRegisterDetails.age = (new Date().getFullYear() - new Date(this.readRegisterDetails.dob).getFullYear())
-    }
-  },
-    
-}
+    data() {
+        return {
+            store,
+            isLoading: false,
+            readRegisterDetails: {
+                name: '',
+                email: '',
+                password: '',
+                role: '',
+                gender: '',
+                dob: '',
+                age: Number,
+            },
+            schema: {
+                name: 'required|alpha_spaces',
+                email: 'required|email',
+                password: 'required|min:8|max:12|regex:^(?=.*\\d)(?=.*[\\W_]).+$',
+                confirmPwd: 'required|confirmed:@password',
+                role: 'required',
+                gender: (value) => {
+                    if (value) {
+                        return true;
+                    }
+
+                    return 'Choose appropriate Gender';
+                },
+                dob: (value) => {
+                    console.log(value);
+                    if (value) {
+                        const date = new Date(value);
+                        // Define the minimum and maximum dates
+                        const minDate = new Date('1900-01-01');
+                        const maxDate = new Date('2015-01-01');
+                        return date >= minDate && date <= maxDate
+                            ? true
+                            : 'DOB must between 01/01/1900 to 01/01/2015';
+                    } else {
+                        return 'Please choose a Date of birth.';
+                    }
+                },
+            },
+        };
+    },
+    methods: {
+        async performRegistration() {
+            this.isLoading = true;
+            console.log(this.readRegisterDetails);
+            const res = await registerUser({ ...this.readRegisterDetails });
+            this.isLoading = false;
+            this.$el.querySelector('button[type=reset]').click();
+            if (res?.status !== 201) {
+                return;
+            }
+            this.$router.push({ name: 'login' });
+        },
+        calculateAge() {
+            this.readRegisterDetails.age =
+                new Date().getFullYear() - new Date(this.readRegisterDetails.dob).getFullYear();
+        },
+    },
+};
 </script>
-  
+
 <style scoped>
 .form-container--login {
-  width: max(316px, 25%);
-  margin-inline: auto;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-block-start: 2rem;
-  flex: 1;
+    width: max(316px, 25%);
+    margin-inline: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-block-start: 2rem;
+    flex: 1;
 }
 
 .form-container--login h1 {
-  color: #606d75;
+    color: #606d75;
 }
 
 .card {
-  background-color: #fff;
-  border-radius: 10px;
-  padding: 20px;
-  width: 350px;
-  display: flex;
-  flex-direction: column;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 20px;
+    width: 350px;
+    display: flex;
+    flex-direction: column;
 }
 
 .title {
-  font-size: 24px;
-  font-weight: 600;
-  text-align: center;
+    font-size: 24px;
+    font-weight: 600;
+    text-align: center;
 }
 input[type='radio'] {
-  margin-left: 10px;
+    margin-left: 10px;
 }
 
 .form {
-  width: 100%;
-  margin-top: 20px;
-  display: flex;
-  flex-direction: column;
-  /* align-items: center; */
+    width: 100%;
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
 }
 
 .group {
-  position: relative;
-  margin-bottom: 20px;
+    position: relative;
+    margin-bottom: 20px;
 }
 
 .form .group > label {
-  font-size: 14px;
-  color: rgb(99, 102, 102);
-  position: absolute;
-  top: -10px;
-  left: 10px;
-  background-color: #E6E8E7;
-  transition: all 0.3s ease;
+    font-size: 14px;
+    color: rgb(99, 102, 102);
+    position: absolute;
+    top: -10px;
+    left: 10px;
+    background-color: #e6e8e7;
+    transition: all 0.3s ease;
 }
 
 .form .group .input,
 .form .group .textarea,
 .form .group select {
-  padding: 10px;
-  border-radius: 5px;
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  outline: 0;
-  width: 100%;
-  background-color: transparent;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    outline: 0;
+    width: 100%;
+    background-color: transparent;
 }
 
 .form .group .input:placeholder-shown + label,
 .form .group .textarea:placeholder-shown + label,
 .form .group select:placeholder-shown + label {
-  top: 10px;
-  background-color: transparent;
+    top: 10px;
+    background-color: transparent;
 }
 
 .form .group input:focus,
 .form .group .textarea:focus,
 .form .group select:focus {
-  border-color: #606D75;
+    border-color: #606d75;
 }
 
 .form .group .input:focus + label,
 .form .group .textarea:focus + label,
 .form .group select:focus + label {
-  top: -10px;
-  left: 10px;
-  background-color: #E6E8E7;
-  color: #606D75;
-  font-weight: 600;
-  font-size: 14px;
+    top: -10px;
+    left: 10px;
+    background-color: #e6e8e7;
+    color: #606d75;
+    font-weight: 600;
+    font-size: 14px;
 }
 
 .form .group .textarea {
-  resize: none;
-  height: 100px;
+    resize: none;
+    height: 100px;
 }
 
 .error_message {
-  color: red;
-  position: relative;
+    color: red;
+    position: relative;
 }
 
 .modal-footer {
-  display: flex;
-  flex-direction: row;
+    display: flex;
+    flex-direction: row;
 }
 
 input:disabled {
-  cursor: not-allowed;
+    cursor: not-allowed;
 }
 
 .group--gender {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 </style>
-  

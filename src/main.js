@@ -16,5 +16,4 @@ const app = createApp(App)
 app.use(VeeValidateSetup)
 app.use(Router)
 app.component('NavbarContainer', NavbarContainer)
-
 app.mount('#app')

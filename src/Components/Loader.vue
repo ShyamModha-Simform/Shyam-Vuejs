@@ -8,8 +8,8 @@
 
 <script>
 export default {
-    name: "LoaderContainer",
-}
+    name: 'LoaderContainer',
+};
 </script>
 
 <style scoped>
@@ -18,7 +18,7 @@ export default {
     height: 100px;
     position: fixed;
     top: 50%;
-                 left: 50%;
+    left: 50%;
     transform: translate(-50%, -50%);
 }
 

@@ -4,15 +4,27 @@
 
         <vForm class="form" :validation-schema="schema" @submit="performLogin">
             <div class="group">
-                <vField name="email" placeholder="‎" type="text" class="input" :validateOnInput="true"
-                    v-model="readLoginDetails.email" />
+                <vField
+                    name="email"
+                    placeholder="‎"
+                    type="text"
+                    class="input"
+                    :validateOnInput="true"
+                    v-model="readLoginDetails.email"
+                />
                 <label for="email">Email</label>
                 <ErrorMessage name="email" class="error_message" />
             </div>
 
             <div class="group">
-                <vField name="password" placeholder="‎" type="password" class="input" :validateOnInput="true"
-                    v-model="readLoginDetails.password" />
+                <vField
+                    name="password"
+                    placeholder="‎"
+                    type="password"
+                    class="input"
+                    :validateOnInput="true"
+                    v-model="readLoginDetails.password"
+                />
                 <label for="password">Password</label>
                 <ErrorMessage name="password" class="error_message" />
             </div>
@@ -28,12 +40,12 @@
         </vForm>
     </div>
 </template>
-  
+
 <script>
-import { store } from '../Store/store'
-import BaseButton from '../Components/BaseButton.vue'
-import { loginUser } from '../api/api'
-import CircularLoader from './CircularLoader.vue'
+import { store } from '../Store/store';
+import BaseButton from '../Components/BaseButton.vue';
+import { loginUser } from '../api/api';
+import CircularLoader from './CircularLoader.vue';
 
 export default {
     name: 'LoginForm',
@@ -50,30 +62,30 @@ export default {
                 password: 'required|min:8|max:12|regex:^(?=.*\\d)(?=.*[\\W_]).+$',
             },
             readLoginDetails: {
-                email: "",
-                password: "",
+                email: '',
+                password: '',
             },
-        }
+        };
     },
     methods: {
         resetForm() {
-            this.$el.querySelector("button[type=reset]").click();
+            this.$el.querySelector('button[type=reset]').click();
         },
         async performLogin() {
             this.isLoading = true;
             const res = await loginUser(this.readLoginDetails);
-            console.log(res)
-            this.isLoading = false
-            this.$el.querySelector("button[type=reset]").click()
+            console.log(res);
+            this.isLoading = false;
+            this.$el.querySelector('button[type=reset]').click();
             if (res?.status !== 200) {
                 return;
             }
-            this.$router.push({ name: 'home' })
-        }
-    }
-}
+            this.$router.push({ name: 'home' });
+        },
+    },
+};
 </script>
-  
+
 <style scoped>
 .form-container--login {
     width: max(316px, 25%);
@@ -85,7 +97,7 @@ export default {
 }
 
 .form-container--login h1 {
-    color: #606D75;
+    color: #606d75;
 }
 
 .card {
@@ -109,7 +121,6 @@ export default {
     display: flex;
     flex-direction: column;
     /* align-items: center; */
-
 }
 
 .group {
@@ -123,7 +134,7 @@ export default {
     position: absolute;
     top: -10px;
     left: 10px;
-    background-color: #E6E8E7;
+    background-color: #e6e8e7;
     transition: all 0.3s ease;
 }
 
@@ -137,22 +148,22 @@ export default {
     background-color: transparent;
 }
 
-.form .group .input:placeholder-shown+label,
-.form .group .textarea:placeholder-shown+label {
+.form .group .input:placeholder-shown + label,
+.form .group .textarea:placeholder-shown + label {
     top: 10px;
     background-color: transparent;
 }
 
 .form .group input:focus,
 .form .group .textarea:focus {
-    border-color: #606D75;
+    border-color: #606d75;
 }
 
-.form .group .input:focus+label,
-.form .group .textarea:focus+label {
+.form .group .input:focus + label,
+.form .group .textarea:focus + label {
     top: -10px;
     left: 10px;
-    background-color: #E6E8E7;
+    background-color: #e6e8e7;
     color: #3366cc;
     font-weight: 600;
     font-size: 14px;
@@ -171,7 +182,5 @@ export default {
 .modal-footer {
     display: flex;
     flex-direction: row;
-
 }
 </style>
-  
