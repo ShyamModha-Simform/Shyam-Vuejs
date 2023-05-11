@@ -1,5 +1,5 @@
 <template>
-  <vForm class="form" :validation-schema="schema" @submit="createCar">
+  <vForm class="form" :validation-schema="schema" @submit="handleFormSubmit">
     <div class="group">
       <vField name="carName" placeholder="‎" type="text" class="input" :validateOnInput="true"
         v-model="store.carToBeEdited.name" />
@@ -61,6 +61,13 @@ export default {
     }
   },
   methods: {
+
+    handleFormSubmit() {
+      clearTimeout(this.submitTimer);
+      this.submitTimer = setTimeout(async () => {
+        await this.createCar();
+      }, 300)
+    },
     async createCar() {
       const temp = store.modalType
       let res = {}
@@ -69,8 +76,9 @@ export default {
       } else {
         res = await updataCarDetails(store.carToBeEdited)
       }
-      console.log(res.status)
+      console.log("submitted=================================")
       // rendering Car details once finish
+
       store.carDetails = await getCarDetails()
 
       this.$el.querySelector('button[type=reset]').click()
@@ -174,26 +182,6 @@ export default {
   resize: none;
   height: 100px;
 }
-
-/* .form button {
-  display: inline-block;
-  outline: 0;
-  border: 0;
-  cursor: pointer;
-  font-weight: 600;
-  color: #fff;
-  font-size: 14px;
-  height: 38px;
-  padding: 8px 24px;
-  border-radius: 50px;
-  background-color: rgb(96, 109, 117);
-  box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
-  transition: all 0.2s ease-out;
-}
-
-.form button:hover {
-  background-color: #849199;
-} */
 
 .error_message {
   color: red;

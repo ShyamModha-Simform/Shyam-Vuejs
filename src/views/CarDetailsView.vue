@@ -1,20 +1,11 @@
 <template>
-  <div class="car-card-container px-4">
+  <LoaderVue v-if="isLoading" />
+  <div class="car-card-container px-4" v-else>
     <div>
       <RouterLink :to="{ name: 'home' }">
         <BaseButton class="card" size="lg">back</BaseButton>
       </RouterLink>
     </div>
-    <!-- <div class="car-detail--container flex-wrap">
-      <div class="container--left w-50">
-        <h1>{{ carDetail.name }}</h1>
-        <h4>Price: {{ carDetail.price }}</h4>
-        <p>{{ carDetail.details }}</p>
-      </div>
-      <div class="container--right w-50">
-        <img :src="carDetail.image" alt="Car Image" />
-      </div>
-    </div> -->
     <div class="card mb-3 mx-sm-2" style="max-width: 70rem;">
       <div class="row g-0">
         <div class="col-md-7">
@@ -36,23 +27,30 @@
 <script>
 import { getCarDetailsById } from '../api/api'
 import BaseButton from '../Components/BaseButton.vue'
+import LoaderVue from "../Components/Loader.vue"
+
 export default {
   name: 'CarDetailsView',
   components: {
     BaseButton,
+    LoaderVue
   },
   data() {
     return {
       carDetail: {},
+      isLoading: false,
     }
   },
-  async mounted() {
+  async created() {
+    this.isLoading = true;
     const res = await getCarDetailsById(this.$route.params.id)
-    if (res.status !== 200) {
-      alert("Couldn't able to fetch detail")
+    if (res?.status !== 200) {
+      this.isLoading = false
+      this.$router.push({ name: "home" })
       return
     }
     this.carDetail = { ...res.data }
+    this.isLoading = false
   }
 }
 </script>p
