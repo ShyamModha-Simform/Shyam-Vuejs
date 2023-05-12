@@ -1,7 +1,7 @@
-import { reactive } from 'vue'
+import { reactive } from 'vue';
 
 export let store = reactive({
-  modalType: 'add',
-  carDetails: [],
-  carToBeEdited: {}
-})
+    modalType: 'add',
+    carDetails: [],
+    carToBeEdited: {},
+});

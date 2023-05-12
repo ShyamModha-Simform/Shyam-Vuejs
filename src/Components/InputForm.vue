@@ -1,29 +1,59 @@
 <template>
-    <vForm class="form" :validation-schema="schema" @submit="createCar">
+    <vForm class="form" :validation-schema="schema" @submit="handleFormSubmit">
         <div class="group">
-            <vField name="carName" placeholder="‎" type="text" class="input" :validateOnInput="true"
-                v-model="store.carToBeEdited.name" />
+            <vField
+                name="carName"
+                placeholder="‎"
+                type="text"
+                class="input"
+                :validateOnInput="true"
+                v-model="store.carToBeEdited.name"
+            />
             <label for="carName">Car Name </label>
             <ErrorMessage name="carName" class="error_message" />
         </div>
 
         <div class="group">
-            <vField name="price" placeholder="‎" type="number" class="input" :validateOnInput="true"
-                v-model="store.carToBeEdited.price" />
+            <vField
+                name="price"
+                placeholder="‎"
+                type="number"
+                class="input"
+                :validateOnInput="true"
+                v-model="store.carToBeEdited.price"
+            />
             <label for="price">Price</label>
             <ErrorMessage name="price" class="error_message" />
         </div>
 
         <div class="group">
-            <vField name="url" placeholder="‎" type="text" class="input" :validateOnInput="true"
-                v-model="store.carToBeEdited.image" />
+            <vField
+                name="url"
+                placeholder="‎"
+                type="text"
+                class="input"
+                :validateOnInput="true"
+                v-model="store.carToBeEdited.image"
+            />
             <label for="url">Image URL</label>
             <ErrorMessage name="url" class="error_message" />
         </div>
         <div class="group">
-            <vField name="carDetails" :bails="false" v-slot="{ field, errors }" v-model="store.carToBeEdited.details">
-                <textarea type="text" placeholder="‎" id="comment" class="textarea" name="carDetails" rows="3"
-                    v-bind="field" />
+            <vField
+                name="carDetails"
+                :bails="false"
+                v-slot="{ field, errors }"
+                v-model="store.carToBeEdited.details"
+            >
+                <textarea
+                    type="text"
+                    placeholder="‎"
+                    id="comment"
+                    class="textarea"
+                    name="carDetails"
+                    rows="3"
+                    v-bind="field"
+                />
                 <div class="error_message" v-for="err in errors" :key="err">
                     {{ err }}
                 </div>
@@ -31,44 +61,56 @@
             <label for="carDetails">Car Details</label>
         </div>
         <div class="modal-footer">
-            <button ref="resetBtn" type="reset" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-            <button type="submit" class="button">
-                {{ store.modalType === "edit" ? `Update` : `Submit` }}
-            </button>
+            <BaseButton type="reset" class="card" size="lg" data-bs-dismiss="modal"
+                >Cancel</BaseButton
+            >
+            <BaseButton type="submit" class="card">
+                {{ store.modalType === 'edit' ? `Update` : `Submit` }}
+            </BaseButton>
         </div>
     </vForm>
 </template>
 
 <script>
-import Swal from 'sweetalert2'
+import Swal from 'sweetalert2';
 import { addCarDetails, getCarDetails, updataCarDetails } from '../api/api';
 import { store } from '../Store/store';
+import BaseButton from './BaseButton.vue';
 
 export default {
     name: 'InputForm',
+    components: {
+        BaseButton,
+    },
     data() {
-
         return {
             store,
             schema: {
                 carName: 'required|alpha_spaces',
                 price: 'required|integer',
                 url: 'required|url:https://*',
-                carDetails: 'required|min:30|max:120'
+                carDetails: 'required|min:30|max:120',
             },
-        }
+        };
     },
     methods: {
+        handleFormSubmit() {
+            clearTimeout(this.submitTimer);
+            this.submitTimer = setTimeout(async () => {
+                await this.createCar();
+            }, 300);
+        },
         async createCar() {
             const temp = store.modalType;
             let res = {};
-            if (temp !== "edit") {
+            if (temp !== 'edit') {
                 res = await addCarDetails(store.carToBeEdited);
             } else {
                 res = await updataCarDetails(store.carToBeEdited);
             }
-            console.log(res.status);
-            // rendering Car details once finish 
+            console.log(res);
+            // rendering Car details once finish
+
             store.carDetails = await getCarDetails();
 
             this.$el.querySelector('button[type=reset]').click();
@@ -76,28 +118,28 @@ export default {
             Swal.fire({
                 title: `${temp === 'edit' ? 'Updated' : 'Created'} data`,
                 html: `
-                <div style="display: flex; align-items: center; justify-content: space-between;">
+              <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
                     <img src="${store.carToBeEdited.image}" alt="Logo" style="width: 300px;" />
                     <h3>${store.carToBeEdited.name}</h3>
                     <p>Price: ${store.carToBeEdited.price}</p>
                     <p>Details: ${store.carToBeEdited.details}</p>
-                </div>
-                </div> `,
+              </div>
+              </div> `,
                 showCloseButton: true,
                 showConfirmButton: true,
                 showCancelButton: false,
                 focusConfirm: false,
                 allowOutsideClick: false,
-                allowEscapeKey: false
-            })
+                allowEscapeKey: false,
+            });
         },
         resetForm() {
-            store.carToBeEdited = {}
-            this.$refs.resetBtn.click();
-        }
-    }
-}
+            store.carToBeEdited = {};
+            this.$el.querySelector('button[type=reset]').click();
+        },
+    },
+};
 </script>
 
 <style scoped>
@@ -147,8 +189,8 @@ export default {
     background-color: transparent;
 }
 
-.form .group .input:placeholder-shown+label,
-.form .group .textarea:placeholder-shown+label {
+.form .group .input:placeholder-shown + label,
+.form .group .textarea:placeholder-shown + label {
     top: 10px;
     background-color: transparent;
 }
@@ -158,8 +200,8 @@ export default {
     border-color: #3366cc;
 }
 
-.form .group .input:focus+label,
-.form .group .textarea:focus+label {
+.form .group .input:focus + label,
+.form .group .textarea:focus + label {
     top: -10px;
     left: 10px;
     background-color: #fff;
@@ -173,29 +215,14 @@ export default {
     height: 100px;
 }
 
-.form button {
-    display: inline-block;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    font-weight: 600;
-    color: #fff;
-    font-size: 14px;
-    height: 38px;
-    padding: 8px 24px;
-    border-radius: 50px;
-    background-color: rgb(96, 109, 117);
-    box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
-    transition: all .2s ease-out;
-}
-
-.form button:hover {
-    background-color: #849199;
-}
-
 .error_message {
     color: red;
     position: relative;
     /* top: -20px; */
+}
+
+.modal-footer {
+    display: flex;
+    flex-direction: row;
 }
 </style>

@@ -4,7 +4,7 @@
   padding: 0;
   margin: 0;
   font-family: 'Raleway';
-
+  word-wrap: break-word;
   -webkit-overflow-scrolling: touch;
 }
 
@@ -36,14 +36,18 @@ html {
 }
 
 body {
-  background-color: whitesmoke;
+  background-color: rgb(230, 232, 231);
 }
 
-.container input {
+a {
+  text-decoration: none;
+}
+
+.card-container input {
   display: none;
 }
 
-.container {
+.card-container {
   max-width: 100em;
   /* background-color: lightgreen; */
   display: flex;
@@ -53,118 +57,9 @@ body {
   align-content: flex-start;
   margin: auto;
   min-height: 30em;
-  padding: 3em 1em 1em 1em;
+
   box-sizing: border-box;
-}
-
-/* Card Styling */
-.card-div {
-  width: 20em;
-  min-height: 20em;
-  display: flex;
-  flex-direction: column;
-  justify-items: center;
-  align-items: center;
-  background-color: var(--card-main-color);
-  margin: 0.6em;
-  box-sizing: border-box;
-  border-radius: 10px;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-  transition: transform 0.2s ease-in-out;
-}
-
-/* ======== General styling of all cards and heart divs ========== */
-.img-div {
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-  /* z-index: 1; */
-  border-radius: 10px;
-  background-color: var(--card-1-secondary-color);
-}
-
-.img-div img {
-  width: 20rem;
-  height: 11rem;
-  object-fit: cover;
-  /* transform-origin: bottom;
-  transform: translateY(7.5%);
-  transition: transform 0.3s ease-in-out; */
-}
-
-.card-1 .like-icon-div {
-  background-color: var(--card-1-secondary-color);
-}
-
-/* ======== text Container Styling general ======== */
-
-.text-container {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  /* background-color: yellow; */
-  padding: 0 1.5em;
-  padding-top: 1em;
-  padding-bottom: 1em;
-  box-sizing: border-box;
-}
-
-.text-container .item-name,
-.text-container .date {
-  margin: 0.25em 0;
-  text-align: center;
-}
-
-.text-container .item-name {
-  font-size: 1.2em;
-  font-weight: var(--title-font-weight);
-  color: var(--heading-color);
-}
-
-.text-container .date {
-  text-align: left;
-  font-size: 0.9em;
-  font-weight: var(--date-font-weight);
-  color: var(--date-text-color);
-}
-
-/* === Pricing and cart div  ===== */
-.pricing-and-cart {
-  /* background-color: wheat; */
-  width: 100%;
-  display: flex;
-  flex-direction: row;
-  justify-content: space-between;
-  margin: 0.25em 0 1em 0;
-}
-
-.pricing {
-  display: flex;
-  flex-direction: column;
-  text-align: left;
-}
-
-.previous-price {
-  font-size: 0.8rem;
-  font-weight: var(--pricing-font-weight);
-  color: var(--previous-price-text-color);
-  text-decoration: line-through;
-  /* background-color: whitesmoke; */
-  text-align: left;
-}
-
-.current-price {
-  color: var(--current-price-text-color);
-  font-size: 1.3rem;
-  font-weight: var(--pricing-font-weight);
-  /* background-color: yellow; */
-  margin: 0;
-}
-
-.pricing-and-cart {
-  width: 100%;
+  position: relative;
 }
 
 .fa-shopping-cart {
@@ -173,70 +68,6 @@ body {
   transform: translateY(50%);
 }
 
-/* ====== Hover effects ======= */
-/* .card-div:hover .img-div img {
-  transform: translateY(7.5%) scale(1.2);
-} */
-
 .card-div:hover {
   transform: translate(0, -10px);
-}
-
-header {
-  /* height: 60px; */
-  background-color: var(--header-background);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-h2 {
-  color: #fff;
-  font-size: 45px;
-  margin: 0;
-  padding: 0;
-  text-align: center;
-}
-h6 {
-  color: #fff;
-  padding: 0;
-  margin-block: 1rem;
-  text-align: center;
-}
-
-@keyframes like-animation {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 1;
-    color: var(--liked-heart-icon-color);
-    transform: scale(0.5);
-  }
-
-  100% {
-    opacity: 1;
-    color: var(--liked-heart-icon-color);
-    transform: scale(1);
-  }
-}
-
-@keyframes unlike-animation {
-  0% {
-    opacity: 1;
-    transform: scale(1);
-  }
-
-  50% {
-    opacity: 1;
-    transform: scale(0.5);
-  }
-
-  100% {
-    opacity: 1;
-    color: var(--heart-icon-color);
-    transform: scale(1);
-  }
 }

@@ -12,5 +12,19 @@ export default defineConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)), // eslint-disable-next-line no-undef
       '~bootstrap': path.resolve(__dirname, 'node_modules/bootstrap')
     }
+  },
+  module: {
+    rules: [
+      {
+        test: /\.vue$/,
+        loader: 'vue-loader',
+        options: {
+          compilerOptions: {
+            // Disable warnings
+            warningHandler: () => {}
+          }
+        }
+      }
+    ]
   }
 })

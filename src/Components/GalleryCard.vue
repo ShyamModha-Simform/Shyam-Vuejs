@@ -1,22 +1,33 @@
 <template>
     <div class="card-1 card-div">
         <div class="img-div">
-            <img :src="carDetail.image" alt="god-of-war-figurine">
+            <img :src="carDetail.image" alt="god-of-war-figurine" />
         </div>
-        <div class="text-container">
+        <div class="card-body-container">
             <h2 class="item-name">{{ carDetail.name }}</h2>
             <p class="date">{{ displayTrunkedDescription }}</p>
             <div class="pricing-and-cart">
                 <div class="pricing">
-                    <button class="button" @click.prevent="showPrice" :disabled="carDetail.price === undefined">{{
-                        carDetail.price === undefined ? 'Available Soon' : 'info' }}</button>
+                    <RouterLink :to="{ name: 'carDetailsById', params: { id: `${carDetail.id}` } }">
+                        <BaseButton class="card"> Info </BaseButton>
+                    </RouterLink>
                 </div>
                 <div>
-                    <img src="../assests/edit_icon.png" class="edit-icon" alt="editIcon" @click="editCarDetails"
-                        data-bs-toggle="modal" data-bs-target="#shyam" />
-                    <img src="../assests/delete_icon.png" class="edit-icon pl-2" alt="editIcon" @click="deleteCarDetails" />
+                    <img
+                        src="../assests/edit_icon.png"
+                        class="edit-icon"
+                        alt="editIcon"
+                        @click="editCarDetails"
+                        data-bs-toggle="modal"
+                        data-bs-target="#shyam"
+                    />
+                    <img
+                        src="../assests/delete_icon.png"
+                        class="edit-icon pl-2"
+                        alt="editIcon"
+                        @click="deleteCarDetails"
+                    />
                 </div>
-
             </div>
         </div>
     </div>
@@ -24,110 +35,126 @@
 
 <script>
 import { store } from '../Store/store';
+import BaseButton from './BaseButton.vue';
 
 export default {
     name: 'GalleryCard',
     props: ['carDetail'],
+    components: {
+        BaseButton,
+    },
     methods: {
-        showPrice() {
-            this.$emit("show-price", this.carDetail.price);
-        },
         editCarDetails() {
             // Setting value in global store which will automatically reactive at other components
-            store.modalType = "edit";
-            store.carToBeEdited = { ...this.carDetail }
+            store.modalType = 'edit';
+            store.carToBeEdited = { ...this.carDetail };
             // we are passing object copy instead of reference
         },
         deleteCarDetails() {
-            this.$emit("delete-car-details", this.carDetail.id, this.carDetail)
+            this.$emit('delete-car-details', this.carDetail.id, this.carDetail);
         },
     },
     computed: {
         displayTrunkedDescription() {
-            return this.carDetail?.details?.slice(0, 200) + "...";
-        }
-    }
-
-}
-
+            return this.carDetail?.details?.slice(0, 200) + '...';
+        },
+    },
+};
 </script>
 
 <style scoped>
-.like-icon-div {
-    padding: 1em 1em 0 1em;
-    width: 100%;
-    box-sizing: border-box;
-    text-align: right;
-    font-size: 1.5em;
-    color: var(--heart-icon-color);
-    border-radius: 10px 10px 0 0;
+/* Card Styling */
+.card-div {
+    width: 20em;
+    min-height: 20em;
     display: flex;
-    justify-content: flex-end;
+    flex-direction: column;
+    justify-items: center;
+    align-items: center;
+    background-color: var(--card-main-color);
+    margin: 0.6em;
+    box-sizing: border-box;
+    border-radius: 10px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    transition: transform 0.2s ease-in-out;
 }
 
-.like-icon-div-child {
-    width: 1em;
-    height: 1em;
-    position: relative;
-    z-index: 3;
-    cursor: pointer;
+.img-div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    background-color: var(--card-1-secondary-color);
 }
 
-.heart-empty {
-    position: absolute;
-    left: 0;
-    opacity: 1;
+.img-div img {
+    width: 20rem;
+    height: 11rem;
+    object-fit: cover;
 }
 
-.heart-fill {
-    position: absolute;
-    left: 0;
-    opacity: 0;
-    transform: scale(0);
-    transition: transform 0.25s ease-in-out, opacity 0.2s ease-in-out;
+.card-body-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 0 1.5em;
+    padding-top: 1em;
+    padding-bottom: 1em;
+    box-sizing: border-box;
 }
 
-.like-icon-div-child:hover .heart-fill {
-    opacity: 1;
-    transform: scale(1);
+.card-body-container .item-name,
+.card-body-container .date {
+    margin: 0.25em 0;
+    text-align: center;
 }
 
-.like-icon-div-child:hover .heart-empty {
-    transition-delay: 0.25s;
-    opacity: 0;
+.card-body-container .item-name {
+    font-size: 1.2em;
+    font-weight: var(--title-font-weight);
+    color: var(--heading-color);
 }
 
-#card-1-like:checked~.heart-empty {
-    opacity: 0;
+.card-body-container .date {
+    text-align: left;
+    font-size: 0.9em;
+    font-weight: var(--date-font-weight);
+    color: var(--date-text-color);
 }
 
-#card-1-like:checked~.heart-fill {
-    animation: like-animation 0.25s ease-in-out forwards;
+.pricing-and-cart {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin: 0.25em 0 1em 0;
 }
 
-#card-1-like:not(:checked)~.heart-fill {
-    animation: unlike-animation 0.25s ease-in-out;
+.pricing {
+    display: flex;
+    flex-direction: column;
+    text-align: left;
 }
 
-.button {
-    display: inline-block;
-    outline: 0;
-    border: 0;
-    cursor: pointer;
-    font-weight: 600;
-    color: #fff;
-    font-size: 14px;
-    height: 38px;
-    padding: 8px 24px;
-    border-radius: 50px;
-    background-color: rgb(96, 109, 117);
-    box-shadow: 0 4px 11px 0 rgb(37 44 97 / 15%), 0 1px 3px 0 rgb(93 100 148 / 20%);
-    transition: all .2s ease-out;
+.previous-price {
+    font-size: 0.8rem;
+    font-weight: var(--pricing-font-weight);
+    color: var(--previous-price-text-color);
+    text-decoration: line-through;
+    text-align: left;
 }
 
-.button:disabled {
-    background-color: rgb(174, 181, 185);
-    cursor: not-allowed;
+.current-price {
+    color: var(--current-price-text-color);
+    font-size: 1.3rem;
+    font-weight: var(--pricing-font-weight);
+    margin: 0;
+}
+
+.pricing-and-cart {
+    width: 100%;
 }
 
 .edit-icon {

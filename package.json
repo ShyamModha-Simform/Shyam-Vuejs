@@ -12,18 +12,21 @@
   "dependencies": {
     "@popperjs/core": "^2.11.7",
     "@vee-validate/rules": "^4.8.6",
+    "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "save": "^2.9.0",
     "sweetalert2": "^11.7.3",
     "vee-validate": "^4.8.6",
-    "vue": "^3.2.47"
+    "vue": "^3.3.1",
+    "vue-loader": "^17.0.1",
+    "vue-router": "^4.1.6"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-prettier": "^7.1.0",
-    "eslint": "^8.34.0",
-    "eslint-plugin-vue": "^9.9.0",
+    "eslint": "^8.40.0",
+    "eslint-plugin-vue": "^9.12.0",
     "node-sass": "^8.0.0",
     "postcss": "^8.4.23",
     "prettier": "^2.8.4",
