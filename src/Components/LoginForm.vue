@@ -31,7 +31,6 @@
 
             <div class="modal-footer">
                 <BaseButton type="reset" class="card" size="w100"> Cancel </BaseButton>
-
                 <BaseButton type="submit" class="card" size="w100">
                     <CircularLoader v-show="isLoading" />
                     <span v-show="!isLoading">Login</span>

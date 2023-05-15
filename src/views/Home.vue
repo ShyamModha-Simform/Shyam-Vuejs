@@ -1,10 +1,10 @@
 <template>
-    <!-- <LoaderContainer v-show="isLoading" /> -->
-    <GalleryCardList />
+    <Loader v-if="isLoading" />
+    <GalleryCardList v-else />
 </template>
 
 <script>
-import LoaderContainer from '../Components/Loader.vue';
+import { Loader } from '../Components';
 import GalleryCardList from '../Components/GalleryCardList.vue';
 import { store } from '../Store/store';
 import { getCarDetails } from '../api/api';
@@ -12,7 +12,7 @@ import { getCarDetails } from '../api/api';
 export default {
     name: 'HomeView',
     components: {
-        LoaderContainer,
+        Loader,
         GalleryCardList,
     },
     data() {
@@ -26,7 +26,7 @@ export default {
         setTimeout(async () => {
             store.carDetails = [...(await getCarDetails())];
             this.isLoading = false;
-        }, 2000);
+        }, 1000);
     },
 };
 </script>
