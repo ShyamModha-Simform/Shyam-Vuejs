@@ -16,7 +16,7 @@ export default {
 .loader {
     width: 100px;
     height: 100px;
-    position: fixed;
+    position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
@@ -38,7 +38,7 @@ export default {
     height: 42px;
     margin-top: 64px;
     margin-left: 0px;
-    animation: abox1 4s 1s forwards ease-in-out infinite;
+    animation: abox1 3s 0.2s forwards ease-in-out infinite;
 }
 
 .box2 {
@@ -46,7 +46,7 @@ export default {
     height: 42px;
     margin-top: 0px;
     margin-left: 0px;
-    animation: abox2 4s 1s forwards ease-in-out infinite;
+    animation: abox2 3s 0.2s forwards ease-in-out infinite;
 }
 
 .box3 {
@@ -54,7 +54,7 @@ export default {
     height: 42px;
     margin-top: 0px;
     margin-left: 64px;
-    animation: abox3 4s 1s forwards ease-in-out infinite;
+    animation: abox3 3s 0.2s forwards ease-in-out infinite;
 }
 
 @keyframes abox1 {

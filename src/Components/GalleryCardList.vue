@@ -12,14 +12,17 @@
                     Add
                 </BaseButton>
             </div>
-            <transition-group class="card-container" name="fade" tag="div">
-                <GalleryCard
-                    :carDetail="car"
-                    v-for="car in store.carDetails"
-                    :key="car.name"
-                    @delete-car-details="deleteCar"
-                />
-            </transition-group>
+            <div class="card-container">
+                <TransitionGroup name="fade" mode="out-in" appear>
+                    <GalleryCard
+                        v-for="(car, index) in store.carDetails"
+                        :carDetail="car"
+                        @delete-car-details="deleteCar"
+                        :key="car.id"
+                        :style="{ transitionDelay: `${0.03 * index}s` }"
+                    />
+                </TransitionGroup>
+            </div>
         </div>
     </main>
 </template>
@@ -42,6 +45,9 @@ export default {
         return {
             store,
         };
+    },
+    unmounted() {
+        console.log('Unmounted!');
     },
     methods: {
         openAddCarForm() {
@@ -96,19 +102,16 @@ export default {
 .fade-enter-active,
 .fade-leave-active {
     opacity: 0.5;
-    transition: all 0.5s;
+    transition: all 0.5s ease-in-out;
 }
 
 .fade-enter-from,
 .fade-leave-to {
     opacity: 0;
-    transform: translateY(5rem);
-    /* Adjust the distance as needed */
+    transform: translateY(6rem);
 }
-
 .fade-enter-to,
 .fade-leave-from {
     opacity: 1;
-    transform: translateY(0);
 }
 </style>
