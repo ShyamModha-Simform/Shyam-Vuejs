@@ -66,7 +66,6 @@ export default {
                 if (result.isConfirmed) {
                     let res = await deleteCarDetails(carId);
                     if (res.status !== 204) {
-                        console.log(res.status, res.statusText);
                         alert("Couldn't able to delete car..");
                         return;
                     }

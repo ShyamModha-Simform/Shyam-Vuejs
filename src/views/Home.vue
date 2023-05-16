@@ -21,7 +21,6 @@ export default {
         };
     },
     created() {
-        console.log('Car details fetched!');
         this.isLoading = true;
         setTimeout(async () => {
             store.carDetails = [...(await getCarDetails())];

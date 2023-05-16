@@ -106,9 +106,9 @@ export default {
             if (temp !== 'edit') {
                 res = await addCarDetails(store.carToBeEdited);
             } else {
+                // eslint-disable-next-line no-unused-vars
                 res = await updataCarDetails(store.carToBeEdited);
             }
-            console.log(res);
             // rendering Car details once finish
 
             store.carDetails = await getCarDetails();

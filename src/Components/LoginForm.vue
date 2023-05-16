@@ -73,7 +73,6 @@ export default {
         async performLogin() {
             this.isLoading = true;
             const res = await loginUser(this.readLoginDetails);
-            console.log(res);
             this.isLoading = false;
             this.$el.querySelector('button[type=reset]').click();
             if (res?.status !== 200) {

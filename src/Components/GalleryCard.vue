@@ -105,9 +105,8 @@ export default {
     box-sizing: border-box;
 }
 
-.card-body-container .item-name,
-.card-body-container .date {
-    margin: 0.25em 0;
+.card-body-container .item-name {
+    margin: 0.2em 0;
     text-align: center;
 }
 
@@ -123,13 +122,17 @@ export default {
     font-weight: var(--date-font-weight);
     color: var(--date-text-color);
 }
+.date {
+    min-height: 86px;
+}
 
 .pricing-and-cart {
     width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    margin: 0.25em 0 1em 0;
+    margin: 0.25em 0 0 0;
 }
 
 .pricing {
