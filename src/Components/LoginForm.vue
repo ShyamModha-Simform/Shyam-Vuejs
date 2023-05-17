@@ -41,10 +41,10 @@
 </template>
 
 <script>
-import { store } from '../Store/store';
 import BaseButton from '../Components/BaseButton.vue';
-import { loginUser } from '../api/api';
 import CircularLoader from './CircularLoader.vue';
+import useCarDataStore from '../Store/carData';
+import { mapActions } from 'pinia';
 
 export default {
     name: 'LoginForm',
@@ -54,7 +54,6 @@ export default {
     },
     data() {
         return {
-            store,
             isLoading: false,
             schema: {
                 email: 'required|email',
@@ -67,12 +66,13 @@ export default {
         };
     },
     methods: {
+        ...mapActions(useCarDataStore, ['userLogin']),
         resetForm() {
             this.$el.querySelector('button[type=reset]').click();
         },
         async performLogin() {
             this.isLoading = true;
-            const res = await loginUser(this.readLoginDetails);
+            const res = await this.userLogin(this.readLoginDetails);
             this.isLoading = false;
             this.$el.querySelector('button[type=reset]').click();
             if (res?.status !== 200) {

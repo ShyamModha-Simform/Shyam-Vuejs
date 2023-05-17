@@ -19,7 +19,7 @@
                         alt="editIcon"
                         @click="editCarDetails"
                         data-bs-toggle="modal"
-                        data-bs-target="#shyam"
+                        data-bs-target="#backdrop-overlay-modal"
                     />
                     <img
                         src="../assests/delete_icon.png"
@@ -34,8 +34,9 @@
 </template>
 
 <script>
-import { store } from '../Store/store';
 import BaseButton from './BaseButton.vue';
+import useModalFormStore from '../Store/modalForm';
+import { mapWritableState } from 'pinia';
 
 export default {
     name: 'GalleryCard',
@@ -46,8 +47,8 @@ export default {
     methods: {
         editCarDetails() {
             // Setting value in global store which will automatically reactive at other components
-            store.modalType = 'edit';
-            store.carToBeEdited = { ...this.carDetail };
+            this.modalType = 'edit';
+            this.selectedCarForEditing = { ...this.carDetail };
             // we are passing object copy instead of reference
         },
         deleteCarDetails() {
@@ -55,6 +56,7 @@ export default {
         },
     },
     computed: {
+        ...mapWritableState(useModalFormStore, ['selectedCarForEditing', 'modalType']),
         displayTrunkedDescription() {
             return this.carDetail?.details?.slice(0, 200) + '...';
         },

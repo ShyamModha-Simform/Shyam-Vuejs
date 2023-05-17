@@ -3,7 +3,6 @@ import axios from 'axios';
 const getCarDetails = async () => {
     try {
         let responseData = await axios.get('https://testapi.io/api/dartya/resource/cardata');
-        console.log(responseData.data.data);
         return responseData.data.data;
     } catch (e) {
         alert("Couldn't able to get Car Details");
@@ -73,7 +72,7 @@ const getCarDetailsById = async (id) => {
         let responseData = await axios.get(`	
     https://testapi.io/api/dartya/resource/cardata/${id}`);
 
-        return responseData;
+        return responseData.data;
     } catch (e) {
         alert("Couldn't able to fetch car details");
     }

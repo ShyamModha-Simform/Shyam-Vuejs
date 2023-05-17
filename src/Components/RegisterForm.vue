@@ -135,10 +135,10 @@
 </template>
 
 <script>
-import { store } from '../Store/store';
 import BaseButton from '../Components/BaseButton.vue';
 import CircularLoader from './CircularLoader.vue';
-import { registerUser } from '../api/api';
+import { mapActions } from 'pinia';
+import useCarDataStore from '../Store/carData';
 
 export default {
     name: 'LoginForm',
@@ -148,7 +148,6 @@ export default {
     },
     data() {
         return {
-            store,
             isLoading: false,
             readRegisterDetails: {
                 name: '',
@@ -165,15 +164,8 @@ export default {
                 password: 'required|min:8|max:12|regex:^(?=.*\\d)(?=.*[\\W_]).+$',
                 confirmPwd: 'required|confirmed:@password',
                 role: 'required',
-                gender: (value) => {
-                    if (value) {
-                        return true;
-                    }
-
-                    return 'Choose appropriate Gender';
-                },
+                gender: 'required',
                 dob: (value) => {
-                    console.log(value);
                     if (value) {
                         const date = new Date(value);
                         // Define the minimum and maximum dates
@@ -190,10 +182,10 @@ export default {
         };
     },
     methods: {
+        ...mapActions(useCarDataStore, ['userRegistration']),
         async performRegistration() {
             this.isLoading = true;
-            console.log(this.readRegisterDetails);
-            const res = await registerUser({ ...this.readRegisterDetails });
+            const res = await this.userRegistration({ ...this.readRegisterDetails });
             this.isLoading = false;
             this.$el.querySelector('button[type=reset]').click();
             if (res?.status !== 201) {

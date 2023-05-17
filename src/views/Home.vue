@@ -6,8 +6,8 @@
 <script>
 import { Loader } from '../Components';
 import GalleryCardList from '../Components/GalleryCardList.vue';
-import { store } from '../Store/store';
-import { getCarDetails } from '../api/api';
+import useCarDataStore from '../Store/carData';
+import { mapActions } from 'pinia';
 
 export default {
     name: 'HomeView',
@@ -20,10 +20,13 @@ export default {
             isLoading: true,
         };
     },
+    methods: {
+        ...mapActions(useCarDataStore, ['fetchAllCars']),
+    },
     created() {
         this.isLoading = true;
         setTimeout(async () => {
-            store.carDetails = [...(await getCarDetails())];
+            await this.fetchAllCars();
             this.isLoading = false;
         }, 1000);
     },
