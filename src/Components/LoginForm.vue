@@ -15,7 +15,6 @@
                 <label for="email">Email</label>
                 <ErrorMessage name="email" class="error_message" />
             </div>
-
             <div class="group">
                 <vField
                     name="password"
@@ -32,8 +31,8 @@
             <div class="modal-footer">
                 <BaseButton type="reset" class="card" size="w100"> Cancel </BaseButton>
                 <BaseButton type="submit" class="card" size="w100">
-                    <CircularLoader v-show="isLoading" />
-                    <span v-show="!isLoading">Login</span>
+                    <CircularLoader v-show="getIsLoaderStarted" />
+                    <span v-show="!getIsLoaderStarted">Login</span>
                 </BaseButton>
             </div>
         </vForm>
@@ -44,7 +43,7 @@
 import BaseButton from '../Components/BaseButton.vue';
 import CircularLoader from './CircularLoader.vue';
 import useCarDataStore from '../Store/carData';
-import { mapActions } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 
 export default {
     name: 'LoginForm',
@@ -54,10 +53,9 @@ export default {
     },
     data() {
         return {
-            isLoading: false,
             schema: {
                 email: 'required|email',
-                password: 'required|min:8|max:12|regex:^(?=.*\\d)(?=.*[\\W_]).+$',
+                password: 'required',
             },
             readLoginDetails: {
                 email: '',
@@ -65,15 +63,16 @@ export default {
             },
         };
     },
+    computed: {
+        ...mapState(useCarDataStore, ['getIsLoaderStarted']),
+    },
     methods: {
         ...mapActions(useCarDataStore, ['userLogin']),
         resetForm() {
             this.$el.querySelector('button[type=reset]').click();
         },
         async performLogin() {
-            this.isLoading = true;
             const res = await this.userLogin(this.readLoginDetails);
-            this.isLoading = false;
             this.$el.querySelector('button[type=reset]').click();
             if (res?.status !== 200) {
                 return;
@@ -92,6 +91,7 @@ export default {
     flex-direction: column;
     align-items: center;
     margin-block-start: 2rem;
+    padding-block-end: 2rem;
 }
 
 .form-container--login h1 {

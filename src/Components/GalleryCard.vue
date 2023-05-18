@@ -1,13 +1,13 @@
 <template>
     <div class="card-1 card-div">
         <div class="img-div">
-            <img :src="carDetail.image" alt="god-of-war-figurine" />
+            <img :src="carDetail.image" :alt="`${carDetail.name}'s image`" />
         </div>
         <div class="card-body-container">
             <h2 class="item-name">{{ carDetail.name }}</h2>
-            <p class="date">{{ displayTrunkedDescription }}</p>
-            <div class="pricing-and-cart">
-                <div class="pricing">
+            <p class="card-description">{{ displayTrunkedDescription }}</p>
+            <div class="card-buttons-container">
+                <div class="card-info-button">
                     <RouterLink :to="{ name: 'carDetailsById', params: { id: `${carDetail.id}` } }">
                         <BaseButton class="card"> Info </BaseButton>
                     </RouterLink>
@@ -95,6 +95,8 @@ export default {
     width: 20rem;
     height: 11rem;
     object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .card-body-container {
@@ -118,17 +120,17 @@ export default {
     color: var(--heading-color);
 }
 
-.card-body-container .date {
+.card-body-container .card-description {
     text-align: left;
     font-size: 0.9em;
     font-weight: var(--date-font-weight);
     color: var(--date-text-color);
 }
-.date {
+.card-description {
     min-height: 86px;
 }
 
-.pricing-and-cart {
+.card-buttons-container {
     width: 100%;
     display: flex;
     flex-direction: row;
@@ -137,29 +139,10 @@ export default {
     margin: 0.25em 0 0 0;
 }
 
-.pricing {
+.card-info-button {
     display: flex;
     flex-direction: column;
     text-align: left;
-}
-
-.previous-price {
-    font-size: 0.8rem;
-    font-weight: var(--pricing-font-weight);
-    color: var(--previous-price-text-color);
-    text-decoration: line-through;
-    text-align: left;
-}
-
-.current-price {
-    color: var(--current-price-text-color);
-    font-size: 1.3rem;
-    font-weight: var(--pricing-font-weight);
-    margin: 0;
-}
-
-.pricing-and-cart {
-    width: 100%;
 }
 
 .edit-icon {

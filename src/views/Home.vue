@@ -1,5 +1,5 @@
 <template>
-    <Loader v-if="isLoading" />
+    <Loader v-if="getIsLoaderStarted" />
     <GalleryCardList v-else />
 </template>
 
@@ -7,7 +7,7 @@
 import { Loader } from '../Components';
 import GalleryCardList from '../Components/GalleryCardList.vue';
 import useCarDataStore from '../Store/carData';
-import { mapActions } from 'pinia';
+import { mapActions, mapState } from 'pinia';
 
 export default {
     name: 'HomeView',
@@ -15,20 +15,14 @@ export default {
         Loader,
         GalleryCardList,
     },
-    data() {
-        return {
-            isLoading: true,
-        };
+    computed: {
+        ...mapState(useCarDataStore, ['getIsLoaderStarted']),
     },
     methods: {
         ...mapActions(useCarDataStore, ['fetchAllCars']),
     },
-    created() {
-        this.isLoading = true;
-        setTimeout(async () => {
-            await this.fetchAllCars();
-            this.isLoading = false;
-        }, 1000);
+    async created() {
+        await this.fetchAllCars();
     },
 };
 </script>

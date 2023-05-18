@@ -42,7 +42,9 @@ export default {
         InputForm,
     },
     computed: {
-        ...mapState(useModalFormStore, ['modalType']),
+        ...mapState(useModalFormStore, {
+            modalType: 'getModalType',
+        }),
     },
     methods: {
         resetForm() {

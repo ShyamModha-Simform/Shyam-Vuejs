@@ -1,5 +1,5 @@
 <template>
-    <LoaderVue v-if="isLoading" />
+    <LoaderVue v-if="getIsLoaderStarted" />
     <div class="car-card-container px-4" v-else>
         <div>
             <RouterLink :to="{ name: 'home' }">
@@ -37,30 +37,19 @@ export default {
     },
     computed: {
         ...mapWritableState(useCarDataStore, ['selectedCarIdForDetails']),
-        ...mapState(useCarDataStore, ['fetchCarDetailsById']),
+        ...mapState(useCarDataStore, ['getCarDetailsById', 'getIsLoaderStarted']),
     },
     data() {
         return {
             carDetail: {},
-            isLoading: false,
         };
     },
     async mounted() {
-        this.isLoading = true;
         this.selectedCarIdForDetails = this.$route.params.id;
-        // const res = await getCarDetailsById(this.$route.params.id);
-        // if (res?.status !== 200) {
-        //     this.isLoading = false;
-        //     this.$router.push({ name: 'home' });
-        //     return;
-        // }
-        this.carDetail = { ...(await this.fetchCarDetailsById) };
-        this.isLoading = false;
+        this.carDetail = { ...(await this.getCarDetailsById) };
     },
 };
 </script>
-p
-
 <style scoped>
 h1,
 h4,

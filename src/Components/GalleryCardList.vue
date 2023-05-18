@@ -43,11 +43,14 @@ export default {
         BaseButton,
     },
     computed: {
-        ...mapState(useCarDataStore, ['carDetails']),
+        ...mapState(useCarDataStore, {
+            carDetails: 'getCarDetails',
+        }), // aliasing getters
         ...mapWritableState(useModalFormStore, ['modalType']),
     },
     methods: {
-        ...mapActions(useCarDataStore, ['deleteCar']),
+        ...mapActions(useCarDataStore, ['deleteCar', 'fetchAllCars']),
+        // Delete Car Handler
         triggerDeleteCarHandler(carId, carToBeDeleted) {
             Swal.fire({
                 title: 'Are you sure?',
@@ -60,12 +63,15 @@ export default {
             }).then(async (result) => {
                 if (result.isConfirmed) {
                     try {
-                        await this.deleteCar(carId);
-                        Swal.fire(
-                            `Deleted ${carToBeDeleted.name}!`,
-                            'Your file has been deleted.',
-                            'success'
-                        );
+                        const res = await this.deleteCar(carId);
+                        await this.fetchAllCars();
+                        if (res?.status === 204) {
+                            Swal.fire(
+                                `Deleted ${carToBeDeleted.name}!`,
+                                'Your file has been deleted.',
+                                'success'
+                            );
+                        }
                     } catch (e) {
                         alert('Something went wrong!');
                     }

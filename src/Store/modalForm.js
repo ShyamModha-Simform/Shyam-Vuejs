@@ -1,5 +1,14 @@
 import { defineStore } from 'pinia';
 
+const getters = {
+    getModalType() {
+        return this.modalType;
+    },
+    getSelectedCarForEditing() {
+        return this.selectedCarForEditing;
+    },
+};
+
 const useModalFormStore = defineStore('modalForm', {
     state: () => {
         return {
@@ -7,6 +16,7 @@ const useModalFormStore = defineStore('modalForm', {
             selectedCarForEditing: {},
         };
     },
+    getters,
 });
 
 export default useModalFormStore;

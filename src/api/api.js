@@ -2,7 +2,7 @@ import axios from 'axios';
 
 const getCarDetails = async () => {
     try {
-        let responseData = await axios.get('https://testapi.io/api/dartya/resource/cardata');
+        let responseData = await axios.get('https://testapi.io/api/dartya/resource/cardaa');
         return responseData.data.data;
     } catch (e) {
         alert("Couldn't able to get Car Details");

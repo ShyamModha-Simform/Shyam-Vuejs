@@ -96,7 +96,7 @@ export default {
     computed: {
         ...mapWritableState(useModalFormStore, {
             modalType: 'modalType',
-            carToBeEdited: 'selectedCarForEditing',
+            carToBeEdited: 'getSelectedCarForEditing',
         }),
     },
     methods: {
