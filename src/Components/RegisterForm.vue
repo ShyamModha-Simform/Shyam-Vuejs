@@ -142,7 +142,7 @@
 import BaseButton from '../Components/BaseButton.vue';
 import CircularLoader from './CircularLoader.vue';
 import { mapActions, mapState } from 'pinia';
-import useCarDataStore from '../Store/carData';
+import useAuthStore from '../Store/authStore';
 
 export default {
     name: 'LoginForm',
@@ -185,10 +185,10 @@ export default {
         };
     },
     computed: {
-        ...mapState(useCarDataStore, ['getIsLoaderStarted']),
+        ...mapState(useAuthStore, ['getIsLoaderStarted']),
     },
     methods: {
-        ...mapActions(useCarDataStore, ['userRegistration']),
+        ...mapActions(useAuthStore, ['userRegistration']),
         async performRegistration() {
             const res = await this.userRegistration({ ...this.readRegisterDetails });
             this.$el.querySelector('button[type=reset]').click();

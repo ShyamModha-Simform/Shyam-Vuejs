@@ -3,7 +3,7 @@ import HomeView from '../views/Home.vue';
 import LoginView from '../views/Login.vue';
 import RegisterView from '../views/Register.vue';
 import CarDetailsView from '../views/CarDetailView.vue';
-
+import NotFound from '../views/NotFound.vue';
 const websiteName = 'Carpedia';
 
 const routes = [
@@ -13,6 +13,7 @@ const routes = [
         component: HomeView,
         meta: {
             title: `Home | ${websiteName}`,
+            isAuthenticationRequired: true,
         },
     },
     {
@@ -21,6 +22,7 @@ const routes = [
         component: LoginView,
         meta: {
             title: `Login | ${websiteName}`,
+            guest: true,
         },
     },
     {
@@ -29,6 +31,7 @@ const routes = [
         component: RegisterView,
         meta: {
             title: `Register | ${websiteName}`,
+            guest: true,
         },
     },
     {
@@ -38,6 +41,11 @@ const routes = [
         meta: {
             title: `Car | ${websiteName}`,
         },
+    },
+    {
+        path: '/:catchAll(.*)',
+        name: 'NotFound',
+        component: NotFound,
     },
 ];
 
@@ -50,6 +58,19 @@ Router.beforeEach((to, from, next) => {
     const title = to.meta.title;
     if (title) {
         document.title = title;
+    }
+    if (to.meta.isAuthenticationRequired) {
+        if (sessionStorage.getItem('token')) {
+            next();
+        } else {
+            alert('Please Login/Register to continue!');
+            next('/login');
+        }
+    }
+    if (to.meta.guest) {
+        if (sessionStorage.getItem('token')) {
+            next('/');
+        }
     }
     next();
 });

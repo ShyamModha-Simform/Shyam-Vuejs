@@ -21,24 +21,31 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="getIsAuthenticated">
                         <RouterLink :to="{ name: 'home' }">
                             <BaseButton class="navbar" size="sm">
                                 <h4>Home</h4>
                             </BaseButton>
                         </RouterLink>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="!getIsAuthenticated">
                         <RouterLink :to="{ name: 'login' }">
                             <BaseButton class="navbar" size="lg">
                                 <h4>Login</h4>
                             </BaseButton>
                         </RouterLink>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="!getIsAuthenticated">
                         <RouterLink :to="{ name: 'register' }">
                             <BaseButton class="navbar" size="sm">
                                 <h4>Register</h4>
+                            </BaseButton>
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item" v-if="getIsAuthenticated">
+                        <RouterLink :to="{ name: 'login' }">
+                            <BaseButton class="navbar" size="sm" @click="handleLogout">
+                                <h4>Logout</h4>
                             </BaseButton>
                         </RouterLink>
                     </li>
@@ -49,7 +56,9 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'pinia';
 import BaseButton from './BaseButton.vue';
+import useAuthStore from '../Store/authStore';
 
 export default {
     name: 'NavbarContainer',
@@ -61,6 +70,12 @@ export default {
             headingContent: 'Carpedia',
             tagLine: 'Your encyclopedia of all things automotive',
         };
+    },
+    computed: {
+        ...mapState(useAuthStore, ['getIsAuthenticated']),
+    },
+    methods: {
+        ...mapActions(useAuthStore, ['handleLogout']),
     },
 };
 </script>
