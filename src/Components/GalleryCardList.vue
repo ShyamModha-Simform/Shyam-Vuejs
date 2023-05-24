@@ -5,9 +5,9 @@
                 <BaseButton
                     class="card"
                     size="lg"
-                    @click="openAddCarForm"
+                    @click="modalType = 'add'"
                     data-bs-toggle="modal"
-                    data-bs-target="#shyam"
+                    data-bs-target="#backdrop-overlay-modal"
                 >
                     Add
                 </BaseButton>
@@ -15,9 +15,9 @@
             <div class="card-container">
                 <TransitionGroup name="fade" mode="out-in" appear>
                     <GalleryCard
-                        v-for="(car, index) in store.carDetails"
+                        v-for="(car, index) in carDetails"
                         :carDetail="car"
-                        @delete-car-details="deleteCar"
+                        @delete-car-details="triggerDeleteCarHandler"
                         :key="car.id"
                         :style="{ transitionDelay: `${0.03 * index}s` }"
                     />
@@ -31,9 +31,10 @@
 import GalleryCard from './GalleryCard.vue';
 
 import Swal from 'sweetalert2';
-import { deleteCarDetails, getCarDetails } from '../api/api';
-import { store } from '../Store/store';
 import BaseButton from './BaseButton.vue';
+import useCarDataStore from '../Store/carData';
+import { mapActions, mapState, mapWritableState } from 'pinia';
+import useModalFormStore from '../Store/modalForm';
 
 export default {
     name: 'GalleryCardList',
@@ -41,19 +42,16 @@ export default {
         GalleryCard,
         BaseButton,
     },
-    data() {
-        return {
-            store,
-        };
-    },
-    unmounted() {
-        console.log('Unmounted!');
+    computed: {
+        ...mapState(useCarDataStore, {
+            carDetails: 'getCarDetails',
+        }), // aliasing getters
+        ...mapWritableState(useModalFormStore, ['modalType']),
     },
     methods: {
-        openAddCarForm() {
-            store.modalType = 'add';
-        },
-        deleteCar(carId, carToBeDeleted) {
+        ...mapActions(useCarDataStore, ['deleteCar', 'fetchAllCars']),
+        // Delete Car Handler
+        triggerDeleteCarHandler(carId, carToBeDeleted) {
             Swal.fire({
                 title: 'Are you sure?',
                 text: "You won't be able to revert this!",
@@ -64,19 +62,19 @@ export default {
                 confirmButtonText: 'Yes, delete it!',
             }).then(async (result) => {
                 if (result.isConfirmed) {
-                    let res = await deleteCarDetails(carId);
-                    if (res.status !== 204) {
-                        console.log(res.status, res.statusText);
-                        alert("Couldn't able to delete car..");
-                        return;
+                    try {
+                        const res = await this.deleteCar(carId);
+                        await this.fetchAllCars();
+                        if (res?.status === 204) {
+                            Swal.fire(
+                                `Deleted ${carToBeDeleted.name}!`,
+                                'Your file has been deleted.',
+                                'success'
+                            );
+                        }
+                    } catch (e) {
+                        alert('Something went wrong!');
                     }
-                    Swal.fire(
-                        `Deleted ${carToBeDeleted.name}!`,
-                        'Your file has been deleted.',
-                        'success'
-                    );
-                    //rendered carList when car deleted
-                    store.carDetails = await getCarDetails();
                 }
             });
         },

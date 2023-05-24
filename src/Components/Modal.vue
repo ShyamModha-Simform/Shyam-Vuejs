@@ -2,7 +2,7 @@
     <!-- Modal -->
     <div
         class="modal fade"
-        id="shyam"
+        id="backdrop-overlay-modal"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabindex="-1"
@@ -13,7 +13,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h1 class="modal-title fs-5 text-dark" id="staticBackdropLabel">
-                        {{ store.modalType === 'edit' ? 'Edit' : 'Add' }} Car Details
+                        {{ modalType === 'edit' ? 'Edit' : 'Add' }} Car Details
                     </h1>
                     <button
                         type="button"
@@ -33,17 +33,18 @@
 
 <script>
 import InputForm from './InputForm.vue';
-import { store } from '../Store/store';
+import { mapState } from 'pinia';
+import useModalFormStore from '../Store/modalForm';
 
 export default {
     name: 'ModalOverlay',
-    data() {
-        return {
-            store,
-        };
-    },
     components: {
         InputForm,
+    },
+    computed: {
+        ...mapState(useModalFormStore, {
+            modalType: 'getModalType',
+        }),
     },
     methods: {
         resetForm() {

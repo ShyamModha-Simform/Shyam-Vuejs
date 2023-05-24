@@ -1,14 +1,12 @@
 <template>
     <nav class="navbar navbar-expand-lg">
         <div class="container justify-content-around">
-            <h1 class="p-0">
-                <div>
-                    <RouterLink :to="{ name: 'home' }">
-                        <h2>{{ headingContent }}</h2>
-                    </RouterLink>
-                    <h6>-{{ tagLine }}</h6>
-                </div>
-            </h1>
+            <div class="navbar-logo-text">
+                <RouterLink :to="{ name: 'home' }">
+                    <h2>{{ headingContent }}</h2>
+                </RouterLink>
+                <h6>-{{ tagLine }}</h6>
+            </div>
 
             <button
                 class="navbar-toggler"
@@ -80,6 +78,12 @@ export default {
     background-color: var(--header-background);
 }
 
+.navbar .navbar-logo-text {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
 .router-link-active > button {
     color: white;
 }
@@ -95,7 +99,7 @@ h2 {
 h6 {
     color: #fff;
     padding: 0;
-    margin-block: 1rem;
+    margin-block: 0.5rem;
     text-align: center;
 }
 

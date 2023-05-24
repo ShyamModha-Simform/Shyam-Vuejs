@@ -7,7 +7,7 @@
                 type="text"
                 class="input"
                 :validateOnInput="true"
-                v-model="store.carToBeEdited.name"
+                v-model="carToBeEdited.name"
             />
             <label for="carName">Car Name </label>
             <ErrorMessage name="carName" class="error_message" />
@@ -20,7 +20,7 @@
                 type="number"
                 class="input"
                 :validateOnInput="true"
-                v-model="store.carToBeEdited.price"
+                v-model="carToBeEdited.price"
             />
             <label for="price">Price</label>
             <ErrorMessage name="price" class="error_message" />
@@ -33,7 +33,7 @@
                 type="text"
                 class="input"
                 :validateOnInput="true"
-                v-model="store.carToBeEdited.image"
+                v-model="carToBeEdited.image"
             />
             <label for="url">Image URL</label>
             <ErrorMessage name="url" class="error_message" />
@@ -43,7 +43,7 @@
                 name="carDetails"
                 :bails="false"
                 v-slot="{ field, errors }"
-                v-model="store.carToBeEdited.details"
+                v-model="carToBeEdited.details"
             >
                 <textarea
                     type="text"
@@ -65,7 +65,7 @@
                 >Cancel</BaseButton
             >
             <BaseButton type="submit" class="card">
-                {{ store.modalType === 'edit' ? `Update` : `Submit` }}
+                {{ modalType == 'edit' ? `Update` : `Submit` }}
             </BaseButton>
         </div>
     </vForm>
@@ -73,9 +73,10 @@
 
 <script>
 import Swal from 'sweetalert2';
-import { addCarDetails, getCarDetails, updataCarDetails } from '../api/api';
-import { store } from '../Store/store';
 import BaseButton from './BaseButton.vue';
+import useCarDataStore from '../Store/carData';
+import useModalFormStore from '../Store/modalForm';
+import { mapActions, mapWritableState } from 'pinia';
 
 export default {
     name: 'InputForm',
@@ -84,7 +85,6 @@ export default {
     },
     data() {
         return {
-            store,
             schema: {
                 carName: 'required|alpha_spaces',
                 price: 'required|integer',
@@ -93,7 +93,14 @@ export default {
             },
         };
     },
+    computed: {
+        ...mapWritableState(useModalFormStore, {
+            modalType: 'modalType',
+            carToBeEdited: 'getSelectedCarForEditing',
+        }),
+    },
     methods: {
+        ...mapActions(useCarDataStore, ['addCar', 'updateCar']),
         handleFormSubmit() {
             clearTimeout(this.submitTimer);
             this.submitTimer = setTimeout(async () => {
@@ -101,17 +108,14 @@ export default {
             }, 300);
         },
         async createCar() {
-            const temp = store.modalType;
+            const temp = this.modalType;
             let res = {};
             if (temp !== 'edit') {
-                res = await addCarDetails(store.carToBeEdited);
+                res = await this.addCar(this.carToBeEdited);
             } else {
-                res = await updataCarDetails(store.carToBeEdited);
+                // eslint-disable-next-line no-unused-vars
+                res = await this.updateCar(this.carToBeEdited);
             }
-            console.log(res);
-            // rendering Car details once finish
-
-            store.carDetails = await getCarDetails();
 
             this.$el.querySelector('button[type=reset]').click();
 
@@ -120,10 +124,10 @@ export default {
                 html: `
               <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
-                    <img src="${store.carToBeEdited.image}" alt="Logo" style="width: 300px;" />
-                    <h3>${store.carToBeEdited.name}</h3>
-                    <p>Price: ${store.carToBeEdited.price}</p>
-                    <p>Details: ${store.carToBeEdited.details}</p>
+                    <img src="${this.carToBeEdited.image}" alt="Logo" style="width: 300px;" />
+                    <h3>${this.carToBeEdited.name}</h3>
+                    <p>Price: ${this.carToBeEdited.price}</p>
+                    <p>Details: ${this.carToBeEdited.details}</p>
               </div>
               </div> `,
                 showCloseButton: true,
@@ -135,7 +139,7 @@ export default {
             });
         },
         resetForm() {
-            store.carToBeEdited = {};
+            this.carToBeEdited = {};
             this.$el.querySelector('button[type=reset]').click();
         },
     },

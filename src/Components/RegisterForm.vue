@@ -32,14 +32,18 @@
             <div class="group">
                 <vField
                     name="password"
-                    placeholder="‎"
-                    type="password"
+                    :bails="false"
                     class="input"
                     :validateOnInput="true"
+                    v-slot="{ field, errors }"
                     v-model="readRegisterDetails.password"
-                />
-                <label for="password">Password</label>
-                <ErrorMessage name="password" class="error_message" />
+                >
+                    <input type="password" placeholder="‎" v-bind="field" class="input" />
+                    <label for="password">Password</label>
+                    <div class="error_message" v-for="err in errors" :key="err">
+                        {{ err }}
+                    </div>
+                </vField>
             </div>
 
             <div class="group">
@@ -126,8 +130,8 @@
             <div class="modal-footer">
                 <BaseButton type="reset" class="card" size="w100"> Cancel </BaseButton>
                 <BaseButton type="submit" class="card" size="w100">
-                    <CircularLoader v-show="isLoading" />
-                    <span v-show="!isLoading">Register</span>
+                    <CircularLoader v-show="getIsLoaderStarted" />
+                    <span v-show="!getIsLoaderStarted">Register</span>
                 </BaseButton>
             </div>
         </vForm>
@@ -135,10 +139,10 @@
 </template>
 
 <script>
-import { store } from '../Store/store';
 import BaseButton from '../Components/BaseButton.vue';
 import CircularLoader from './CircularLoader.vue';
-import { registerUser } from '../api/api';
+import { mapActions, mapState } from 'pinia';
+import useCarDataStore from '../Store/carData';
 
 export default {
     name: 'LoginForm',
@@ -148,8 +152,6 @@ export default {
     },
     data() {
         return {
-            store,
-            isLoading: false,
             readRegisterDetails: {
                 name: '',
                 email: '',
@@ -165,15 +167,8 @@ export default {
                 password: 'required|min:8|max:12|regex:^(?=.*\\d)(?=.*[\\W_]).+$',
                 confirmPwd: 'required|confirmed:@password',
                 role: 'required',
-                gender: (value) => {
-                    if (value) {
-                        return true;
-                    }
-
-                    return 'Choose appropriate Gender';
-                },
+                gender: 'required',
                 dob: (value) => {
-                    console.log(value);
                     if (value) {
                         const date = new Date(value);
                         // Define the minimum and maximum dates
@@ -189,12 +184,13 @@ export default {
             },
         };
     },
+    computed: {
+        ...mapState(useCarDataStore, ['getIsLoaderStarted']),
+    },
     methods: {
+        ...mapActions(useCarDataStore, ['userRegistration']),
         async performRegistration() {
-            this.isLoading = true;
-            console.log(this.readRegisterDetails);
-            const res = await registerUser({ ...this.readRegisterDetails });
-            this.isLoading = false;
+            const res = await this.userRegistration({ ...this.readRegisterDetails });
             this.$el.querySelector('button[type=reset]').click();
             if (res?.status !== 201) {
                 return;
@@ -217,6 +213,7 @@ export default {
     flex-direction: column;
     align-items: center;
     margin-block-start: 2rem;
+    padding-block-end: 2rem;
     flex: 1;
 }
 

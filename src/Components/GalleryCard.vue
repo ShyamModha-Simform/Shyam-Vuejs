@@ -1,13 +1,13 @@
 <template>
     <div class="card-1 card-div">
         <div class="img-div">
-            <img :src="carDetail.image" alt="god-of-war-figurine" />
+            <img :src="carDetail.image" :alt="`${carDetail.name}'s image`" />
         </div>
         <div class="card-body-container">
             <h2 class="item-name">{{ carDetail.name }}</h2>
-            <p class="date">{{ displayTrunkedDescription }}</p>
-            <div class="pricing-and-cart">
-                <div class="pricing">
+            <p class="card-description">{{ displayTrunkedDescription }}</p>
+            <div class="card-buttons-container">
+                <div class="card-info-button">
                     <RouterLink :to="{ name: 'carDetailsById', params: { id: `${carDetail.id}` } }">
                         <BaseButton class="card"> Info </BaseButton>
                     </RouterLink>
@@ -19,7 +19,7 @@
                         alt="editIcon"
                         @click="editCarDetails"
                         data-bs-toggle="modal"
-                        data-bs-target="#shyam"
+                        data-bs-target="#backdrop-overlay-modal"
                     />
                     <img
                         src="../assests/delete_icon.png"
@@ -34,8 +34,9 @@
 </template>
 
 <script>
-import { store } from '../Store/store';
 import BaseButton from './BaseButton.vue';
+import useModalFormStore from '../Store/modalForm';
+import { mapWritableState } from 'pinia';
 
 export default {
     name: 'GalleryCard',
@@ -46,8 +47,8 @@ export default {
     methods: {
         editCarDetails() {
             // Setting value in global store which will automatically reactive at other components
-            store.modalType = 'edit';
-            store.carToBeEdited = { ...this.carDetail };
+            this.modalType = 'edit';
+            this.selectedCarForEditing = { ...this.carDetail };
             // we are passing object copy instead of reference
         },
         deleteCarDetails() {
@@ -55,6 +56,7 @@ export default {
         },
     },
     computed: {
+        ...mapWritableState(useModalFormStore, ['selectedCarForEditing', 'modalType']),
         displayTrunkedDescription() {
             return this.carDetail?.details?.slice(0, 200) + '...';
         },
@@ -93,6 +95,8 @@ export default {
     width: 20rem;
     height: 11rem;
     object-fit: cover;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .card-body-container {
@@ -105,9 +109,8 @@ export default {
     box-sizing: border-box;
 }
 
-.card-body-container .item-name,
-.card-body-container .date {
-    margin: 0.25em 0;
+.card-body-container .item-name {
+    margin: 0.2em 0;
     text-align: center;
 }
 
@@ -117,44 +120,29 @@ export default {
     color: var(--heading-color);
 }
 
-.card-body-container .date {
+.card-body-container .card-description {
     text-align: left;
     font-size: 0.9em;
     font-weight: var(--date-font-weight);
     color: var(--date-text-color);
 }
+.card-description {
+    min-height: 86px;
+}
 
-.pricing-and-cart {
+.card-buttons-container {
     width: 100%;
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: space-between;
-    margin: 0.25em 0 1em 0;
+    margin: 0.25em 0 0 0;
 }
 
-.pricing {
+.card-info-button {
     display: flex;
     flex-direction: column;
     text-align: left;
-}
-
-.previous-price {
-    font-size: 0.8rem;
-    font-weight: var(--pricing-font-weight);
-    color: var(--previous-price-text-color);
-    text-decoration: line-through;
-    text-align: left;
-}
-
-.current-price {
-    color: var(--current-price-text-color);
-    font-size: 1.3rem;
-    font-weight: var(--pricing-font-weight);
-    margin: 0;
-}
-
-.pricing-and-cart {
-    width: 100%;
 }
 
 .edit-icon {

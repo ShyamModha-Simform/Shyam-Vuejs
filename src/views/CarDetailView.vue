@@ -1,5 +1,5 @@
 <template>
-    <LoaderVue v-if="isLoading" />
+    <LoaderVue v-if="getIsLoaderStarted" />
     <div class="car-card-container px-4" v-else>
         <div>
             <RouterLink :to="{ name: 'home' }">
@@ -9,13 +9,13 @@
         <div class="card mb-3 mx-sm-2" style="max-width: 70rem">
             <div class="row g-0">
                 <div class="col-md-7">
-                    <img :src="carDetail.image" class="img-fluid rounded-start" alt="..." />
+                    <img :src="carDetail?.image" class="img-fluid rounded-start" alt="..." />
                 </div>
                 <div class="col-md-5">
                     <div class="card-body">
-                        <h1 class="card-title">{{ carDetail.name }}</h1>
-                        <h4 class="card-text">Price:-{{ carDetail.price }}</h4>
-                        <p class="card-text">{{ carDetail.details }}</p>
+                        <h1 class="card-title">{{ carDetail?.name }}</h1>
+                        <h4 class="card-text">Price:-{{ carDetail?.price }}</h4>
+                        <p class="card-text">{{ carDetail?.details }}</p>
                     </div>
                 </div>
             </div>
@@ -24,9 +24,10 @@
 </template>
 
 <script>
-import { getCarDetailsById } from '../api/api';
+import { mapState, mapWritableState } from 'pinia';
 import BaseButton from '../Components/BaseButton.vue';
 import LoaderVue from '../Components/Loader.vue';
+import useCarDataStore from '../Store/carData';
 
 export default {
     name: 'CarDetailsView',
@@ -34,27 +35,21 @@ export default {
         BaseButton,
         LoaderVue,
     },
+    computed: {
+        ...mapWritableState(useCarDataStore, ['selectedCarIdForDetails']),
+        ...mapState(useCarDataStore, ['getCarDetailsById', 'getIsLoaderStarted']),
+    },
     data() {
         return {
             carDetail: {},
-            isLoading: false,
         };
     },
-    async created() {
-        this.isLoading = true;
-        const res = await getCarDetailsById(this.$route.params.id);
-        if (res?.status !== 200) {
-            this.isLoading = false;
-            this.$router.push({ name: 'home' });
-            return;
-        }
-        this.carDetail = { ...res.data };
-        this.isLoading = false;
+    async mounted() {
+        this.selectedCarIdForDetails = this.$route.params.id;
+        this.carDetail = { ...(await this.getCarDetailsById) };
     },
 };
 </script>
-p
-
 <style scoped>
 h1,
 h4,

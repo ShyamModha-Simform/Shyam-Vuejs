@@ -21,7 +21,6 @@ export default {
 <style scoped>
 .fade-pages-enter-active,
 .fade-pages-leave-active {
-    /* opacity: 0.9; */
     transition: all 0.4s;
 }
 
