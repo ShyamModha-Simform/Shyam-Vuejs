@@ -11,20 +11,8 @@
     >
         <div class="modal-dialog">
             <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5 text-dark" id="staticBackdropLabel">
-                        {{ modalType === 'edit' ? 'Edit' : 'Add' }} Car Details
-                    </h1>
-                    <button
-                        type="button"
-                        class="btn-close"
-                        data-bs-dismiss="modal"
-                        aria-label="Close"
-                        @click="resetForm"
-                    ></button>
-                </div>
                 <div class="modal-body">
-                    <InputForm ref="child" />
+                    <InputForm />
                 </div>
             </div>
         </div>
@@ -45,11 +33,6 @@ export default {
         ...mapState(useModalFormStore, {
             modalType: 'getModalType',
         }),
-    },
-    methods: {
-        resetForm() {
-            this.$refs.child.resetForm();
-        },
     },
 };
 </script>

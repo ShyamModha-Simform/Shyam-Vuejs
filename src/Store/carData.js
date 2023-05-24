@@ -77,32 +77,6 @@ const actions = {
             alert("Couldn't able to fetch car details");
         }
     },
-    async userLogin(user) {
-        try {
-            this.isLoaderStarted = true;
-            let responseData = await axios.post(`https://testapi.io/api/dartya//login`, {
-                ...user,
-            });
-            this.isLoaderStarted = false;
-            return responseData;
-        } catch (e) {
-            this.isLoaderStarted = false;
-            alert("Something went wrong! Couldn't able to Login user.");
-        }
-    },
-    async userRegistration(user) {
-        try {
-            this.isLoaderStarted = true;
-            let responseData = await axios.post(`https://testapi.io/api/dartya/resource/users`, {
-                ...user,
-            });
-            this.isLoaderStarted = false;
-            return responseData;
-        } catch (e) {
-            this.isLoaderStarted = false;
-            alert("Something went wrong! Couldn't able to register user.");
-        }
-    },
 };
 
 const getters = {

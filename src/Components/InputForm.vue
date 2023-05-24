@@ -1,5 +1,16 @@
 <template>
     <vForm class="form" :validation-schema="schema" @submit="handleFormSubmit">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5 text-dark" id="staticBackdropLabel">
+                {{ modalType === 'edit' ? 'Edit' : 'Add' }} Car Details
+            </h1>
+            <button
+                type="reset"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+            ></button>
+        </div>
         <div class="group">
             <vField
                 name="carName"
@@ -139,7 +150,8 @@ export default {
             });
         },
         resetForm() {
-            this.carToBeEdited = {};
+            // this.carToBeEdited = {};
+            console.log(this.$el, '======');
             this.$el.querySelector('button[type=reset]').click();
         },
     },
