@@ -40,6 +40,7 @@ const routes = [
         component: CarDetailsView,
         meta: {
             title: `Car | ${websiteName}`,
+            isAuthenticationRequired: true,
         },
     },
     {
@@ -55,10 +56,6 @@ const Router = createRouter({
 });
 
 Router.beforeEach((to, from, next) => {
-    const title = to.meta.title;
-    if (title) {
-        document.title = title;
-    }
     if (to.meta.isAuthenticationRequired) {
         if (sessionStorage.getItem('token')) {
             next();
@@ -71,6 +68,15 @@ Router.beforeEach((to, from, next) => {
         if (sessionStorage.getItem('token')) {
             next('/');
         }
+    }
+
+    next();
+});
+
+Router.afterEach((to, from, next) => {
+    const title = to.meta.title;
+    if (title) {
+        document.title = title;
     }
     next();
 });
