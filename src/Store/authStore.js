@@ -30,8 +30,8 @@ const actions = {
                     user.password === loginCredentials.password
                 );
             });
-            console.log(userExists);
             if (userExists) {
+                sessionStorage.setItem('username', userExists.name);
                 sessionStorage.setItem(
                     'token',
                     GENERATE_RANDOM_TOKEN(loginCredentials.password.length)
@@ -62,6 +62,7 @@ const actions = {
     },
     handleLogout() {
         sessionStorage.removeItem('token');
+        sessionStorage.removeItem('username');
         this.isAuthenticated = false;
     },
 };
@@ -71,6 +72,7 @@ const useAuthStore = defineStore('authStore', {
         return {
             isAuthenticated: sessionStorage.getItem('token') ? true : false,
             isLoaderStarted: false,
+            username: sessionStorage.getItem('username'),
         };
     },
     getters: {
@@ -79,6 +81,9 @@ const useAuthStore = defineStore('authStore', {
         },
         getIsLoaderStarted() {
             return this.isLoaderStarted;
+        },
+        getLoggedInUserName() {
+            return this.username;
         },
     },
     actions,

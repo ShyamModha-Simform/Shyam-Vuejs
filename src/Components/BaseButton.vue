@@ -64,7 +64,7 @@ export default {
     margin: 5px;
     font-size: 14px;
     min-height: 38px;
-    padding: 8px 24px;
+    padding: 8px 20px;
 }
 
 .base-button:disabled {
