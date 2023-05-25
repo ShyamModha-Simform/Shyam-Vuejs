@@ -42,7 +42,7 @@
 <script>
 import BaseButton from '../Components/BaseButton.vue';
 import CircularLoader from './CircularLoader.vue';
-import useCarDataStore from '../Store/carData';
+import useAuthStore from '../Store/authStore';
 import { mapActions, mapState } from 'pinia';
 
 export default {
@@ -64,10 +64,10 @@ export default {
         };
     },
     computed: {
-        ...mapState(useCarDataStore, ['getIsLoaderStarted']),
+        ...mapState(useAuthStore, ['getIsLoaderStarted']),
     },
     methods: {
-        ...mapActions(useCarDataStore, ['userLogin']),
+        ...mapActions(useAuthStore, ['userLogin']),
         resetForm() {
             this.$el.querySelector('button[type=reset]').click();
         },
@@ -118,7 +118,6 @@ export default {
     margin-top: 20px;
     display: flex;
     flex-direction: column;
-    /* align-items: center; */
 }
 
 .group {
@@ -162,7 +161,7 @@ export default {
     top: -10px;
     left: 10px;
     background-color: #e6e8e7;
-    color: #3366cc;
+    color: #606d75;
     font-weight: 600;
     font-size: 14px;
 }

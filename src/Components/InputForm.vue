@@ -1,5 +1,16 @@
 <template>
     <vForm class="form" :validation-schema="schema" @submit="handleFormSubmit">
+        <div class="modal-header">
+            <h1 class="modal-title fs-5 text-dark" id="staticBackdropLabel">
+                {{ modalType === 'edit' ? 'Edit' : 'Add' }} Car Details
+            </h1>
+            <button
+                type="reset"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+            ></button>
+        </div>
         <div class="group">
             <vField
                 name="carName"
@@ -65,7 +76,10 @@
                 >Cancel</BaseButton
             >
             <BaseButton type="submit" class="card">
-                {{ modalType == 'edit' ? `Update` : `Submit` }}
+                <CircularLoader v-show="getIsLoaderStarted" />
+                <span v-show="!getIsLoaderStarted">{{
+                    modalType == 'edit' ? `Update` : `Submit`
+                }}</span>
             </BaseButton>
         </div>
     </vForm>
@@ -76,12 +90,14 @@ import Swal from 'sweetalert2';
 import BaseButton from './BaseButton.vue';
 import useCarDataStore from '../Store/carData';
 import useModalFormStore from '../Store/modalForm';
-import { mapActions, mapWritableState } from 'pinia';
+import { mapActions, mapState, mapWritableState } from 'pinia';
+import CircularLoader from './CircularLoader.vue';
 
 export default {
     name: 'InputForm',
     components: {
         BaseButton,
+        CircularLoader,
     },
     data() {
         return {
@@ -94,6 +110,7 @@ export default {
         };
     },
     computed: {
+        ...mapState(useCarDataStore, ['getIsLoaderStarted']),
         ...mapWritableState(useModalFormStore, {
             modalType: 'modalType',
             carToBeEdited: 'getSelectedCarForEditing',
@@ -139,7 +156,8 @@ export default {
             });
         },
         resetForm() {
-            this.carToBeEdited = {};
+            // this.carToBeEdited = {};
+            console.log(this.$el, '======');
             this.$el.querySelector('button[type=reset]').click();
         },
     },

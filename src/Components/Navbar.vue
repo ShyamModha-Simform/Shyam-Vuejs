@@ -19,26 +19,37 @@
             >
                 <span class="navbar-toggler-icon"></span>
             </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <div class="collapse navbar-collapse justify-content-end my-3" id="navbarNav">
+                <div class="user_detail" v-if="getIsAuthenticated">
+                    <img class="user_logo" src="../assests/userlogo.png" alt="userlogo" />
+                    <h4>{{ getLoggedInUserName }}</h4>
+                </div>
                 <ul class="navbar-nav">
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="getIsAuthenticated">
                         <RouterLink :to="{ name: 'home' }">
                             <BaseButton class="navbar" size="sm">
                                 <h4>Home</h4>
                             </BaseButton>
                         </RouterLink>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="!getIsAuthenticated">
                         <RouterLink :to="{ name: 'login' }">
                             <BaseButton class="navbar" size="lg">
                                 <h4>Login</h4>
                             </BaseButton>
                         </RouterLink>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item" v-if="!getIsAuthenticated">
                         <RouterLink :to="{ name: 'register' }">
                             <BaseButton class="navbar" size="sm">
                                 <h4>Register</h4>
+                            </BaseButton>
+                        </RouterLink>
+                    </li>
+                    <li class="nav-item" v-if="getIsAuthenticated">
+                        <RouterLink :to="{ name: 'login' }">
+                            <BaseButton class="navbar" size="sm" @click="handleLogout">
+                                <h4>Logout</h4>
                             </BaseButton>
                         </RouterLink>
                     </li>
@@ -49,7 +60,9 @@
 </template>
 
 <script>
+import { mapActions, mapState } from 'pinia';
 import BaseButton from './BaseButton.vue';
+import useAuthStore from '../Store/authStore';
 
 export default {
     name: 'NavbarContainer',
@@ -61,6 +74,12 @@ export default {
             headingContent: 'Carpedia',
             tagLine: 'Your encyclopedia of all things automotive',
         };
+    },
+    computed: {
+        ...mapState(useAuthStore, ['getIsAuthenticated', 'getLoggedInUserName']),
+    },
+    methods: {
+        ...mapActions(useAuthStore, ['handleLogout']),
     },
 };
 </script>
@@ -76,6 +95,9 @@ export default {
     gap: 10;
     z-index: 100;
     background-color: var(--header-background);
+}
+h4 {
+    margin: 0;
 }
 
 .navbar .navbar-logo-text {
@@ -106,6 +128,23 @@ h6 {
 .container-fluid {
     display: flex;
     justify-content: space-around;
+}
+
+.user_logo {
+    width: 2.5rem;
+}
+
+.user_detail {
+    display: flex;
+    align-items: center;
+    margin: 0 20px;
+    color: white;
+    /* box-shadow: 0 0px 2px 1px white; */
+    border-radius: 3rem;
+    padding: 2px 0.8rem;
+    gap: 0.5rem;
+    background: #6b7a83;
+    max-width: fit-content;
 }
 
 @media screen and (max-width: 600px) {
