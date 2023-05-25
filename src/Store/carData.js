@@ -23,11 +23,11 @@ const actions = {
             let responseData = await axios.post('https://testapi.io/api/dartya/resource/cardata', {
                 ...newCar,
             });
-            this.isLoaderStarted = false;
             if (responseData?.status === 201) {
                 // After deleting fetch all car details again
                 await this.fetchAllCars();
             }
+            this.isLoaderStarted = false;
             return responseData;
         } catch (e) {
             this.isLoaderStarted = false;

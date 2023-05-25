@@ -73,12 +73,11 @@ Router.beforeEach((to, from, next) => {
     next();
 });
 
-Router.afterEach((to, from, next) => {
+Router.afterEach((to, from) => {
     const title = to.meta.title;
     if (title) {
         document.title = title;
     }
-    next();
 });
 
 export default Router;

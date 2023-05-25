@@ -12,7 +12,12 @@
                     Add
                 </BaseButton>
             </div>
-            <div class="card-container">
+            <div class="no_cars_found" v-if="carDetails.length === 0">
+                <h1>No Cars Found!</h1>
+                <img src="../assests/No_cars.png" />
+            </div>
+
+            <div class="card-container" v-else>
                 <TransitionGroup name="fade" mode="out-in" appear>
                     <GalleryCard
                         v-for="(car, index) in carDetails"
@@ -86,8 +91,23 @@ export default {
 .card-container--layer {
     display: flex;
     flex-direction: column;
+    justify-content: center;
     align-items: center;
     padding: 3em 1em 1em 1em;
+}
+
+.no_cars_found {
+    width: 100%;
+    color: #606d75;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-block: 1rem;
+}
+
+.no_cars_found > img {
+    width: max(316px, 25%);
 }
 
 .add-car-container {

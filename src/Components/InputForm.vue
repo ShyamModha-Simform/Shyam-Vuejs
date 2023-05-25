@@ -76,7 +76,10 @@
                 >Cancel</BaseButton
             >
             <BaseButton type="submit" class="card">
-                {{ modalType == 'edit' ? `Update` : `Submit` }}
+                <CircularLoader v-show="getIsLoaderStarted" />
+                <span v-show="!getIsLoaderStarted">{{
+                    modalType == 'edit' ? `Update` : `Submit`
+                }}</span>
             </BaseButton>
         </div>
     </vForm>
@@ -87,12 +90,14 @@ import Swal from 'sweetalert2';
 import BaseButton from './BaseButton.vue';
 import useCarDataStore from '../Store/carData';
 import useModalFormStore from '../Store/modalForm';
-import { mapActions, mapWritableState } from 'pinia';
+import { mapActions, mapState, mapWritableState } from 'pinia';
+import CircularLoader from './CircularLoader.vue';
 
 export default {
     name: 'InputForm',
     components: {
         BaseButton,
+        CircularLoader,
     },
     data() {
         return {
@@ -105,6 +110,7 @@ export default {
         };
     },
     computed: {
+        ...mapState(useCarDataStore, ['getIsLoaderStarted']),
         ...mapWritableState(useModalFormStore, {
             modalType: 'modalType',
             carToBeEdited: 'getSelectedCarForEditing',

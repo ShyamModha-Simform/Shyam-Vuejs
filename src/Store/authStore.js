@@ -31,6 +31,7 @@ const actions = {
                 );
             });
             if (userExists) {
+                this.username = userExists.name;
                 sessionStorage.setItem('username', userExists.name);
                 sessionStorage.setItem(
                     'token',
@@ -39,9 +40,11 @@ const actions = {
                 this.isLoaderStarted = false;
                 this.isAuthenticated = true;
                 return { status: 200, statusText: 'Logged in Successfully!' };
+            } else {
+                this.isLoaderStarted = false;
+                alert('Invalid Credentials or User not found!');
+                return { status: 401, statusText: 'Invalid Credentials' };
             }
-            this.isLoaderStarted = false;
-            return { status: 404, statusText: 'User Not Found!' };
         } catch (e) {
             this.isLoaderStarted = false;
             alert("Something went wrong! Couldn't able to Login user.");
@@ -63,6 +66,7 @@ const actions = {
     handleLogout() {
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('username');
+        this.username = null;
         this.isAuthenticated = false;
     },
 };
@@ -72,7 +76,7 @@ const useAuthStore = defineStore('authStore', {
         return {
             isAuthenticated: sessionStorage.getItem('token') ? true : false,
             isLoaderStarted: false,
-            username: sessionStorage.getItem('username'),
+            username: sessionStorage.getItem('username') || null,
         };
     },
     getters: {
