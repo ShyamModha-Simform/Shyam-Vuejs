@@ -1,6 +1,6 @@
 <template>
     <div class="not_found">
-        <img src="../assests/404 Error-pana.png" alt="" />
+        <img src="../assests/404Error-pana.png" alt="" />
         <RouterLink :to="{ name: 'home' }">
             <BaseButton class="card" size="lg">Go Back To Home</BaseButton>
         </RouterLink>
