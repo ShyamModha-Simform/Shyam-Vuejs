@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-import HomeView from '../views/Home.vue';
-import LoginView from '../views/Login.vue';
-import RegisterView from '../views/Register.vue';
-import CarDetailsView from '../views/CarDetailView.vue';
-import NotFound from '../views/NotFound.vue';
+const HomeView = () => import('../views/Home.vue');
+const LoginView = () => import('../views/Login.vue');
+const RegisterView = () => import('../views/Register.vue');
+const CarDetailView = () => import('../views/CarDetailView.vue');
+const NotFound = () => import('../views/NotFound.vue');
 const websiteName = 'Carpedia';
 
 const routes = [
@@ -11,10 +11,7 @@ const routes = [
         path: '/',
         name: 'home',
         component: HomeView,
-        meta: {
-            title: `Home | ${websiteName}`,
-            isAuthenticationRequired: true,
-        },
+        meta: { title: `Home | ${websiteName}`, isAuthenticationRequired: true },
     },
     {
         path: '/login',
@@ -37,7 +34,7 @@ const routes = [
     {
         path: '/details/:id',
         name: 'carDetailsById',
-        component: CarDetailsView,
+        component: CarDetailView,
         meta: {
             title: `Car | ${websiteName}`,
             isAuthenticationRequired: true,
@@ -73,7 +70,7 @@ Router.beforeEach((to, from, next) => {
     next();
 });
 
-Router.afterEach((to, from) => {
+Router.afterEach((to) => {
     const title = to.meta.title;
     if (title) {
         document.title = title;
