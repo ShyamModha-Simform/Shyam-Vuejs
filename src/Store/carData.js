@@ -20,7 +20,7 @@ const actions = {
     async addCar(newCar) {
         try {
             this.isLoaderStarted = true;
-            let responseData = await axios.post(`${import.meta.env.VITE_BASE_URL}/cardata`, {
+            let responseData = await axios.post(`${import.meta.env.VITE_BASE_URL}/cardat`, {
                 ...newCar,
             });
             if (responseData?.status === 201) {
