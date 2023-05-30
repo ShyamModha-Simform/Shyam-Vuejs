@@ -5,7 +5,7 @@ const actions = {
     async fetchAllCars() {
         try {
             this.isLoaderStarted = true;
-            let responseData = await axios.get('https://testapi.io/api/dartya/resource/cardata');
+            let responseData = await axios.get(`${import.meta.env.VITE_BASE_URL}/cardata`);
             if (responseData.status === 200) {
                 // Updating global state
                 this.carsData = [...responseData.data.data];
@@ -20,7 +20,7 @@ const actions = {
     async addCar(newCar) {
         try {
             this.isLoaderStarted = true;
-            let responseData = await axios.post('https://testapi.io/api/dartya/resource/cardata', {
+            let responseData = await axios.post(`${import.meta.env.VITE_BASE_URL}/cardata`, {
                 ...newCar,
             });
             if (responseData?.status === 201) {
@@ -37,7 +37,7 @@ const actions = {
     async deleteCar(carId) {
         try {
             let responseData = await axios.delete(
-                `https://testapi.io/api/dartya/resource/cardata/${carId}`
+                `${import.meta.env.VITE_BASE_URL}/cardata/${carId}`
             );
             return responseData;
         } catch (e) {
@@ -49,7 +49,7 @@ const actions = {
         try {
             this.isLoaderStarted = true;
             let responseData = await axios.put(
-                `https://testapi.io/api/dartya/resource/cardata/${editedCar.id}`,
+                `${import.meta.env.VITE_BASE_URL}/cardata/${editedCar.id}`,
                 {
                     ...editedCar,
                 }
@@ -69,7 +69,7 @@ const actions = {
         try {
             this.isLoaderStarted = true;
             let responseData = await axios.get(`	
-        https://testapi.io/api/dartya/resource/cardata/${this.selectedCarIdForDetails}`);
+        ${import.meta.env.VITE_BASE_URL}/cardata/${this.selectedCarIdForDetails}`);
             this.isLoaderStarted = false;
             return responseData.data;
         } catch (e) {
