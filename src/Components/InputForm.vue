@@ -136,9 +136,10 @@ export default {
 
             this.$el.querySelector('button[type=reset]').click();
 
-            Swal.fire({
-                title: `${temp === 'edit' ? 'Updated' : 'Created'} data`,
-                html: `
+            if (res?.status == 201 || res?.status == 200) {
+                Swal.fire({
+                    title: `${temp === 'edit' ? 'Updated' : 'Created'} data`,
+                    html: `
               <div style="display: flex; align-items: center; justify-content: space-between;">
                 <div>
                     <img src="${this.carToBeEdited.image}" alt="Logo" style="width: 300px;" />
@@ -147,13 +148,14 @@ export default {
                     <p>Details: ${this.carToBeEdited.details}</p>
               </div>
               </div> `,
-                showCloseButton: true,
-                showConfirmButton: true,
-                showCancelButton: false,
-                focusConfirm: false,
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-            });
+                    showCloseButton: true,
+                    showConfirmButton: true,
+                    showCancelButton: false,
+                    focusConfirm: false,
+                    allowOutsideClick: false,
+                    allowEscapeKey: false,
+                });
+            }
         },
         resetForm() {
             // this.carToBeEdited = {};
