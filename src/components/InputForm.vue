@@ -88,8 +88,8 @@
 <script>
 import Swal from 'sweetalert2';
 import BaseButton from './BaseButton.vue';
-import useCarDataStore from '../Store/carData';
-import useModalFormStore from '../Store/modalForm';
+import useCarDataStore from '../store/carData';
+import useModalFormStore from '../store/modalForm';
 import { mapActions, mapState, mapWritableState } from 'pinia';
 import CircularLoader from './CircularLoader.vue';
 

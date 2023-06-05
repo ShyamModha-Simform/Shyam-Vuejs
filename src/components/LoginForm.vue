@@ -40,9 +40,9 @@
 </template>
 
 <script>
-import BaseButton from '../Components/BaseButton.vue';
+import BaseButton from './BaseButton.vue';
 import CircularLoader from './CircularLoader.vue';
-import useAuthStore from '../Store/authStore';
+import useAuthStore from '../store/authStore';
 import { mapActions, mapState } from 'pinia';
 
 export default {

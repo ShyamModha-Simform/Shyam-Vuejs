@@ -22,7 +22,7 @@
 <script>
 import InputForm from './InputForm.vue';
 import { mapState } from 'pinia';
-import useModalFormStore from '../Store/modalForm';
+import useModalFormStore from '../store/modalForm';
 
 export default {
     name: 'ModalOverlay',

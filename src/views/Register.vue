@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import RegisterForm from '../Components/RegisterForm.vue';
+import RegisterForm from '../components/RegisterForm.vue';
 
 export default {
     name: 'RegisterView',

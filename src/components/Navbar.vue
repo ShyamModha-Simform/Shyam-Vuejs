@@ -62,7 +62,7 @@
 <script>
 import { mapActions, mapState } from 'pinia';
 import BaseButton from './BaseButton.vue';
-import useAuthStore from '../Store/authStore';
+import useAuthStore from '../store/authStore';
 
 export default {
     name: 'NavbarContainer',

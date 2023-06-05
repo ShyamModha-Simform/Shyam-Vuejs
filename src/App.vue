@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import ModalOverlay from './Components/Modal.vue';
+import ModalOverlay from './components/Modal.vue';
 
 export default {
     name: 'App',

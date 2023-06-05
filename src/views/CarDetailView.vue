@@ -27,7 +27,7 @@
 import { mapState, mapWritableState } from 'pinia';
 import BaseButton from '../Components/BaseButton.vue';
 import LoaderVue from '../Components/Loader.vue';
-import useCarDataStore from '../Store/carData';
+import useCarDataStore from '../store/carData';
 
 export default {
     name: 'CarDetailsView',

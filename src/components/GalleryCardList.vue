@@ -37,9 +37,9 @@ import GalleryCard from './GalleryCard.vue';
 
 import Swal from 'sweetalert2';
 import BaseButton from './BaseButton.vue';
-import useCarDataStore from '../Store/carData';
+import useCarDataStore from '../store/carData';
 import { mapActions, mapState, mapWritableState } from 'pinia';
-import useModalFormStore from '../Store/modalForm';
+import useModalFormStore from '../store/modalForm';
 
 export default {
     name: 'GalleryCardList',

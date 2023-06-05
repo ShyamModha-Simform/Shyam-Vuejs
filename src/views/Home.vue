@@ -4,9 +4,9 @@
 </template>
 
 <script>
-import { Loader } from '../Components';
-import GalleryCardList from '../Components/GalleryCardList.vue';
-import useCarDataStore from '../Store/carData';
+import { Loader } from '../components';
+import GalleryCardList from '../components/GalleryCardList.vue';
+import useCarDataStore from '../store/carData';
 import { mapActions, mapState } from 'pinia';
 
 export default {

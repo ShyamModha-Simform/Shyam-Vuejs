@@ -35,7 +35,7 @@
 
 <script>
 import BaseButton from './BaseButton.vue';
-import useModalFormStore from '../Store/modalForm';
+import useModalFormStore from '../store/modalForm';
 import { mapWritableState } from 'pinia';
 
 export default {

@@ -139,10 +139,10 @@
 </template>
 
 <script>
-import BaseButton from '../Components/BaseButton.vue';
+import BaseButton from './BaseButton.vue';
 import CircularLoader from './CircularLoader.vue';
 import { mapActions, mapState } from 'pinia';
-import useAuthStore from '../Store/authStore';
+import useAuthStore from '../store/authStore';
 
 export default {
     name: 'LoginForm',

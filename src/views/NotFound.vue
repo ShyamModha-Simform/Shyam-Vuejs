@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import BaseButton from '../Components/BaseButton.vue';
+import BaseButton from '../components/BaseButton.vue';
 export default {
     components: { BaseButton },
     name: 'NotFound',
