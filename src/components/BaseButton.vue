@@ -4,49 +4,46 @@
     </button>
 </template>
 
-<script>
-export default {
-    name: 'BaseButton',
-    props: {
-        type: {
-            type: String,
-            default: 'button',
-            validator: (value) => {
-                return ['submit', 'reset'].includes(value);
-            },
-        },
-        class: {
-            type: String,
-            default: '',
-            validator: (value) => {
-                return ['navbar', 'card'].includes(value);
-            },
-        },
-        size: {
-            type: String,
-            default: '',
-            validator: (value) => {
-                return ['w100'].includes(value);
-            },
-        },
-        disabled: {
-            type: Boolean,
-            default: false,
+<script setup>
+import { computed } from 'vue';
+const props = defineProps({
+    type: {
+        type: String,
+        default: 'button',
+        validator: (value) => {
+            return ['submit', 'reset'].includes(value);
         },
     },
-    computed: {
-        classList() {
-            return [
-                'base-button',
-                `base-button--${this.class} `,
-                `base-button--${this.size} `,
-                {
-                    'base-button--disabled': this.disabled,
-                },
-            ];
+    class: {
+        type: String,
+        default: '',
+        validator: (value) => {
+            return ['navbar', 'card'].includes(value);
         },
     },
-};
+    size: {
+        type: String,
+        default: '',
+        validator: (value) => {
+            return ['w100'].includes(value);
+        },
+    },
+    disabled: {
+        type: Boolean,
+        default: false,
+    },
+});
+
+const classList = computed(() => {
+    return [
+        'base-button',
+        `base-button--${props.class} `,
+        `base-button--${props.size} `,
+        {
+            'base-button--disabled': props.disabled,
+        },
+    ];
+});
 </script>
 
 <style scoped>

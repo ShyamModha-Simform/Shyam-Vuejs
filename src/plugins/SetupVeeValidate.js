@@ -36,7 +36,7 @@ export default {
             bails: false,
             generateMessage: (ctx) => {
                 const messages = {
-                    required: `This field is should not be empty`,
+                    required: `This field should not be empty`,
                     integer: `This field should contain only Integer`,
                     min: `This field should contain minimum ${ctx.rule.params} characters`,
                     max: `This field should not contain more than ${ctx.rule.params} characters`,

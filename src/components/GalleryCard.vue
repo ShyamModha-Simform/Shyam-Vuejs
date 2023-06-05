@@ -23,7 +23,7 @@
                     />
                     <img
                         src="../assests/delete_icon.png"
-                        class="edit-icon pl-2"
+                        class="edit-icon"
                         alt="editIcon"
                         @click="deleteCarDetails"
                     />
@@ -33,35 +33,31 @@
     </div>
 </template>
 
-<script>
+<script setup>
+//
 import BaseButton from './BaseButton.vue';
 import useModalFormStore from '../store/modalForm';
-import { mapWritableState } from 'pinia';
+import { storeToRefs } from 'pinia';
 
-export default {
-    name: 'GalleryCard',
-    props: ['carDetail'],
-    components: {
-        BaseButton,
-    },
-    methods: {
-        editCarDetails() {
-            // Setting value in global store which will automatically reactive at other components
-            this.modalType = 'edit';
-            this.selectedCarForEditing = { ...this.carDetail };
-            // we are passing object copy instead of reference
-        },
-        deleteCarDetails() {
-            this.$emit('delete-car-details', this.carDetail.id, this.carDetail);
-        },
-    },
-    computed: {
-        ...mapWritableState(useModalFormStore, ['selectedCarForEditing', 'modalType']),
-        displayTrunkedDescription() {
-            return this.carDetail?.details?.slice(0, 200) + '...';
-        },
-    },
-};
+// State and Variables
+const emits = defineEmits(['delete-car-details']);
+const props = defineProps(['carDetail']);
+const modalFormStore = useModalFormStore();
+const { selectedCarForEditing, modalType } = storeToRefs(modalFormStore);
+
+// Methods
+function editCarDetails() {
+    // Setting value in global store which will automatically reactive at other components
+    modalType.value = 'edit';
+    selectedCarForEditing.value = { ...props.carDetail };
+    // we are passing object by value instead of passing by reference
+}
+function deleteCarDetails() {
+    emits('delete-car-details', props.carDetail.id, props.carDetail);
+}
+function displayTrunkedDescription() {
+    return props.carDetail?.details?.slice(0, 200) + '...';
+}
 </script>
 
 <style scoped>
@@ -146,6 +142,8 @@ export default {
 }
 
 .edit-icon {
+    cursor: pointer;
     width: 32px;
+    margin-inline-start: 0.4rem;
 }
 </style>

@@ -65,13 +65,13 @@ const actions = {
             alert("Couldn't able to Update Data..");
         }
     },
-    async fetchCarDetailsById() {
+    async fetchCarDetailsById(id) {
         try {
             this.isLoaderStarted = true;
             let responseData = await axios.get(`	
-        ${import.meta.env.VITE_BASE_URL}/cardata/${this.selectedCarIdForDetails}`);
+        ${import.meta.env.VITE_BASE_URL}/cardata/${id}`);
             this.isLoaderStarted = false;
-            return responseData.data;
+            this.detailsOfSelectedCar = responseData.data;
         } catch (e) {
             this.isLoaderStarted = false;
             alert("Couldn't able to fetch car details");
@@ -89,8 +89,8 @@ const getters = {
     getIsLoaderStarted() {
         return this.isLoaderStarted;
     },
-    async getCarDetailsById() {
-        return await this.fetchCarDetailsById();
+    getDetailsOfSelectedCar() {
+        return this.detailsOfSelectedCar;
     },
 };
 
@@ -98,7 +98,7 @@ const useCarDataStore = defineStore('carData', {
     state: () => {
         return {
             carsData: [],
-            selectedCarIdForDetails: null,
+            detailsOfSelectedCar: null,
             isLoaderStarted: false,
         };
     },

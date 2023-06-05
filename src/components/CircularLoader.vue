@@ -14,11 +14,6 @@
         <div class="bar12"></div>
     </div>
 </template>
-<script>
-export default {
-    name: 'CircularLoader',
-};
-</script>
 
 <style scoped>
 .loader {

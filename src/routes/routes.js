@@ -1,9 +1,9 @@
 import { createRouter, createWebHistory } from 'vue-router';
-const HomeView = () => import('../views/Home.vue');
-const LoginView = () => import('../views/Login.vue');
-const RegisterView = () => import('../views/Register.vue');
+const HomeView = () => import('../views/HomeView.vue');
+const LoginView = () => import('../views/LoginView.vue');
+const RegisterView = () => import('../views/RegisterView.vue');
 const CarDetailView = () => import('../views/CarDetailView.vue');
-const NotFound = () => import('../views/NotFound.vue');
+const NotFound = () => import('../views/NotFoundView.vue');
 const websiteName = 'Carpedia';
 
 const routes = [
@@ -53,21 +53,14 @@ const Router = createRouter({
 });
 
 Router.beforeEach((to, from, next) => {
-    if (to.meta.isAuthenticationRequired) {
-        if (sessionStorage.getItem('token')) {
-            next();
-        } else {
-            alert('Please Login/Register to continue!');
-            next('/login');
-        }
+    if (to.meta.isAuthenticationRequired && !sessionStorage.getItem('token')) {
+        alert('Please Login/Register to continue!');
+        return next('/login');
     }
-    if (to.meta.guest) {
-        if (sessionStorage.getItem('token')) {
-            next('/');
-        }
+    if (to.meta.guest && sessionStorage.getItem('token')) {
+        return next('/');
     }
-
-    next();
+    return next();
 });
 
 Router.afterEach((to) => {

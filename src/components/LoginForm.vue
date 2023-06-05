@@ -39,48 +39,36 @@
     </div>
 </template>
 
-<script>
+<script setup>
+import { reactive } from 'vue';
 import BaseButton from './BaseButton.vue';
 import CircularLoader from './CircularLoader.vue';
 import useAuthStore from '../store/authStore';
-import { mapActions, mapState } from 'pinia';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 
-export default {
-    name: 'LoginForm',
-    components: {
-        BaseButton,
-        CircularLoader,
-    },
-    data() {
-        return {
-            schema: {
-                email: 'required|email',
-                password: 'required',
-            },
-            readLoginDetails: {
-                email: '',
-                password: '',
-            },
-        };
-    },
-    computed: {
-        ...mapState(useAuthStore, ['getIsLoaderStarted']),
-    },
-    methods: {
-        ...mapActions(useAuthStore, ['userLogin']),
-        resetForm() {
-            this.$el.querySelector('button[type=reset]').click();
-        },
-        async performLogin() {
-            const res = await this.userLogin(this.readLoginDetails);
-            this.$el.querySelector('button[type=reset]').click();
-            if (res?.status !== 200) {
-                return;
-            }
-            this.$router.push({ name: 'home' });
-        },
-    },
+const authStore = useAuthStore();
+const { getIsLoaderStarted } = storeToRefs(authStore);
+const { userLogin } = authStore;
+const router = useRouter();
+
+const schema = {
+    email: 'required|email',
+    password: 'required',
 };
+
+let readLoginDetails = reactive({
+    email: '',
+    password: '',
+});
+
+async function performLogin() {
+    const res = await userLogin(readLoginDetails);
+    if (res?.status !== 200) {
+        return;
+    }
+    router.push({ name: 'home' });
+}
 </script>
 
 <style scoped>

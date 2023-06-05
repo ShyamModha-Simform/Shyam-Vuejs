@@ -138,71 +138,65 @@
     </div>
 </template>
 
-<script>
+<script setup>
+// Imports
 import BaseButton from './BaseButton.vue';
 import CircularLoader from './CircularLoader.vue';
-import { mapActions, mapState } from 'pinia';
+import { storeToRefs } from 'pinia';
 import useAuthStore from '../store/authStore';
+import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
-export default {
-    name: 'LoginForm',
-    components: {
-        BaseButton,
-        CircularLoader,
-    },
-    data() {
-        return {
-            readRegisterDetails: {
-                name: '',
-                email: '',
-                password: '',
-                role: '',
-                gender: '',
-                dob: '',
-                age: Number,
-            },
-            schema: {
-                name: 'required|alpha_spaces',
-                email: 'required|email',
-                password: 'required|min:8|max:12|regex:^(?=.*\\d)(?=.*[\\W_]).+$',
-                confirmPwd: 'required|confirmed:@password',
-                role: 'required',
-                gender: 'required',
-                dob: (value) => {
-                    if (value) {
-                        const date = new Date(value);
-                        // Define the minimum and maximum dates
-                        const minDate = new Date('1900-01-01');
-                        const maxDate = new Date('2015-01-01');
-                        return date >= minDate && date <= maxDate
-                            ? true
-                            : 'DOB must between 01/01/1900 to 01/01/2015';
-                    } else {
-                        return 'Please choose a Date of birth.';
-                    }
-                },
-            },
-        };
-    },
-    computed: {
-        ...mapState(useAuthStore, ['getIsLoaderStarted']),
-    },
-    methods: {
-        ...mapActions(useAuthStore, ['userRegistration']),
-        async performRegistration() {
-            const res = await this.userRegistration({ ...this.readRegisterDetails });
-            this.$el.querySelector('button[type=reset]').click();
-            if (res?.status !== 201) {
-                return;
-            }
-            this.$router.push({ name: 'login' });
-        },
-        calculateAge() {
-            this.readRegisterDetails.age =
-                new Date().getFullYear() - new Date(this.readRegisterDetails.dob).getFullYear();
-        },
+// State
+const authStore = useAuthStore();
+const { getIsLoaderStarted } = storeToRefs(authStore);
+const { userRegistration } = authStore;
+const router = useRouter();
+
+const schema = {
+    name: 'required|alpha_spaces',
+    email: 'required|email',
+    password: 'required|min:8|max:12|regex:^(?=.*\\d)(?=.*[\\W_]).+$',
+    confirmPwd: 'required|confirmed:@password',
+    role: 'required',
+    gender: 'required',
+    dob: (value) => {
+        if (value) {
+            const date = new Date(value);
+            // Define the minimum and maximum dates
+            const minDate = new Date('1900-01-01');
+            const maxDate = new Date('2015-01-01');
+            return date >= minDate && date <= maxDate
+                ? true
+                : 'DOB must between 01/01/1900 to 01/01/2015';
+        } else {
+            return 'Please choose a Date of birth.';
+        }
     },
 };
+
+let readRegisterDetails = reactive({
+    name: '',
+    email: '',
+    password: '',
+    role: '',
+    gender: '',
+    dob: '',
+    age: Number,
+});
+
+// Methods
+async function performRegistration() {
+    const res = await userRegistration({ ...readRegisterDetails });
+    if (res?.status !== 201) {
+        return;
+    }
+    router.push({ name: 'login' });
+}
+function calculateAge() {
+    readRegisterDetails.age =
+        new Date().getFullYear() - new Date(readRegisterDetails.dob).getFullYear();
+}
 </script>
 
 <style scoped>

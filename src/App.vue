@@ -1,5 +1,5 @@
 <template>
-    <ModalOverlay />
+    <InputForm />
     <NavbarContainer />
 
     <RouterView v-slot="{ Component }">
@@ -7,15 +7,8 @@
     </RouterView>
 </template>
 
-<script>
-import ModalOverlay from './components/Modal.vue';
-
-export default {
-    name: 'App',
-    components: {
-        ModalOverlay,
-    },
-};
+<script setup>
+import InputForm from './components/InputForm.vue';
 </script>
 
 <style scoped>

@@ -32,59 +32,49 @@
     </main>
 </template>
 
-<script>
+<script setup>
 import GalleryCard from './GalleryCard.vue';
 
 import Swal from 'sweetalert2';
 import BaseButton from './BaseButton.vue';
 import useCarDataStore from '../store/carData';
-import { mapActions, mapState, mapWritableState } from 'pinia';
+import { storeToRefs } from 'pinia';
 import useModalFormStore from '../store/modalForm';
 
-export default {
-    name: 'GalleryCardList',
-    components: {
-        GalleryCard,
-        BaseButton,
-    },
-    computed: {
-        ...mapState(useCarDataStore, {
-            carDetails: 'getCarDetails',
-        }), // aliasing getters
-        ...mapWritableState(useModalFormStore, ['modalType']),
-    },
-    methods: {
-        ...mapActions(useCarDataStore, ['deleteCar', 'fetchAllCars']),
-        // Delete Car Handler
-        triggerDeleteCarHandler(carId, carToBeDeleted) {
-            Swal.fire({
-                title: 'Are you sure?',
-                text: "You won't be able to revert this!",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Yes, delete it!',
-            }).then(async (result) => {
-                if (result.isConfirmed) {
-                    try {
-                        const res = await this.deleteCar(carId);
-                        await this.fetchAllCars();
-                        if (res?.status === 204) {
-                            Swal.fire(
-                                `Deleted ${carToBeDeleted.name}!`,
-                                'Your file has been deleted.',
-                                'success'
-                            );
-                        }
-                    } catch (e) {
-                        alert('Something went wrong!');
-                    }
+const modalFormStore = useModalFormStore();
+const carDataStore = useCarDataStore();
+const { getCarDetails: carDetails } = storeToRefs(carDataStore);
+const { deleteCar, fetchAllCars } = carDataStore;
+const { modalType } = storeToRefs(modalFormStore);
+
+// Delete Car Handler
+function triggerDeleteCarHandler(carId, carToBeDeleted) {
+    Swal.fire({
+        title: 'Are you sure?',
+        text: "You won't be able to revert this!",
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonColor: '#3085d6',
+        cancelButtonColor: '#d33',
+        confirmButtonText: 'Yes, delete it!',
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            try {
+                const res = await deleteCar(carId);
+                await fetchAllCars();
+                if (res?.status === 204) {
+                    Swal.fire(
+                        `Deleted ${carToBeDeleted.name}!`,
+                        'Your file has been deleted.',
+                        'success'
+                    );
                 }
-            });
-        },
-    },
-};
+            } catch (e) {
+                alert('Something went wrong!');
+            }
+        }
+    });
+}
 </script>
 
 <style scoped>
