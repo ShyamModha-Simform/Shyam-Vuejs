@@ -2,7 +2,6 @@ import { createApp } from 'vue';
 import App from './App.vue';
 import NavbarContainer from './Components/Navbar.vue';
 import VeeValidateSetup from './plugins/SetupVeeValidate';
-import Router from './routes/routes';
 import { createPinia } from 'pinia';
 
 // Import our custom CSS
@@ -11,6 +10,7 @@ import './assests/main.css';
 
 // Import all of Bootstrap's JS
 import 'bootstrap';
+import Router from './routes/routes';
 
 const pinia = createPinia();
 const app = createApp(App);

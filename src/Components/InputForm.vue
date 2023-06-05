@@ -158,8 +158,6 @@ export default {
             }
         },
         resetForm() {
-            // this.carToBeEdited = {};
-            console.log(this.$el, '======');
             this.$el.querySelector('button[type=reset]').click();
         },
     },

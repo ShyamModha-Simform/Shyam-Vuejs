@@ -48,26 +48,19 @@ const routes = [
 ];
 
 const Router = createRouter({
-    history: createWebHistory('/'),
+    history: createWebHistory(''),
     routes,
 });
 
 Router.beforeEach((to, from, next) => {
-    if (to.meta.isAuthenticationRequired) {
-        if (sessionStorage.getItem('token')) {
-            next();
-        } else {
-            alert('Please Login/Register to continue!');
-            next('/login');
-        }
+    if (to.meta.isAuthenticationRequired && !sessionStorage.getItem('token')) {
+        alert('Please Login/Register to continue!');
+        return next('/login');
     }
-    if (to.meta.guest) {
-        if (sessionStorage.getItem('token')) {
-            next('/');
-        }
+    if (to.meta.guest && sessionStorage.getItem('token')) {
+        return next('/');
     }
-
-    next();
+    return next();
 });
 
 Router.afterEach((to) => {
