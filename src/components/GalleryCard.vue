@@ -5,7 +5,7 @@
         </div>
         <div class="card-body-container">
             <h2 class="item-name">{{ carDetail.name }}</h2>
-            <p class="card-description">{{ displayTrunkedDescription }}</p>
+            <p class="card-description">{{ displayTruncatedDescription }}</p>
             <div class="card-buttons-container">
                 <div class="card-info-button">
                     <RouterLink :to="{ name: 'carDetailsById', params: { id: `${carDetail.id}` } }">
@@ -38,6 +38,7 @@
 import BaseButton from './BaseButton.vue';
 import useModalFormStore from '../store/modalForm';
 import { storeToRefs } from 'pinia';
+import { computed } from 'vue';
 
 // State and Variables
 const emits = defineEmits(['delete-car-details']);
@@ -55,9 +56,9 @@ function editCarDetails() {
 function deleteCarDetails() {
     emits('delete-car-details', props.carDetail.id, props.carDetail);
 }
-function displayTrunkedDescription() {
+const displayTruncatedDescription = computed(() => {
     return props.carDetail?.details?.slice(0, 200) + '...';
-}
+});
 </script>
 
 <style scoped>

@@ -33,7 +33,7 @@
                                 :validateOnInput="true"
                                 v-model="selectedCarForEditing.name"
                             />
-                            <label for="carName">Car Name </label>
+                            <label for="carName">Car Name* </label>
                             <ErrorMessage name="carName" class="error_message" />
                         </div>
 
@@ -46,7 +46,7 @@
                                 :validateOnInput="true"
                                 v-model="selectedCarForEditing.price"
                             />
-                            <label for="price">Price</label>
+                            <label for="price">Price*</label>
                             <ErrorMessage name="price" class="error_message" />
                         </div>
 
@@ -59,7 +59,7 @@
                                 :validateOnInput="true"
                                 v-model="selectedCarForEditing.image"
                             />
-                            <label for="url">Image URL</label>
+                            <label for="url">Image URL*</label>
                             <ErrorMessage name="url" class="error_message" />
                         </div>
                         <div class="group">
@@ -82,15 +82,15 @@
                                     {{ err }}
                                 </div>
                             </vField>
-                            <label for="carDetails">Car Details</label>
+                            <label for="carDetails">Car Details <span>*</span></label>
                         </div>
                         <div class="modal-footer">
                             <BaseButton type="reset" class="card" size="lg" data-bs-dismiss="modal"
                                 >Cancel</BaseButton
                             >
                             <BaseButton type="submit" class="card">
-                                <CircularLoader v-show="getIsLoaderStarted" />
-                                <span v-show="!getIsLoaderStarted">{{
+                                <CircularLoader v-show="buttonLoader" />
+                                <span v-show="!buttonLoader">{{
                                     modalType == 'edit' ? `Update` : `Submit`
                                 }}</span>
                             </BaseButton>
@@ -121,12 +121,12 @@ const schema = {
 const carDataStore = useCarDataStore();
 const modalFormStore = useModalFormStore();
 
-const { getIsLoaderStarted } = storeToRefs(carDataStore);
 const { addCar, updateCar } = carDataStore;
 const { modalType, selectedCarForEditing } = storeToRefs(modalFormStore);
 
-let submitFormTimer = null;
 const closeForm = ref(null);
+let submitFormTimer = null;
+let buttonLoader = ref(false);
 
 function handleFormSubmit() {
     clearTimeout(submitFormTimer);
@@ -137,6 +137,7 @@ function handleFormSubmit() {
 
 async function createCar() {
     const temp = modalType.value;
+    buttonLoader.value = true;
     let res = {};
     if (temp !== 'edit') {
         res = await addCar(selectedCarForEditing.value);
@@ -154,7 +155,7 @@ async function createCar() {
                 <div>
                     <img src="${selectedCarForEditing.value.image}" alt="Logo" style="width: 300px;" />
                     <h3>${selectedCarForEditing.value.name}</h3>
-                    <p>Price: ${selectedCarForEditing.value.price}</p>
+                        <p>Price: ${selectedCarForEditing.value.price}</p>
                     <p>Details: ${selectedCarForEditing.value.details}</p>
               </div>
               </div> `,
@@ -166,8 +167,9 @@ async function createCar() {
             allowEscapeKey: false,
         });
 
-        selectedCarForEditing.value = {};
+        // selectedCarForEditing.value = {};
     }
+    buttonLoader.value = false;
 }
 </script>
 
@@ -217,6 +219,10 @@ async function createCar() {
     background-color: transparent;
 }
 
+label {
+    font-weight: 700;
+}
+
 .form .group .input:placeholder-shown + label,
 .form .group .textarea:placeholder-shown + label {
     top: 10px;
@@ -225,7 +231,7 @@ async function createCar() {
 
 .form .group input:focus,
 .form .group .textarea:focus {
-    border-color: #3366cc;
+    border-color: #606d75;
 }
 
 .form .group .input:focus + label,
@@ -233,7 +239,7 @@ async function createCar() {
     top: -10px;
     left: 10px;
     background-color: #fff;
-    color: #3366cc;
+    color: #606d75;
     font-weight: 600;
     font-size: 14px;
 }

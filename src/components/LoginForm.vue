@@ -12,7 +12,7 @@
                     :validateOnInput="true"
                     v-model="readLoginDetails.email"
                 />
-                <label for="email">Email</label>
+                <label for="email">Email<span>*</span></label>
                 <ErrorMessage name="email" class="error_message" />
             </div>
             <div class="group">
@@ -24,7 +24,7 @@
                     :validateOnInput="true"
                     v-model="readLoginDetails.password"
                 />
-                <label for="password">Password</label>
+                <label for="password">Password<span>*</span></label>
                 <ErrorMessage name="password" class="error_message" />
             </div>
 
@@ -80,6 +80,11 @@ async function performLogin() {
     align-items: center;
     margin-block-start: 2rem;
     padding-block-end: 2rem;
+    flex: 1;
+}
+
+label span {
+    font-weight: 900;
 }
 
 .form-container--login h1 {
@@ -100,6 +105,9 @@ async function performLogin() {
     font-weight: 600;
     text-align: center;
 }
+input[type='radio'] {
+    margin-left: 10px;
+}
 
 .form {
     width: 100%;
@@ -113,7 +121,7 @@ async function performLogin() {
     margin-bottom: 20px;
 }
 
-.form .group label {
+.form .group > label {
     font-size: 14px;
     color: rgb(99, 102, 102);
     position: absolute;
@@ -124,7 +132,8 @@ async function performLogin() {
 }
 
 .form .group .input,
-.form .group .textarea {
+.form .group .textarea,
+.form .group select {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -134,18 +143,21 @@ async function performLogin() {
 }
 
 .form .group .input:placeholder-shown + label,
-.form .group .textarea:placeholder-shown + label {
+.form .group .textarea:placeholder-shown + label,
+.form .group select:placeholder-shown + label {
     top: 10px;
     background-color: transparent;
 }
 
 .form .group input:focus,
-.form .group .textarea:focus {
+.form .group .textarea:focus,
+.form .group select:focus {
     border-color: #606d75;
 }
 
 .form .group .input:focus + label,
-.form .group .textarea:focus + label {
+.form .group .textarea:focus + label,
+.form .group select:focus + label {
     top: -10px;
     left: 10px;
     background-color: #e6e8e7;

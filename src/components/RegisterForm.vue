@@ -12,7 +12,7 @@
                     :validateOnInput="true"
                     v-model="readRegisterDetails.name"
                 />
-                <label for="name">Name</label>
+                <label for="name">Name<span>*</span></label>
                 <ErrorMessage name="name" class="error_message" />
             </div>
 
@@ -25,7 +25,7 @@
                     :validateOnInput="true"
                     v-model="readRegisterDetails.email"
                 />
-                <label for="email">Email</label>
+                <label for="email">Email<span>*</span></label>
                 <ErrorMessage name="email" class="error_message" />
             </div>
 
@@ -39,7 +39,7 @@
                     v-model="readRegisterDetails.password"
                 >
                     <input type="password" placeholder="‎" v-bind="field" class="input" />
-                    <label for="password">Password</label>
+                    <label for="password">Password<span>*</span></label>
                     <div class="error_message" v-for="err in errors" :key="err">
                         {{ err }}
                     </div>
@@ -55,7 +55,7 @@
                     :validateOnInput="true"
                     v-model="readRegisterDetails.confirmPwd"
                 />
-                <label for="confirmPwd">Confirm Password</label>
+                <label for="confirmPwd">Confirm Password<span>*</span></label>
                 <ErrorMessage name="confirmPwd" class="error_message" />
             </div>
 
@@ -77,11 +77,11 @@
                         {{ err }}
                     </div>
                 </vField>
-                <label for="role">Role</label>
+                <label for="role">Role<span>*</span></label>
             </div>
 
             <div class="group--gender">
-                <label for="gender">Gender:</label>
+                <label for="gender">Gender:<span>*</span></label>
                 <vField
                     name="gender"
                     placeholder="‎"
@@ -110,7 +110,7 @@
                     v-model="readRegisterDetails.dob"
                     @change="calculateAge"
                 />
-                <label for="dob">DOB:</label>
+                <label for="dob">DOB:<span>*</span></label>
                 <ErrorMessage name="dob" class="error_message" />
             </div>
 
@@ -209,6 +209,10 @@ function calculateAge() {
     margin-block-start: 2rem;
     padding-block-end: 2rem;
     flex: 1;
+}
+
+label span {
+    font-weight: 900;
 }
 
 .form-container--login h1 {

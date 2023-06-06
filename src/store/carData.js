@@ -19,7 +19,6 @@ const actions = {
     },
     async addCar(newCar) {
         try {
-            this.isLoaderStarted = true;
             let responseData = await axios.post(`${import.meta.env.VITE_BASE_URL}/cardata`, {
                 ...newCar,
             });
@@ -27,10 +26,8 @@ const actions = {
                 // After deleting fetch all car details again
                 await this.fetchAllCars();
             }
-            this.isLoaderStarted = false;
             return responseData;
         } catch (e) {
-            this.isLoaderStarted = false;
             alert("Couldn't able to post Data..");
         }
     },
@@ -47,21 +44,18 @@ const actions = {
     },
     async updateCar(editedCar) {
         try {
-            this.isLoaderStarted = true;
             let responseData = await axios.put(
                 `${import.meta.env.VITE_BASE_URL}/cardata/${editedCar.id}`,
                 {
                     ...editedCar,
                 }
             );
-            this.isLoaderStarted = false;
             if (responseData?.status === 200) {
                 // After updating fetch all car details again
                 await this.fetchAllCars();
             }
             return responseData;
         } catch (e) {
-            this.isLoaderStarted = false;
             alert("Couldn't able to Update Data..");
         }
     },
