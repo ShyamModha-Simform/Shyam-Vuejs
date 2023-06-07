@@ -1,15 +1,10 @@
 <template>
-    <InputForm />
     <NavbarContainer />
 
     <RouterView v-slot="{ Component }">
         <Transition name="fade-pages" mode="out-in"> <component :is="Component" /></Transition>
     </RouterView>
 </template>
-
-<script setup>
-import InputForm from './components/InputForm.vue';
-</script>
 
 <style scoped>
 .fade-pages-enter-active,

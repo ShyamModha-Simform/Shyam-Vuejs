@@ -114,7 +114,7 @@ const displayTruncatedDescription = computed(() => {
 .card-body-container .item-name {
     font-size: 1.2em;
     font-weight: var(--title-font-weight);
-    color: var(--heading-color);
+    color: #606d75;
 }
 
 .card-body-container .card-description {
