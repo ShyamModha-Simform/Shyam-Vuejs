@@ -2,7 +2,9 @@
     <NavbarContainer />
 
     <RouterView v-slot="{ Component }">
-        <Transition name="fade-pages" mode="out-in"> <component :is="Component" /></Transition>
+        <Transition name="fade-pages">
+            <component :is="Component" />
+        </Transition>
     </RouterView>
 </template>
 
