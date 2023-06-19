@@ -59,29 +59,16 @@
     </nav>
 </template>
 
-<script>
-import { mapActions, mapState } from 'pinia';
+<script setup>
+import { storeToRefs } from 'pinia';
 import BaseButton from './BaseButton.vue';
-import useAuthStore from '../Store/authStore';
+import useAuthStore from '../store/authStore';
 
-export default {
-    name: 'NavbarContainer',
-    components: {
-        BaseButton,
-    },
-    data() {
-        return {
-            headingContent: 'Carpedia',
-            tagLine: 'Your encyclopedia of all things automotive',
-        };
-    },
-    computed: {
-        ...mapState(useAuthStore, ['getIsAuthenticated', 'getLoggedInUserName']),
-    },
-    methods: {
-        ...mapActions(useAuthStore, ['handleLogout']),
-    },
-};
+const authStore = useAuthStore();
+const { getIsAuthenticated, getLoggedInUserName } = storeToRefs(authStore);
+const { handleLogout } = authStore;
+const headingContent = 'Carpedia';
+const tagLine = 'Your encyclopedia of all things automotive';
 </script>
 
 <style scoped>

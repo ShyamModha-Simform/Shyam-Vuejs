@@ -6,12 +6,6 @@
     </div>
 </template>
 
-<script>
-export default {
-    name: 'LoaderContainer',
-};
-</script>
-
 <style scoped>
 .loader {
     width: 100px;

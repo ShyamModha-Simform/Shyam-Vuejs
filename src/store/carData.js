@@ -19,7 +19,6 @@ const actions = {
     },
     async addCar(newCar) {
         try {
-            this.isLoaderStarted = true;
             let responseData = await axios.post(`${import.meta.env.VITE_BASE_URL}/cardata`, {
                 ...newCar,
             });
@@ -27,10 +26,8 @@ const actions = {
                 // After deleting fetch all car details again
                 await this.fetchAllCars();
             }
-            this.isLoaderStarted = false;
             return responseData;
         } catch (e) {
-            this.isLoaderStarted = false;
             alert("Couldn't able to post Data..");
         }
     },
@@ -47,31 +44,28 @@ const actions = {
     },
     async updateCar(editedCar) {
         try {
-            this.isLoaderStarted = true;
             let responseData = await axios.put(
                 `${import.meta.env.VITE_BASE_URL}/cardata/${editedCar.id}`,
                 {
                     ...editedCar,
                 }
             );
-            this.isLoaderStarted = false;
             if (responseData?.status === 200) {
                 // After updating fetch all car details again
                 await this.fetchAllCars();
             }
             return responseData;
         } catch (e) {
-            this.isLoaderStarted = false;
             alert("Couldn't able to Update Data..");
         }
     },
-    async fetchCarDetailsById() {
+    async fetchCarDetailsById(id) {
         try {
             this.isLoaderStarted = true;
             let responseData = await axios.get(`	
-        ${import.meta.env.VITE_BASE_URL}/cardata/${this.selectedCarIdForDetails}`);
+        ${import.meta.env.VITE_BASE_URL}/cardata/${id}`);
             this.isLoaderStarted = false;
-            return responseData.data;
+            this.detailsOfSelectedCar = responseData.data;
         } catch (e) {
             this.isLoaderStarted = false;
             alert("Couldn't able to fetch car details");
@@ -89,8 +83,8 @@ const getters = {
     getIsLoaderStarted() {
         return this.isLoaderStarted;
     },
-    async getCarDetailsById() {
-        return await this.fetchCarDetailsById();
+    getDetailsOfSelectedCar() {
+        return this.detailsOfSelectedCar;
     },
 };
 
@@ -98,7 +92,7 @@ const useCarDataStore = defineStore('carData', {
     state: () => {
         return {
             carsData: [],
-            selectedCarIdForDetails: null,
+            detailsOfSelectedCar: null,
             isLoaderStarted: false,
         };
     },

@@ -1,6 +1,6 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import NavbarContainer from './Components/Navbar.vue';
+import NavbarContainer from './components/Navbar.vue';
 import VeeValidateSetup from './plugins/SetupVeeValidate';
 import Router from './routes/routes';
 import { createPinia } from 'pinia';

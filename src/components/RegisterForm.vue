@@ -12,7 +12,7 @@
                     :validateOnInput="true"
                     v-model="readRegisterDetails.name"
                 />
-                <label for="name">Name</label>
+                <label for="name">Name<span>*</span></label>
                 <ErrorMessage name="name" class="error_message" />
             </div>
 
@@ -25,7 +25,7 @@
                     :validateOnInput="true"
                     v-model="readRegisterDetails.email"
                 />
-                <label for="email">Email</label>
+                <label for="email">Email<span>*</span></label>
                 <ErrorMessage name="email" class="error_message" />
             </div>
 
@@ -39,7 +39,7 @@
                     v-model="readRegisterDetails.password"
                 >
                     <input type="password" placeholder="‎" v-bind="field" class="input" />
-                    <label for="password">Password</label>
+                    <label for="password">Password<span>*</span></label>
                     <div class="error_message" v-for="err in errors" :key="err">
                         {{ err }}
                     </div>
@@ -55,7 +55,7 @@
                     :validateOnInput="true"
                     v-model="readRegisterDetails.confirmPwd"
                 />
-                <label for="confirmPwd">Confirm Password</label>
+                <label for="confirmPwd">Confirm Password<span>*</span></label>
                 <ErrorMessage name="confirmPwd" class="error_message" />
             </div>
 
@@ -77,11 +77,11 @@
                         {{ err }}
                     </div>
                 </vField>
-                <label for="role">Role</label>
+                <label for="role">Role<span>*</span></label>
             </div>
 
             <div class="group--gender">
-                <label for="gender">Gender:</label>
+                <label for="gender">Gender:<span>*</span></label>
                 <vField
                     name="gender"
                     placeholder="‎"
@@ -110,7 +110,7 @@
                     v-model="readRegisterDetails.dob"
                     @change="calculateAge"
                 />
-                <label for="dob">DOB:</label>
+                <label for="dob">DOB:<span>*</span></label>
                 <ErrorMessage name="dob" class="error_message" />
             </div>
 
@@ -138,71 +138,65 @@
     </div>
 </template>
 
-<script>
-import BaseButton from '../Components/BaseButton.vue';
+<script setup>
+// Imports
+import BaseButton from './BaseButton.vue';
 import CircularLoader from './CircularLoader.vue';
-import { mapActions, mapState } from 'pinia';
-import useAuthStore from '../Store/authStore';
+import { storeToRefs } from 'pinia';
+import useAuthStore from '../store/authStore';
+import { reactive } from 'vue';
+import { useRouter } from 'vue-router';
 
-export default {
-    name: 'LoginForm',
-    components: {
-        BaseButton,
-        CircularLoader,
-    },
-    data() {
-        return {
-            readRegisterDetails: {
-                name: '',
-                email: '',
-                password: '',
-                role: '',
-                gender: '',
-                dob: '',
-                age: Number,
-            },
-            schema: {
-                name: 'required|alpha_spaces',
-                email: 'required|email',
-                password: 'required|min:8|max:12|regex:^(?=.*\\d)(?=.*[\\W_]).+$',
-                confirmPwd: 'required|confirmed:@password',
-                role: 'required',
-                gender: 'required',
-                dob: (value) => {
-                    if (value) {
-                        const date = new Date(value);
-                        // Define the minimum and maximum dates
-                        const minDate = new Date('1900-01-01');
-                        const maxDate = new Date('2015-01-01');
-                        return date >= minDate && date <= maxDate
-                            ? true
-                            : 'DOB must between 01/01/1900 to 01/01/2015';
-                    } else {
-                        return 'Please choose a Date of birth.';
-                    }
-                },
-            },
-        };
-    },
-    computed: {
-        ...mapState(useAuthStore, ['getIsLoaderStarted']),
-    },
-    methods: {
-        ...mapActions(useAuthStore, ['userRegistration']),
-        async performRegistration() {
-            const res = await this.userRegistration({ ...this.readRegisterDetails });
-            this.$el.querySelector('button[type=reset]').click();
-            if (res?.status !== 201) {
-                return;
-            }
-            this.$router.push({ name: 'login' });
-        },
-        calculateAge() {
-            this.readRegisterDetails.age =
-                new Date().getFullYear() - new Date(this.readRegisterDetails.dob).getFullYear();
-        },
+// State
+const authStore = useAuthStore();
+const { getIsLoaderStarted } = storeToRefs(authStore);
+const { userRegistration } = authStore;
+const router = useRouter();
+
+const schema = {
+    name: 'required|alpha_spaces',
+    email: 'required|email',
+    password: 'required|min:8|max:12|regex:^(?=.*\\d)(?=.*[\\W_]).+$',
+    confirmPwd: 'required|confirmed:@password',
+    role: 'required',
+    gender: 'required',
+    dob: (value) => {
+        if (value) {
+            const date = new Date(value);
+            // Define the minimum and maximum dates
+            const minDate = new Date('1900-01-01');
+            const maxDate = new Date('2015-01-01');
+            return date >= minDate && date <= maxDate
+                ? true
+                : 'DOB must between 01/01/1900 to 01/01/2015';
+        } else {
+            return 'Please choose a Date of birth.';
+        }
     },
 };
+
+let readRegisterDetails = reactive({
+    name: '',
+    email: '',
+    password: '',
+    role: '',
+    gender: '',
+    dob: '',
+    age: Number,
+});
+
+// Methods
+async function performRegistration() {
+    const res = await userRegistration({ ...readRegisterDetails });
+    if (res?.status !== 201) {
+        return;
+    }
+    router.push({ name: 'login' });
+}
+function calculateAge() {
+    readRegisterDetails.age =
+        new Date().getFullYear() - new Date(readRegisterDetails.dob).getFullYear();
+}
 </script>
 
 <style scoped>
@@ -215,6 +209,10 @@ export default {
     margin-block-start: 2rem;
     padding-block-end: 2rem;
     flex: 1;
+}
+
+label span {
+    font-weight: 900;
 }
 
 .form-container--login h1 {

@@ -12,7 +12,7 @@
                     :validateOnInput="true"
                     v-model="readLoginDetails.email"
                 />
-                <label for="email">Email</label>
+                <label for="email">Email<span>*</span></label>
                 <ErrorMessage name="email" class="error_message" />
             </div>
             <div class="group">
@@ -24,7 +24,7 @@
                     :validateOnInput="true"
                     v-model="readLoginDetails.password"
                 />
-                <label for="password">Password</label>
+                <label for="password">Password<span>*</span></label>
                 <ErrorMessage name="password" class="error_message" />
             </div>
 
@@ -39,48 +39,36 @@
     </div>
 </template>
 
-<script>
-import BaseButton from '../Components/BaseButton.vue';
+<script setup>
+import { reactive } from 'vue';
+import BaseButton from './BaseButton.vue';
 import CircularLoader from './CircularLoader.vue';
-import useAuthStore from '../Store/authStore';
-import { mapActions, mapState } from 'pinia';
+import useAuthStore from '../store/authStore';
+import { useRouter } from 'vue-router';
+import { storeToRefs } from 'pinia';
 
-export default {
-    name: 'LoginForm',
-    components: {
-        BaseButton,
-        CircularLoader,
-    },
-    data() {
-        return {
-            schema: {
-                email: 'required|email',
-                password: 'required',
-            },
-            readLoginDetails: {
-                email: '',
-                password: '',
-            },
-        };
-    },
-    computed: {
-        ...mapState(useAuthStore, ['getIsLoaderStarted']),
-    },
-    methods: {
-        ...mapActions(useAuthStore, ['userLogin']),
-        resetForm() {
-            this.$el.querySelector('button[type=reset]').click();
-        },
-        async performLogin() {
-            const res = await this.userLogin(this.readLoginDetails);
-            this.$el.querySelector('button[type=reset]').click();
-            if (res?.status !== 200) {
-                return;
-            }
-            this.$router.push({ name: 'home' });
-        },
-    },
+const authStore = useAuthStore();
+const { getIsLoaderStarted } = storeToRefs(authStore);
+const { userLogin } = authStore;
+const router = useRouter();
+
+const schema = {
+    email: 'required|email',
+    password: 'required',
 };
+
+let readLoginDetails = reactive({
+    email: '',
+    password: '',
+});
+
+async function performLogin() {
+    const res = await userLogin(readLoginDetails);
+    if (res?.status !== 200) {
+        return;
+    }
+    router.push({ name: 'home' });
+}
 </script>
 
 <style scoped>
@@ -92,6 +80,11 @@ export default {
     align-items: center;
     margin-block-start: 2rem;
     padding-block-end: 2rem;
+    flex: 1;
+}
+
+label span {
+    font-weight: 900;
 }
 
 .form-container--login h1 {
@@ -112,6 +105,9 @@ export default {
     font-weight: 600;
     text-align: center;
 }
+input[type='radio'] {
+    margin-left: 10px;
+}
 
 .form {
     width: 100%;
@@ -125,7 +121,7 @@ export default {
     margin-bottom: 20px;
 }
 
-.form .group label {
+.form .group > label {
     font-size: 14px;
     color: rgb(99, 102, 102);
     position: absolute;
@@ -136,7 +132,8 @@ export default {
 }
 
 .form .group .input,
-.form .group .textarea {
+.form .group .textarea,
+.form .group select {
     padding: 10px;
     border-radius: 5px;
     border: 1px solid rgba(0, 0, 0, 0.2);
@@ -146,18 +143,21 @@ export default {
 }
 
 .form .group .input:placeholder-shown + label,
-.form .group .textarea:placeholder-shown + label {
+.form .group .textarea:placeholder-shown + label,
+.form .group select:placeholder-shown + label {
     top: 10px;
     background-color: transparent;
 }
 
 .form .group input:focus,
-.form .group .textarea:focus {
+.form .group .textarea:focus,
+.form .group select:focus {
     border-color: #606d75;
 }
 
 .form .group .input:focus + label,
-.form .group .textarea:focus + label {
+.form .group .textarea:focus + label,
+.form .group select:focus + label {
     top: -10px;
     left: 10px;
     background-color: #e6e8e7;

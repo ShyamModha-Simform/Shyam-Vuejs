@@ -1,11 +1,12 @@
 <template>
-    <LoaderVue v-if="getIsLoaderStarted" />
+    <RectangularLoader v-if="getIsLoaderStarted" />
     <div class="car-card-container px-4" v-else>
         <div>
             <RouterLink :to="{ name: 'home' }">
                 <BaseButton class="card" size="lg">back</BaseButton>
             </RouterLink>
         </div>
+
         <div class="card mb-3 mx-sm-2" style="max-width: 70rem">
             <div class="row g-0">
                 <div class="col-md-7">
@@ -23,33 +24,21 @@
     </div>
 </template>
 
-<script>
-import { mapState, mapWritableState } from 'pinia';
-import BaseButton from '../Components/BaseButton.vue';
-import LoaderVue from '../Components/Loader.vue';
-import useCarDataStore from '../Store/carData';
+<script setup>
+import { storeToRefs } from 'pinia';
+import { useRoute } from 'vue-router';
+import BaseButton from '../components/BaseButton.vue';
+import RectangularLoader from '../components/RectangularLoader.vue';
+import useCarDataStore from '../store/carData';
 
-export default {
-    name: 'CarDetailsView',
-    components: {
-        BaseButton,
-        LoaderVue,
-    },
-    computed: {
-        ...mapWritableState(useCarDataStore, ['selectedCarIdForDetails']),
-        ...mapState(useCarDataStore, ['getCarDetailsById', 'getIsLoaderStarted']),
-    },
-    data() {
-        return {
-            carDetail: {},
-        };
-    },
-    async mounted() {
-        this.selectedCarIdForDetails = this.$route.params.id;
-        this.carDetail = { ...(await this.getCarDetailsById) };
-    },
-};
+const carDataStore = useCarDataStore();
+const route = useRoute();
+const { getIsLoaderStarted, getDetailsOfSelectedCar: carDetail } = storeToRefs(carDataStore);
+const { fetchCarDetailsById } = carDataStore;
+
+fetchCarDetailsById(route.params.id);
 </script>
+
 <style scoped>
 h1,
 h4,

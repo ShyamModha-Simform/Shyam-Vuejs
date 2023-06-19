@@ -1,22 +1,12 @@
 <template>
-    <ModalOverlay />
     <NavbarContainer />
 
     <RouterView v-slot="{ Component }">
-        <Transition name="fade-pages" mode="out-in"> <component :is="Component" /></Transition>
+        <Transition name="fade-pages">
+            <component :is="Component" />
+        </Transition>
     </RouterView>
 </template>
-
-<script>
-import ModalOverlay from './Components/Modal.vue';
-
-export default {
-    name: 'App',
-    components: {
-        ModalOverlay,
-    },
-};
-</script>
 
 <style scoped>
 .fade-pages-enter-active,
