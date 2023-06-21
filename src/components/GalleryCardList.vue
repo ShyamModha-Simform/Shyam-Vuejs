@@ -1,7 +1,9 @@
 <template>
     <div class="card-container--layer">
         <div class="add-car-container">
-            <BaseButton class="card" size="lg" @click="openAddCarModal"> Add </BaseButton>
+            <BaseButton class="card" size="lg" @click="openAddCarModal">
+                {{ $t('add') }}
+            </BaseButton>
         </div>
         <div class="no_cars_found" v-if="carDetails.length === 0">
             <h1>No Cars Found!</h1>

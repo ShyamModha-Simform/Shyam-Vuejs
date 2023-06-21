@@ -9,7 +9,7 @@
             <div class="card-buttons-container">
                 <div class="card-info-button">
                     <RouterLink :to="{ name: 'carDetailsById', params: { id: `${carDetail.id}` } }">
-                        <BaseButton class="card"> Info </BaseButton>
+                        <BaseButton class="card"> {{ $t('info') }} </BaseButton>
                     </RouterLink>
                 </div>
                 <div>

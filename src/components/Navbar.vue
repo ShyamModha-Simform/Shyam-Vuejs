@@ -5,59 +5,74 @@
                 <RouterLink :to="{ name: 'home' }">
                     <h3>{{ headingContent }}</h3>
                 </RouterLink>
-                <h5>-{{ tagLine }}</h5>
-            </div>
-
-            <div
-                id="hamburger_menu"
-                class="hamburger_container"
-                :class="{ open: drawer }"
-                @click.stop="toggleDrawer"
-                v-if="isMobile"
-            >
-                <span class="hamburger_stick"></span>
-                <span class="hamburger_stick"></span>
-                <span class="hamburger_stick"></span>
+                <h5>-{{ $t('tagline') }}</h5>
             </div>
 
             <!-- Menu button -->
-
-            <div class="d-flex align-center" id="navbarNav" v-if="!isMobile">
-                <div class="user_detail" v-if="getIsAuthenticated">
-                    <img class="user_logo" src="../assests/userlogo.png" alt="userlogo" />
-                    <h4>{{ getLoggedInUserName }}</h4>
+            <div class="d-flex align-center justify-center">
+                <div class="d-flex align-center" id="navbarNav" v-if="!isMobile">
+                    <div class="user_detail" v-if="getIsAuthenticated">
+                        <img class="user_logo" src="../assests/userlogo.png" alt="userlogo" />
+                        <h4>{{ getLoggedInUserName }}</h4>
+                    </div>
+                    <ul class="d-flex flex-row align-center justify-center large__screen__navbar">
+                        <li class="nav__links" v-if="getIsAuthenticated">
+                            <RouterLink :to="{ name: 'home' }"> {{ $t('home') }} </RouterLink>
+                        </li>
+                        <li class="nav__links" v-if="getIsAuthenticated && getUserRole === 'admin'">
+                            <RouterLink :to="{ name: 'admin_userList' }">
+                                {{ $t('users') }}
+                            </RouterLink>
+                        </li>
+                        <li class="nav__links" v-if="!getIsAuthenticated">
+                            <RouterLink :to="{ name: 'login' }">{{ $t('login') }} </RouterLink>
+                        </li>
+                        <li class="nav__links" v-if="!getIsAuthenticated">
+                            <RouterLink :to="{ name: 'register' }">
+                                {{ $t('register') }}
+                            </RouterLink>
+                        </li>
+                        <li class="nav__links" v-if="getIsAuthenticated">
+                            <RouterLink :to="{ name: 'login' }" @click="handleLogout">
+                                {{ $t('logout') }}
+                            </RouterLink>
+                        </li>
+                    </ul>
                 </div>
-                <ul class="d-flex flex-row align-center justify-center large__screen__navbar">
-                    <li class="nav__links" v-if="getIsAuthenticated">
-                        <RouterLink :to="{ name: 'home' }"> Home </RouterLink>
-                    </li>
-                    <li class="nav__links" v-if="getIsAuthenticated && getUserRole === 'admin'">
-                        <RouterLink :to="{ name: 'admin_userList' }"> Users </RouterLink>
-                    </li>
-                    <li class="nav__links" v-if="!getIsAuthenticated">
-                        <RouterLink :to="{ name: 'login' }"> Login </RouterLink>
-                    </li>
-                    <li class="nav__links" v-if="!getIsAuthenticated">
-                        <RouterLink :to="{ name: 'register' }"> Register </RouterLink>
-                    </li>
-                    <li class="nav__links" v-if="getIsAuthenticated">
-                        <RouterLink :to="{ name: 'login' }" @click="handleLogout">
-                            Logout
-                        </RouterLink>
-                    </li>
-                </ul>
+                <div class="text-white i18n" v-if="getIsAuthenticated">
+                    <div class="text-white i18n" v-bind="props">
+                        <img class="" src="../assests/i18n.png" alt="userlogo" />
+                        <div class="navigation-dropdown">
+                            <span
+                                ><select v-model="$i18n.locale">
+                                    <option
+                                        v-for="(item, index) in items"
+                                        :key="index"
+                                        :value="item.value"
+                                    >
+                                        {{ item.title }}
+                                    </option>
+                                </select></span
+                            >
+                        </div>
+                    </div>
+                </div>
                 <div
-                    class="d-flex flex-row justify-center align-center text-white gap-2"
-                    v-if="getIsAuthenticated"
+                    id="hamburger_menu"
+                    class="hamburger_container"
+                    :class="{ open: drawer }"
+                    @click.stop="toggleDrawer"
+                    v-if="isMobile"
                 >
-                    <img class="mx-2" src="../assests/i18n.png" alt="userlogo" />
-                    <h4>en</h4>
+                    <span class="hamburger_stick"></span>
+                    <span class="hamburger_stick"></span>
+                    <span class="hamburger_stick"></span>
                 </div>
             </div>
         </div>
     </nav>
-    <v-overlay v-model="drawer" location-strategy="connected" scroll-strategy="block"> </v-overlay>
     <!-- For smaller screen size -->
+    <v-overlay v-model="drawer" location-strategy="connected" scroll-strategy="block"> </v-overlay>
     <v-card v-if="isMobile">
         <v-layout>
             <v-navigation-drawer v-model="drawer" persistent>
@@ -74,7 +89,7 @@
                                 class="d-flex flex-fill list_item justify-center"
                                 @click="toggleDrawer"
                             >
-                                Home
+                                {{ $t('home') }}
                             </li></RouterLink
                         >
                         <RouterLink :to="{ name: 'admin_userList' }" v-if="getUserRole === 'admin'"
@@ -82,7 +97,7 @@
                                 class="d-flex flex-fill list_item justify-center"
                                 @click="toggleDrawer"
                             >
-                                Users
+                                {{ $t('users') }}
                             </li></RouterLink
                         >
                         <RouterLink :to="{ name: 'login' }" @click="handleLogout">
@@ -90,7 +105,7 @@
                                 class="d-flex flex-fill list_item justify-center"
                                 @click="toggleDrawer"
                             >
-                                Logout
+                                {{ $t('logout') }}
                             </li></RouterLink
                         >
                     </template>
@@ -100,7 +115,7 @@
                                 class="d-flex flex-fill list_item justify-center"
                                 @click="toggleDrawer"
                             >
-                                Login
+                                {{ $t('login') }}
                             </li></RouterLink
                         >
 
@@ -109,7 +124,7 @@
                                 class="d-flex flex-fill list_item justify-center"
                                 @click="toggleDrawer"
                             >
-                                Register
+                                {{ $t('register') }}
                             </li></RouterLink
                         >
                     </template>
@@ -123,17 +138,27 @@
 <script setup>
 import { storeToRefs } from 'pinia';
 import useAuthStore from '../store/authStore';
-import { ref, watch } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { useDisplay } from 'vuetify';
 
 const { width } = useDisplay();
 const isMobile = ref(width.value < 700 ? true : false);
 const drawer = ref(false);
+const selected_locale = ref('en');
+// const dropdown__activate = ref(false);
+const items = [
+    { title: 'English', value: 'en' },
+    { title: 'Gujarati', value: 'gu' },
+];
 
 watch(width, () => {
     console.log('called');
-    isMobile.value = width.value < 700 ? true : false;
+    isMobile.value = width.value < 850 ? true : false;
 });
+
+// const dropdown__toggle = () => {
+//     dropdown__activate.value = !dropdown__activate.value;
+// };
 
 const toggleDrawer = () => {
     drawer.value = !drawer.value;
@@ -186,7 +211,7 @@ li {
 
 h3 {
     color: #fff;
-    font-size: 45px;
+    font-size: 35px;
     margin: 0;
     padding: 0;
     text-align: center;
@@ -223,11 +248,12 @@ h5 {
 
 /* Hamburger -- Menu button */
 .hamburger_container {
+    margin-inline: 10px;
     display: none;
     width: 2.5rem;
     height: 2.5rem;
-    position: absolute;
-    right: 25px;
+    /* position: absolute; */
+    /* right: 25px; */
 }
 
 .hamburger_stick {
@@ -276,7 +302,48 @@ h5 {
     list-style-type: none;
 }
 
-@media screen and (max-width: 700px) {
+.i18n {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    /* box-shadow: 0 0px 2px 1px white; */
+    border-radius: 3rem;
+    gap: 5px;
+    padding: 0.2rem 0.4rem;
+    background: #6b7a83;
+    max-width: fit-content;
+    cursor: pointer;
+}
+.i18n > img {
+    width: 33px;
+}
+
+.navigation-dropdown select {
+    text-decoration: underline;
+    color: white;
+    font-size: 15px;
+    font-weight: 600;
+    outline: none;
+    padding: 5px;
+}
+select option {
+    background-color: #646d75;
+}
+
+.navigation-dropdown-arrow {
+    margin: 0 3px;
+    color: white;
+    transform: rotate(-90deg);
+    transition: transform 0.2s ease-in-out;
+}
+
+.i18n:hover .navigation-dropdown-arrow {
+    transform: rotate(-270deg);
+}
+
+@media screen and (max-width: 850px) {
     header {
         padding-block: 10px;
     }
@@ -305,7 +372,7 @@ h5 {
     }
 
     .navbar__wrapper {
-        justify-content: start !important;
+        justify-content: space-around !important;
     }
 
     .navbar__smaller__screen > a {

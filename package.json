@@ -12,11 +12,13 @@
   "dependencies": {
     "@vee-validate/rules": "^4.8.6",
     "axios": "^1.4.0",
+    "eslint-plugin-json": "^3.1.0",
     "pinia": "^2.0.36",
     "save": "^2.9.0",
     "sweetalert2": "^11.7.3",
     "vee-validate": "^4.8.6",
     "vue": "^3.3.1",
+    "vue-i18n": "^9.2.2",
     "vue-loader": "^17.0.1",
     "vue-router": "^4.2.2",
     "vuetify": "^3.3.3"
@@ -25,6 +27,7 @@
     "@rushstack/eslint-patch": "^1.2.0",
     "@vitejs/plugin-vue": "^4.0.0",
     "@vue/eslint-config-prettier": "^7.1.0",
+    "babel-eslint": "^10.1.0",
     "eslint": "^8.40.0",
     "eslint-plugin-vue": "^9.12.0",
     "node-sass": "^8.0.0",
