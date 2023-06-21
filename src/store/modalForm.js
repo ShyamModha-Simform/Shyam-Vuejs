@@ -14,6 +14,7 @@ const useModalFormStore = defineStore('modalForm', {
         return {
             modalType: 'add',
             selectedCarForEditing: {},
+            openModal: false,
         };
     },
     getters,

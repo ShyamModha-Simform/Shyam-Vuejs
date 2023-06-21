@@ -1,117 +1,105 @@
 <template>
-    <div
-        class="modal fade"
-        id="backdrop-overlay-modal"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-    >
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                    <vForm
-                        class="form"
-                        :validation-schema="schema"
-                        @submit="handleFormSubmit"
-                        v-slot="{ handleSubmit }"
-                        as="div"
-                    >
-                        <form @submit="handleSubmit($event, handleFormSubmit)">
-                            <div class="modal-header">
-                                <h1 class="modal-title fs-5 text-dark" id="staticBackdropLabel">
-                                    {{ modalType === 'edit' ? 'Edit' : 'Add' }} Car Details
-                                </h1>
-                                <button
-                                    type="reset"
-                                    class="btn-close"
-                                    data-bs-dismiss="modal"
-                                    aria-label="Close"
-                                    ref="closeForm"
-                                ></button>
-                            </div>
-                            <div class="group">
-                                <vField
-                                    name="carName"
-                                    placeholder="‎"
-                                    type="text"
-                                    class="input"
-                                    :validateOnInput="true"
-                                    v-model.lazy="selectedCarForEditing.name"
-                                />
-                                <label for="carName">Car Name<span>*</span></label>
-                                <ErrorMessage name="carName" class="error_message" />
-                            </div>
-
-                            <div class="group">
-                                <vField
-                                    name="price"
-                                    placeholder="‎"
-                                    type="number"
-                                    class="input"
-                                    :validateOnInput="true"
-                                    v-model="selectedCarForEditing.price"
-                                />
-                                <label for="price">Price<span>*</span></label>
-                                <ErrorMessage name="price" class="error_message" />
-                            </div>
-
-                            <div class="group">
-                                <vField
-                                    name="url"
-                                    placeholder="‎"
-                                    type="text"
-                                    class="input"
-                                    :validateOnInput="true"
-                                    v-model="selectedCarForEditing.image"
-                                />
-                                <label for="url">Image URL<span>*</span></label>
-                                <ErrorMessage name="url" class="error_message" />
-                            </div>
-                            <div class="group">
-                                <vField
-                                    name="carDetails"
-                                    :bails="false"
-                                    v-slot="{ field, errors }"
-                                    v-model="selectedCarForEditing.details"
-                                >
-                                    <textarea
-                                        type="text"
+    <v-row justify="center" class="form__container">
+        <v-dialog v-model="dialog" persistent width="600">
+            <v-card>
+                <v-card-text>
+                    <v-container>
+                        <div class="">
+                            <vForm
+                                class="form"
+                                :validation-schema="schema"
+                                @submit="handleFormSubmit"
+                            >
+                                <div class="d-flex mb-5 text-blue-grey-darken-2">
+                                    <h2 class="" id="staticBackdropLabel">
+                                        {{ modalType === 'edit' ? 'Edit' : 'Add' }}
+                                        Car Details
+                                    </h2>
+                                </div>
+                                <div class="group">
+                                    <vField
+                                        name="carName"
                                         placeholder="‎"
-                                        id="comment"
-                                        class="textarea"
-                                        name="carDetails"
-                                        rows="3"
-                                        v-bind="field"
+                                        type="text"
+                                        class="input"
+                                        :validateOnInput="true"
+                                        v-model.lazy="selectedCarForEditing.name"
                                     />
-                                    <div class="error_message" v-for="err in errors" :key="err">
-                                        {{ err }}
-                                    </div>
-                                </vField>
-                                <label for="carDetails">Car Details <span>*</span></label>
-                            </div>
-                            <div class="modal-footer">
-                                <BaseButton
-                                    type="reset"
-                                    class="card"
-                                    size="lg"
-                                    data-bs-dismiss="modal"
-                                    >Cancel</BaseButton
-                                >
-                                <BaseButton type="submit" class="card">
-                                    <CircularLoader v-show="buttonLoader" />
-                                    <span v-show="!buttonLoader">{{
-                                        modalType == 'edit' ? `Update` : `Submit`
-                                    }}</span>
-                                </BaseButton>
-                            </div>
-                        </form>
-                    </vForm>
-                </div>
-            </div>
-        </div>
-    </div>
+                                    <label for="carName">Car Name<span>*</span></label>
+                                    <ErrorMessage name="carName" class="error_message" />
+                                </div>
+
+                                <div class="group">
+                                    <vField
+                                        name="price"
+                                        placeholder="‎"
+                                        type="number"
+                                        class="input"
+                                        :validateOnInput="true"
+                                        v-model="selectedCarForEditing.price"
+                                    />
+                                    <label for="price">Price<span>*</span></label>
+                                    <ErrorMessage name="price" class="error_message" />
+                                </div>
+
+                                <div class="group">
+                                    <vField
+                                        name="url"
+                                        placeholder="‎"
+                                        type="text"
+                                        class="input"
+                                        :validateOnInput="true"
+                                        v-model="selectedCarForEditing.image"
+                                    />
+                                    <label for="url">Image URL<span>*</span></label>
+                                    <ErrorMessage name="url" class="error_message" />
+                                </div>
+                                <div class="group">
+                                    <vField
+                                        name="carDetails"
+                                        :bails="false"
+                                        v-slot="{ field, errors }"
+                                        v-model="selectedCarForEditing.details"
+                                    >
+                                        <textarea
+                                            type="text"
+                                            placeholder="‎"
+                                            id="comment"
+                                            class="textarea"
+                                            name="carDetails"
+                                            rows="3"
+                                            v-bind="field"
+                                        />
+                                        <div class="error_message" v-for="err in errors" :key="err">
+                                            {{ err }}
+                                        </div>
+                                    </vField>
+                                    <label for="carDetails">Car Details <span>*</span></label>
+                                </div>
+                                <small>*Indicates required field</small>
+                                <div class="d-flex justify-end align-center">
+                                    <BaseButton
+                                        type="reset"
+                                        class="card"
+                                        size="lg"
+                                        @click="closeModalForm"
+                                        ref="closeForm"
+                                        >Cancel</BaseButton
+                                    >
+                                    <BaseButton type="submit" class="card">
+                                        <CircularLoader v-show="buttonLoader" />
+                                        <span v-show="!buttonLoader">{{
+                                            modalType == 'edit' ? `Update` : `Submit`
+                                        }}</span>
+                                    </BaseButton>
+                                </div>
+                            </vForm>
+                        </div>
+                    </v-container>
+                </v-card-text>
+            </v-card>
+        </v-dialog>
+    </v-row>
 </template>
 
 <script setup>
@@ -134,7 +122,7 @@ const carDataStore = useCarDataStore();
 const modalFormStore = useModalFormStore();
 
 const { addCar, updateCar } = carDataStore;
-const { modalType, selectedCarForEditing } = storeToRefs(modalFormStore);
+const { openModal: dialog, modalType, selectedCarForEditing } = storeToRefs(modalFormStore);
 
 const closeForm = ref(null);
 let submitFormTimer = null;
@@ -180,6 +168,10 @@ async function createCar() {
     }
     buttonLoader.value = false;
 }
+
+const closeModalForm = () => {
+    dialog.value = false;
+};
 </script>
 
 <style scoped>

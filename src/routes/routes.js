@@ -4,6 +4,7 @@ const LoginView = () => import('../views/LoginView.vue');
 const RegisterView = () => import('../views/RegisterView.vue');
 const CarDetailView = () => import('../views/CarDetailView.vue');
 const NotFound = () => import('../views/NotFoundView.vue');
+const UsersPageView = () => import('../views/UsersPageView.vue');
 const websiteName = 'Carpedia';
 
 const routes = [
@@ -41,6 +42,16 @@ const routes = [
         },
     },
     {
+        path: '/users',
+        name: 'admin_userList',
+        component: UsersPageView,
+        meta: {
+            title: `Users | ${websiteName}`,
+            isAuthenticationRequired: true,
+            admin: true,
+        },
+    },
+    {
         path: '/:catchAll(.*)',
         name: 'NotFound',
         component: NotFound,
@@ -58,6 +69,9 @@ Router.beforeEach((to, from, next) => {
         return next('/login');
     }
     if (to.meta.guest && sessionStorage.getItem('token')) {
+        return next('/');
+    }
+    if (to.meta.admin && sessionStorage.getItem('userRole') !== 'admin') {
         return next('/');
     }
     return next();

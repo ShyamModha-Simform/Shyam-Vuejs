@@ -21,10 +21,8 @@ const actions = {
     async userLogin(loginCredentials) {
         try {
             this.isLoaderStarted = true;
-
-            let responseData = await axios.get(`	
-            ${import.meta.env.VITE_BASE_URL}/users`);
-            const userExists = responseData.data.data?.find((user) => {
+            const response = await this.getAllUsers();
+            const userExists = response?.find((user) => {
                 return (
                     user.email === loginCredentials.email &&
                     user.password === loginCredentials.password
@@ -32,7 +30,9 @@ const actions = {
             });
             if (userExists) {
                 this.username = userExists.name;
+                this.userRole = userExists.role;
                 sessionStorage.setItem('username', userExists.name);
+                sessionStorage.setItem('userRole', userExists.role);
                 sessionStorage.setItem(
                     'token',
                     GENERATE_RANDOM_TOKEN(loginCredentials.password.length)
@@ -47,6 +47,7 @@ const actions = {
             }
         } catch (e) {
             this.isLoaderStarted = false;
+            console.log(e);
             alert("Something went wrong! Couldn't able to Login user.");
         }
     },
@@ -66,8 +67,20 @@ const actions = {
     handleLogout() {
         sessionStorage.removeItem('token');
         sessionStorage.removeItem('username');
+        sessionStorage.removeItem('userRole');
+        this.userRole = null;
         this.username = null;
         this.isAuthenticated = false;
+    },
+    async getAllUsers() {
+        try {
+            let responseData = await axios.get(`	
+            ${import.meta.env.VITE_BASE_URL}/users`);
+            this.usersList = responseData.data.data;
+            return responseData.data.data;
+        } catch (e) {
+            alert('Something went Wrong! Please try again');
+        }
     },
 };
 
@@ -76,7 +89,9 @@ const useAuthStore = defineStore('authStore', {
         return {
             isAuthenticated: sessionStorage.getItem('token') ? true : false,
             isLoaderStarted: false,
-            username: sessionStorage.getItem('username') || null,
+            username: sessionStorage.getItem('username') || 'Login to Account',
+            userRole: sessionStorage.getItem('userRole') || null,
+            usersList: {},
         };
     },
     getters: {
@@ -87,7 +102,13 @@ const useAuthStore = defineStore('authStore', {
             return this.isLoaderStarted;
         },
         getLoggedInUserName() {
-            return this.username;
+            return this.username || 'Login to Account';
+        },
+        getUserRole() {
+            return this.userRole;
+        },
+        getUserList() {
+            return this.usersList;
         },
     },
     actions,

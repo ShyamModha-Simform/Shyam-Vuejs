@@ -10,17 +10,16 @@
     "format": "prettier --write src/"
   },
   "dependencies": {
-    "@popperjs/core": "^2.11.7",
     "@vee-validate/rules": "^4.8.6",
     "axios": "^1.4.0",
-    "bootstrap": "^5.2.3",
     "pinia": "^2.0.36",
     "save": "^2.9.0",
     "sweetalert2": "^11.7.3",
     "vee-validate": "^4.8.6",
     "vue": "^3.3.1",
     "vue-loader": "^17.0.1",
-    "vue-router": "^4.2.2"
+    "vue-router": "^4.2.2",
+    "vuetify": "^3.3.3"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

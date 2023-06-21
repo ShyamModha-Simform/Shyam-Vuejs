@@ -1,35 +1,25 @@
 <template>
-    <main>
-        <div class="card-container--layer">
-            <div class="add-car-container">
-                <BaseButton
-                    class="card"
-                    size="lg"
-                    @click="modalType = 'add'"
-                    data-bs-toggle="modal"
-                    data-bs-target="#backdrop-overlay-modal"
-                >
-                    Add
-                </BaseButton>
-            </div>
-            <div class="no_cars_found" v-if="carDetails.length === 0">
-                <h1>No Cars Found!</h1>
-                <img src="../assests/No_cars.png" />
-            </div>
-
-            <div class="card-container" v-else>
-                <TransitionGroup name="fade" mode="out-in" appear>
-                    <GalleryCard
-                        v-for="(car, index) in carDetails"
-                        :carDetail="car"
-                        @delete-car-details="triggerDeleteCarHandler"
-                        :key="car.id"
-                        :style="{ transitionDelay: `${0.03 * index}s` }"
-                    />
-                </TransitionGroup>
-            </div>
+    <div class="card-container--layer">
+        <div class="add-car-container">
+            <BaseButton class="card" size="lg" @click="openAddCarModal"> Add </BaseButton>
         </div>
-    </main>
+        <div class="no_cars_found" v-if="carDetails.length === 0">
+            <h1>No Cars Found!</h1>
+            <img src="../assests/No_cars.png" />
+        </div>
+
+        <div class="card-container" v-else>
+            <TransitionGroup name="fade" mode="out-in" appear>
+                <GalleryCard
+                    v-for="(car, index) in carDetails"
+                    :carDetail="car"
+                    @delete-car-details="triggerDeleteCarHandler"
+                    :key="car.id"
+                    :style="{ transitionDelay: `${0.03 * index}s` }"
+                />
+            </TransitionGroup>
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -45,7 +35,12 @@ const modalFormStore = useModalFormStore();
 const carDataStore = useCarDataStore();
 const { getCarDetails: carDetails } = storeToRefs(carDataStore);
 const { deleteCar, fetchAllCars } = carDataStore;
-const { modalType } = storeToRefs(modalFormStore);
+const { openModal, modalType } = storeToRefs(modalFormStore);
+
+const openAddCarModal = () => {
+    modalType.value = 'add';
+    openModal.value = true;
+};
 
 // Delete Car Handler
 function triggerDeleteCarHandler(carId, carToBeDeleted) {

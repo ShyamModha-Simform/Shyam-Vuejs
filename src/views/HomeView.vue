@@ -1,7 +1,9 @@
 <template>
-    <Teleport to="#modal_overlay"><InputForm /></Teleport>
-    <RectangularLoader v-if="getIsLoaderStarted" />
-    <GalleryCardList v-else />
+    <div>
+        <InputForm />
+        <RectangularLoader v-if="getIsLoaderStarted" />
+        <GalleryCardList v-else />
+    </div>
 </template>
 
 <script setup>
@@ -16,3 +18,5 @@ const { fetchAllCars } = carDataStore;
 
 fetchAllCars();
 </script>
+
+<style scoped></style>
