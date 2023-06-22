@@ -7,8 +7,7 @@
                 </RouterLink>
                 <h5>-{{ $t('tagline') }}</h5>
             </div>
-
-            <!-- Menu button -->
+            <!-- For larger screen size navigation links -->
             <div class="d-flex align-center justify-center">
                 <div class="d-flex align-center" id="navbarNav" v-if="!isMobile">
                     <div class="user_detail" v-if="getIsAuthenticated">
@@ -39,6 +38,7 @@
                         </li>
                     </ul>
                 </div>
+                <!-- i18n ICON -->
                 <div class="text-white i18n" v-if="getIsAuthenticated">
                     <div class="text-white i18n" v-bind="props">
                         <img class="" src="../assests/i18n.png" alt="userlogo" />
@@ -57,6 +57,7 @@
                         </div>
                     </div>
                 </div>
+                <!-- MENU button -- for smaller screen size -->
                 <div
                     id="hamburger_menu"
                     class="hamburger_container"
@@ -71,68 +72,56 @@
             </div>
         </div>
     </nav>
-    <!-- For smaller screen size -->
-    <v-overlay v-model="drawer" location-strategy="connected" scroll-strategy="block"> </v-overlay>
-    <v-card v-if="isMobile">
-        <v-layout>
-            <v-navigation-drawer v-model="drawer" persistent>
-                <div class="user_detail">
-                    <img class="user_logo" src="../assests/userlogo.png" alt="userlogo" />
-                    <h4>{{ getLoggedInUserName }}</h4>
-                </div>
 
-                <v-divider></v-divider>
-                <ul class="d-flex flex-column navbar__smaller__screen">
-                    <template v-if="getIsAuthenticated">
-                        <RouterLink :to="{ name: 'home' }"
-                            ><li
-                                class="d-flex flex-fill list_item justify-center"
-                                @click="toggleDrawer"
-                            >
-                                {{ $t('home') }}
-                            </li></RouterLink
-                        >
-                        <RouterLink :to="{ name: 'admin_userList' }" v-if="getUserRole === 'admin'"
-                            ><li
-                                class="d-flex flex-fill list_item justify-center"
-                                @click="toggleDrawer"
-                            >
-                                {{ $t('users') }}
-                            </li></RouterLink
-                        >
-                        <RouterLink :to="{ name: 'login' }" @click="handleLogout">
-                            <li
-                                class="d-flex flex-fill list_item justify-center"
-                                @click="toggleDrawer"
-                            >
-                                {{ $t('logout') }}
-                            </li></RouterLink
-                        >
-                    </template>
-                    <template v-if="!getIsAuthenticated">
-                        <RouterLink :to="{ name: 'login' }">
-                            <li
-                                class="d-flex flex-fill list_item justify-center"
-                                @click="toggleDrawer"
-                            >
-                                {{ $t('login') }}
-                            </li></RouterLink
-                        >
+    <!-- Navigation DRAWER -- For smaller screen size -->
+    <v-overlay v-model="drawer" location-strategy="connected" scroll-strategy="block">
+        <div class="navigation__sidebar">
+            <div class="user_detail">
+                <img class="user_logo" src="../assests/userlogo.png" alt="userlogo" />
+                <h4>{{ getLoggedInUserName }}</h4>
+            </div>
 
-                        <RouterLink :to="{ name: 'register' }">
-                            <li
-                                class="d-flex flex-fill list_item justify-center"
-                                @click="toggleDrawer"
-                            >
-                                {{ $t('register') }}
-                            </li></RouterLink
+            <v-divider></v-divider>
+            <ul class="d-flex flex-column navbar__smaller__screen">
+                <template v-if="getIsAuthenticated">
+                    <RouterLink :to="{ name: 'home' }"
+                        ><li
+                            class="d-flex flex-fill list_item justify-center"
+                            @click="toggleDrawer"
                         >
-                    </template>
-                </ul>
-            </v-navigation-drawer>
-        </v-layout>
-    </v-card>
-    <!-- Overlay -->
+                            {{ $t('home') }}
+                        </li></RouterLink
+                    >
+                    <RouterLink :to="{ name: 'admin_userList' }" v-if="getUserRole === 'admin'"
+                        ><li
+                            class="d-flex flex-fill list_item justify-center"
+                            @click="toggleDrawer"
+                        >
+                            {{ $t('users') }}
+                        </li></RouterLink
+                    >
+                    <RouterLink :to="{ name: 'login' }" @click="handleLogout">
+                        <li class="d-flex flex-fill list_item justify-center" @click="toggleDrawer">
+                            {{ $t('logout') }}
+                        </li></RouterLink
+                    >
+                </template>
+                <template v-if="!getIsAuthenticated">
+                    <RouterLink :to="{ name: 'login' }">
+                        <li class="d-flex flex-fill list_item justify-center" @click="toggleDrawer">
+                            {{ $t('login') }}
+                        </li></RouterLink
+                    >
+
+                    <RouterLink :to="{ name: 'register' }">
+                        <li class="d-flex flex-fill list_item justify-center" @click="toggleDrawer">
+                            {{ $t('register') }}
+                        </li></RouterLink
+                    >
+                </template>
+            </ul>
+        </div>
+    </v-overlay>
 </template>
 
 <script setup>
@@ -145,7 +134,6 @@ const { width } = useDisplay();
 const isMobile = ref(width.value < 700 ? true : false);
 const drawer = ref(false);
 const selected_locale = ref('en');
-// const dropdown__activate = ref(false);
 const items = [
     { title: 'English', value: 'en' },
     { title: 'Gujarati', value: 'gu' },
@@ -155,10 +143,6 @@ watch(width, () => {
     console.log('called');
     isMobile.value = width.value < 850 ? true : false;
 });
-
-// const dropdown__toggle = () => {
-//     dropdown__activate.value = !dropdown__activate.value;
-// };
 
 const toggleDrawer = () => {
     drawer.value = !drawer.value;
@@ -179,6 +163,14 @@ const tagLine = 'Your encyclopedia of all things automotive';
     top: 0;
     left: 0;
     z-index: 1;
+}
+
+.navigation__sidebar {
+    position: absolute;
+    background-color: whitesmoke;
+    width: 250px;
+    min-width: fit-content;
+    height: 100vh;
 }
 
 .v-card {
@@ -238,7 +230,6 @@ h5 {
     align-items: center;
     margin: 0 20px;
     color: white;
-    /* box-shadow: 0 0px 2px 1px white; */
     border-radius: 3rem;
     padding: 2px 0.8rem;
     gap: 0.5rem;
@@ -252,8 +243,7 @@ h5 {
     display: none;
     width: 2.5rem;
     height: 2.5rem;
-    /* position: absolute; */
-    /* right: 25px; */
+    cursor: pointer;
 }
 
 .hamburger_stick {
@@ -308,13 +298,11 @@ h5 {
     align-items: center;
     justify-content: center;
     color: white;
-    /* box-shadow: 0 0px 2px 1px white; */
     border-radius: 3rem;
     gap: 5px;
     padding: 0.2rem 0.4rem;
     background: #6b7a83;
     max-width: fit-content;
-    cursor: pointer;
 }
 .i18n > img {
     width: 33px;
@@ -327,6 +315,7 @@ h5 {
     font-weight: 600;
     outline: none;
     padding: 5px;
+    cursor: pointer;
 }
 select option {
     background-color: #646d75;
