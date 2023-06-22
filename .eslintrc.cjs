@@ -10,4 +10,17 @@ module.exports = {
         ecmaVersion: 2020,
     },
     plugins: ['eslint-plugin-json', 'import'],
+    overrides: [
+        {
+            files: ['src/components/__tests__/**.spec.js'],
+            globals: {
+                test: 'readonly',
+                describe: 'readonly',
+                expect: 'readonly',
+                vi: 'readonly',
+                it: 'readonly',
+                beforeEach: 'readonly',
+            },
+        },
+    ],
 };

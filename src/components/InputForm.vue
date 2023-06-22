@@ -11,7 +11,7 @@
                                 @submit="handleFormSubmit"
                             >
                                 <div class="d-flex mb-5 text-blue-grey-darken-2">
-                                    <h2 class="" id="staticBackdropLabel">
+                                    <h2 class="Form__type" id="staticBackdropLabel">
                                         {{ modalType === 'edit' ? 'Edit' : 'Add' }}
                                         Car Details
                                     </h2>
@@ -88,7 +88,7 @@
                                     >
                                     <BaseButton type="submit" class="card">
                                         <CircularLoader v-show="buttonLoader" />
-                                        <span v-show="!buttonLoader">{{
+                                        <span class="submit__button_text" v-show="!buttonLoader">{{
                                             modalType == 'edit' ? `Update` : `Submit`
                                         }}</span>
                                     </BaseButton>
