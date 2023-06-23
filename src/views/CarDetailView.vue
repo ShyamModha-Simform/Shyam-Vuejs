@@ -1,24 +1,22 @@
 <template>
     <RectangularLoader v-if="getIsLoaderStarted" />
-    <div class="car-card-container px-4" v-else>
-        <div>
+    <div class="page-wrapper px-2 py-2" v-else>
+        <div class="back-button">
             <RouterLink :to="{ name: 'home' }">
                 <BaseButton class="card" size="lg">back</BaseButton>
             </RouterLink>
         </div>
 
-        <div class="card mb-3 mx-sm-2" style="max-width: 70rem">
-            <div class="row g-0">
-                <div class="col-md-7">
-                    <img :src="carDetail?.image" class="img-fluid rounded-start" alt="..." />
+        <div class="detail-container">
+            <div class="detail-left">
+                <div class="detail-left__image__container">
+                    <img :src="carDetail?.image" class="car__image" alt="..." />
                 </div>
-                <div class="col-md-5">
-                    <div class="card-body">
-                        <h1 class="card-title">{{ carDetail?.name }}</h1>
-                        <h4 class="card-text">Price:-{{ carDetail?.price }}</h4>
-                        <p class="card-text">{{ carDetail?.details }}</p>
-                    </div>
-                </div>
+            </div>
+            <div class="detail-right">
+                <h1 class="card-title">{{ carDetail?.name }}</h1>
+                <h4 class="card-text">Price:-{{ carDetail?.price }}</h4>
+                <p class="description">{{ carDetail?.details }}</p>
             </div>
         </div>
     </div>
@@ -40,61 +38,91 @@ fetchCarDetailsById(route.params.id);
 </script>
 
 <style scoped>
-h1,
-h4,
-p {
+.page-wrapper {
+    margin-block: max(10px, 5%);
+    margin-inline: auto;
+    width: max(350px, 70%);
+    min-width: fit-content;
+    max-width: 900px;
+    display: flex;
+    flex-direction: column;
+    background: #d7dcdf;
+}
+
+.detail-container {
+    width: 100%;
+    height: 30rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     color: #606d75;
 }
 
-h1 {
-    margin-block: 10px;
+.detail-left__image__container {
+    display: flex;
+    width: 400px;
+    height: 400px;
+    position: relative;
+    justify-content: center;
+    align-items: center;
 }
 
-p,
-h4 {
-    margin-block: 20px;
-}
-
-img {
-    width: 100%;
-    height: 100%;
+.car__image {
+    width: 90%;
+    height: 90%;
     object-fit: cover;
+    z-index: 1;
 }
 
-.car-card-container {
-    display: flex;
-    flex-direction: column;
-    flex-wrap: wrap;
-    width: 70rem;
-    max-width: fit-content;
-    margin-inline: auto;
-    margin-top: 10%;
+.detail-left__image__container::before {
+    content: '';
+    width: 35%;
+    height: 55%;
+    background: #606d75;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+.detail-left__image__container::after {
+    content: '';
+    width: 35%;
+    height: 55%;
+    background: #606d75;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+}
+.detail-right {
+    width: 25rem;
+    height: 70%;
+    margin-inline: 1rem;
 }
 
-.car-card-container > button {
-    margin-right: 10px;
+.detail-right .description {
+    word-wrap: break-word;
 }
 
-.car-detail--container {
-    display: flex;
-    background-color: whitesmoke;
-    padding: 1.5em 1.5em 1.5em 1.5em;
-    box-sizing: border-box;
-    margin-inline: auto;
-    margin-inline: 10px;
-    border-radius: 10px;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
-    transition: transform 0.2s ease-in-out;
+.back-button {
+    width: 100%;
+}
+@media screen and (max-width: 900px) {
+    .detail-container {
+        flex-direction: column;
+        height: fit-content;
+    }
+
+    .detail-right {
+        margin-block: 1rem;
+    }
 }
 
-.container--right,
-.container--left {
-    min-width: 300px;
-}
-
-@media screen and (max-width: 680px) {
-    .car-card-container {
-        width: fit-content;
+@media screen and (max-width: 450px) {
+    .detail-left__image__container {
+        width: 300px;
+        height: 300px;
+    }
+    .detail-right {
+        width: 280px;
     }
 }
 </style>
