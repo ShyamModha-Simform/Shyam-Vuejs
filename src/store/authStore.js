@@ -74,12 +74,15 @@ const actions = {
     },
     async getAllUsers() {
         try {
+            this.isLoaderStarted = true;
             let responseData = await axios.get(`	
             ${import.meta.env.VITE_BASE_URL}/users`);
             this.usersList = responseData.data.data;
+            this.isLoaderStarted = false;
             return responseData.data.data;
         } catch (e) {
             alert('Something went Wrong! Please try again');
+            this.isLoaderStarted = false;
         }
     },
 };

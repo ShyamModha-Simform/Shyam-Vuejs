@@ -74,7 +74,12 @@
     </nav>
 
     <!-- Navigation DRAWER -- For smaller screen size -->
-    <v-overlay v-model="drawer" location-strategy="connected" scroll-strategy="block">
+    <v-overlay
+        v-model="drawer"
+        location-strategy="connected"
+        scroll-strategy="block"
+        v-if="isMobile"
+    >
         <div class="navigation__sidebar">
             <div class="user_detail">
                 <img class="user_logo" src="../assests/userlogo.png" alt="userlogo" />

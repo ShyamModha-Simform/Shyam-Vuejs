@@ -1,5 +1,6 @@
 <template>
-    <section class="table-container">
+    <RectangularLoader v-if="getIsLoaderStarted" />
+    <section class="table-container" v-else>
         <v-table class="v-table">
             <thead>
                 <tr>
@@ -27,9 +28,11 @@
 
 <script setup>
 import { storeToRefs } from 'pinia';
+import RectangularLoaderVue from '../components/RectangularLoader.vue';
 import useAuthStore from '../store/authStore';
+import RectangularLoader from '../components/RectangularLoader.vue';
 const authStore = useAuthStore();
-const { getUserList } = storeToRefs(authStore);
+const { getUserList, getIsLoaderStarted } = storeToRefs(authStore);
 authStore.getAllUsers();
 </script>
 

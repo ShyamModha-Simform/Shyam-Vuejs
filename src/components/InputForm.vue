@@ -145,6 +145,8 @@ async function createCar() {
             : await updateCar(selectedCarForEditing.value);
 
     if (res?.status == 201 || res?.status == 200) {
+        buttonLoader.value = false;
+        closeModalForm();
         Swal.fire({
             title: `${temp === 'edit' ? 'Updated' : 'Created'} data`,
             html: `
@@ -163,10 +165,9 @@ async function createCar() {
             allowOutsideClick: false,
             allowEscapeKey: false,
         });
-
-        closeForm.value.click();
+        // closeForm.click();
+        selectedCarForEditing.value = {};
     }
-    buttonLoader.value = false;
 }
 
 const closeModalForm = () => {
