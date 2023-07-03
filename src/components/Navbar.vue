@@ -39,7 +39,7 @@
                     </ul>
                 </div>
                 <!-- i18n ICON -->
-                <div class="text-white i18n" v-if="getIsAuthenticated">
+                <div class="text-white i18n">
                     <div class="text-white i18n" v-bind="props">
                         <img class="" src="../assests/i18n.png" alt="userlogo" />
                         <div class="navigation-dropdown">
