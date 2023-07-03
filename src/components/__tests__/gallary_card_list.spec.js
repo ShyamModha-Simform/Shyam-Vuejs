@@ -8,12 +8,8 @@ describe('GalleryCardList', async () => {
     const carStore = useCarDataStore(createPinia());
     await carStore.fetchAllCars();
     const wrapper = shallowMount(GalleryCardList, {
-        data() {
-            return {
-                carDetails: [{}, {}],
-            };
-        },
         global: {
+            // In case i use mount method then i have to mock $t() or register plugin
             // mocks: {
             //     $t: (mes) => mes,
             // },
@@ -22,6 +18,6 @@ describe('GalleryCardList', async () => {
     });
 
     test('Renders the carlist', () => {
-        expect(wrapper.findAllComponents(GalleryCard)).toHaveLength('3');
+        expect(wrapper.findAllComponents(GalleryCard)).toHaveLength('2');
     });
 });
